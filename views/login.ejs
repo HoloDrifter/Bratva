@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="login_left">
+          <div class="logo">
+            <img src="/img/logo.png" alt="" width="200" />
+          </div>
+
+          <% if (error) { %>
+          <div id="errorMessage">
+            <%= error %>
+            <span><i class="ri-close-line"></i></span>
+          </div>
+          <% } %>
+          <form action="/login" method="post">
+            <div class="box">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="username"
+                id="username"
+                value="<%= formData.username || '' %>"
+              />
+            </div>
+            <div class="box">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+                value="<%= formData.password || '' %>"
+              />
+              <span class="togglePasswordSpan"
+                ><i class="ri-eye-line" id="togglePassword"></i
+              ></span>
+            </div>
+
+            <button type="submit" class="btn btn-bg">Connexion</button>
+
+            <div class="form_bottom">
+              <a href="/register" class="btn btn-outline">
+                <i class="ri-user-add-line"></i>
+                Créer un nouveau compte
+              </a>
+            </div>
+          </form>
+
+          <div class="bottom_info">
+            <p>NOUVEAU TELEGRAM <a href="#">@Bratva</a></p>
+          </div>
+        </div>
+
+        <div class="login_right">
+          <img src="/img/bg-img.png" alt="" />
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+
+      togglePassword.addEventListener("click", () => {
+        const type =
+          passwordInput.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordInput.setAttribute("type", type);
+
+        togglePassword.classList.toggle("ri-eye-line");
+        togglePassword.classList.toggle("ri-eye-off-line");
+      });
+
+      const closeIcon = document.querySelector("#errorMessage i");
+
+      closeIcon.addEventListener("click", function () {
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

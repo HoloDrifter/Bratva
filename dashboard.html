@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/styles/generalStyles.css" />
+    <link rel="stylesheet" href="./public/styles/dashboard.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <nav>
+          <div class="container">
+            <div class="nav_left">
+              <img src="./public/img/logo.png" alt="Bratva logo" width="120" />
+              <ul>
+                <li>
+                  <a href="dashboard.html"
+                    ><i class="ri-home-5-line"></i> Accueil</a
+                  >
+                </li>
+                <li>
+                  <a href="dashboard.html"
+                    ><i class="ri-government-line"></i> Products</a
+                  >
+                </li>
+                <li>
+                  <a href="dashboard.html"
+                    ><i class="ri-shopping-cart-line"></i> Orders</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav_right">
+              <ul>
+                <li class="nav_cart">
+                  <a href=""
+                    ><i class="ri-shopping-cart-line"></i>
+                    <span class="cart_item-count">2</span></a
+                  >
+                </li>
+                <li>
+                  <div class="profile_nav-card">
+                    <img
+                      src="./public/img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                      alt=""
+                      width="30"
+                    />
+                    <div class="profile-details">
+                      <p class="username">holodrifter</p>
+                      <p class="available_money">0$</p>
+                    </div>
+
+                    <div class="profile_card-sub">
+                      <ul>
+                        <li>
+                          <a href="/profile"
+                            ><i class="ri-user-settings-line"></i> Profile</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/deposit"
+                            ><i class="ri-wallet-line"></i> Wallet</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/logout"
+                            ><button>
+                              <i class="ri-logout-box-r-line"></i> Logout
+                            </button></a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    </main>
+
+    <script>
+      const profile_card = document.querySelector(".profile_nav-card");
+      const profile_card_sub = document.querySelector(".profile_card-sub");
+
+      profile_card.addEventListener("click", (e) => {
+        e.stopPropagation(); 
+        profile_card_sub.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !profile_card.contains(e.target) &&
+          !profile_card_sub.contains(e.target)
+        ) {
+          profile_card_sub.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>

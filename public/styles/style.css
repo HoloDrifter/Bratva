@@ -1,0 +1,127 @@
+
+main .container {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  align-items: center;
+  height: 100vh;
+  min-height: 45rem;
+  /* border: 2px solid; */
+}
+
+.login_left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  /* border: 2px solid; */
+}
+.login_right {
+  width: 40%;
+  /* border: 2px solid; */
+}
+
+form {
+  max-width: 450px;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid var(--border-clr);
+  padding: 35px 40px;
+  background-color: var(--clr-white);
+  border-radius: var(--border-radius);
+}
+form .box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+form .box label {
+  font-weight: 500;
+  font-size: 18px;
+}
+form .box input {
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid var(--border-clr);
+  border-radius: var(--border-radius);
+}
+form .box input:focus {
+  outline: 2px solid var(--clr-primary);
+  border-color: var(--clr-primary);
+}
+.togglePasswordSpan {
+  position: absolute;
+  right: 15px;
+  top: 70%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.form_bottom {
+  padding: 35px 0 0 0;
+  border-top: 1px solid var(--border-clr);
+  position: relative;
+}
+.form_bottom::before {
+  content: "OU";
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0000009f;
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--clr-white);
+  padding: 0 8px;
+}
+.bottom_info {
+  margin: 0 auto;
+}
+.login_right img {
+  width: 450px;
+}
+
+/* Registration */
+.registration_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.registration_container .bottom_info {
+  margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 992px) {
+  main .container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 25px;
+  }
+  .login_left {
+    width: 100%;
+  }
+  .login_right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .login_right img {
+    width: 200px;
+  }
+}
+
+/* -----------------DASHBOARD--------------- */

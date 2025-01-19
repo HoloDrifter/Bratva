@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="registration_container">
+          <div class="logo">
+            <img src="/img/logo.png" alt="" width="200" />
+          </div>
+
+          <% if (error) { %>
+          <div id="errorMessage">
+            <%= error %>
+            <span><i class="ri-close-line"></i></span>
+          </div>
+          <% } %>
+          <form action="/register" method="post">
+            <div class="box">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="username"
+                id="username"
+                value="<%= formData.username || '' %>"
+              />
+            </div>
+            <div class="box">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="********"
+                id="password"
+                class="pass"
+                value="<%= formData.password || '' %>"
+              />
+              <span class="togglePasswordSpan"
+                ><i class="ri-eye-line togglePassword"></i
+              ></span>
+            </div>
+            <div class="box">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="********"
+                id="confirmPassword"
+                class="pass"
+                value="<%= formData.confirmPassword || '' %>"
+              />
+              <span class="togglePasswordSpan"
+                ><i class="ri-eye-line togglePassword"></i
+              ></span>
+            </div>
+            <div class="box">
+              <label for="telegram">Telegram ID</label>
+              <input
+                type="text"
+                name="telegram"
+                placeholder="Telegram ID"
+                id="telegram"
+              />
+            </div>
+            <button type="submit" class="btn btn-bg">
+              <i class="ri-user-add-line"></i> Créer un nouveau compte
+            </button>
+          </form>
+
+          <div class="bottom_info">
+            <p>Déjà inscrit ? <a href="/login">Connexion.</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.querySelectorAll(".togglePassword").forEach((toggle) => {
+        toggle.addEventListener("click", function () {
+          const input = this.closest(".box").querySelector("input");
+
+          if (input) {
+            input.type = input.type === "password" ? "text" : "password";
+
+            this.classList.toggle("ri-eye-line");
+            this.classList.toggle("ri-eye-off-line");
+          }
+        });
+      });
+
+      const closeIcon = document.querySelector("#errorMessage i");
+
+      closeIcon.addEventListener("click", function () {
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+header {
+  background-color: var(--clr-dark-blue);
+  min-height: 250px;
+}
+nav {
+  border-bottom: 1px solid var(--border-clr);
+  padding: 15px 12px 15px 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+nav .nav_left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 45px;
+}
+.nav_right {
+}
+.nav_left ul,
+.nav_right ul {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.nav_right ul {
+  gap: 18px;
+}
+nav li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav_left li a:hover {
+  color: var(--clr-white);
+}
+
+nav li a i {
+  font-size: 20px;
+}
+
+.profile_nav-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+}
+.profile_card-sub {
+  position: absolute;
+  bottom: -157px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  padding: 10px 4px;
+  background-color: var(--clr-white);
+  color: var(--clr-black);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-clr);
+  z-index: 5;
+display: none;
+}
+.profile_card-sub.active {
+  display: flex;
+}
+.profile_card-sub::before {
+  content: "";
+
+  position: absolute;
+  top: -5px;
+  right: 50%;
+  width: 12px;
+  height: 12px;
+  z-index: -100;
+  transform: rotate(45deg) ;
+  background-color: var(--clr-white);
+  /* background-color: skyblue; */
+}
+.profile_card-sub ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+.profile_card-sub ul li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  /* border: 1px solid; */
+}
+.profile_card-sub ul li:hover {
+  background-color: rgba(30, 30, 30, 0.1);
+  border-radius: var(--border-radius);
+  /* color: var(--clr-white); */
+}
+.profile_card-sub ul li button {
+  outline: none;
+  border: none;
+  background: transparent;
+}
+.nav_cart {
+  position: relative;
+}
+.cart_item-count {
+  border-radius: 50px;
+  height: 16px;
+  width: 16px;
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+.profile_nav-card .available_money {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}
