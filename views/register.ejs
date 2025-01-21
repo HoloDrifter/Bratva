@@ -20,13 +20,11 @@
             <img src="/img/logo.png" alt="" width="200" />
           </div>
 
-          <% if (error) { %>
           <div id="errorMessage">
-            <%= error %>
+            <p class="error"></p>
             <span><i class="ri-close-line"></i></span>
           </div>
-          <% } %>
-          <form action="/register" method="post">
+          <form id="registerForm">
             <div class="box">
               <label for="username">Username</label>
               <input
@@ -106,6 +104,63 @@
         const errorMessage = document.getElementById("errorMessage");
         errorMessage.style.display = "none";
       });
+
+      // Registraion api
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const telegram = document.getElementById("telegram").value;
+
+          const errorMessage = document.querySelector("#errorMessage p");
+          const errorBox = document.getElementById("errorMessage");
+          // const successMessage = document.getElementById("successMessage");
+          const URL = "http://localhost:3000/api/auth/";
+
+          try {
+            const response = await fetch(`${URL}register`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username,
+                password,
+                confirmPassword,
+                telegram,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+              errorBox.style.display = "flex";
+              console.log(data,"{{2}}")
+              errorMessage.textContent = data.error;
+              // successMessage.textContent = "";
+              return;
+            }
+            
+
+            // Store the token in localStorage
+            localStorage.setItem("token", data.token);
+            
+            window.location.href = '/dashboard';
+            // successMessage.textContent = data.message;
+            // errorMessage.textContent = "";
+            // error.style.display = "none";
+          } catch (error) {
+            console.error("Error:", error);
+            errorMessage.textContent =
+              "An unexpected error occurred. Please try again.";
+            // successMessage.textContent = "";
+          }
+        });
     </script>
   </body>
 </html>

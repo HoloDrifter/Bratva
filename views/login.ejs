@@ -19,13 +19,12 @@
             <img src="/img/logo.png" alt="" width="200" />
           </div>
 
-          <% if (error) { %>
           <div id="errorMessage">
-            <%= error %>
+            <p class="error"></p>
             <span><i class="ri-close-line"></i></span>
           </div>
-          <% } %>
-          <form action="/login" method="post">
+
+          <form id="loginForm">
             <div class="box">
               <label for="username">Username</label>
               <input
@@ -92,6 +91,53 @@
         const errorMessage = document.getElementById("errorMessage");
         errorMessage.style.display = "none";
       });
+
+      // Calling the post api
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          const errorMessage = document.querySelector("#errorMessage p");
+          const URL = "http://localhost:3000/api/auth/";
+
+          try {
+            const response = await fetch(`${URL}login`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+              console.log("yoyoy");
+              const error = (document.getElementById(
+                "errorMessage"
+              ).style.display = "flex");
+              errorMessage.textContent = data.error;
+              return;
+            }
+
+            // Store JWT token in localStorage
+            localStorage.setItem("token", data.token);
+
+            if (data.role === "admin") {
+              // Redirect to admin dashboard
+              window.location.href = "/admin/dashboard";
+              return;
+            }
+
+            // Redirect to dashboard
+            window.location.href = "/dashboard";
+          } catch (err) {
+            errorMessage.textContent = "An error occurred. Please try again.";
+          }
+        });
     </script>
   </body>
 </html>
