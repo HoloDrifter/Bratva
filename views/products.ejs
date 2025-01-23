@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <header>
+        <nav>
+          <div class="container">
+            <div class="nav_left">
+              <a href="/dashboard">
+                <img src="img/logo.png" alt="Bratva logo" width="120" />
+              </a>
+              <ul>
+                <li>
+                  <a href="/dashboard"
+                    ><i class="ri-home-5-line"></i> Accueil</a
+                  >
+                </li>
+                <li>
+                  <a href="/products"
+                    ><i class="ri-government-line"></i> Produits</a
+                  >
+                </li>
+                <li>
+                  <a href="/orders"
+                    ><i class="ri-shopping-cart-line"></i> Mes achats</a
+                  >
+                </li>
+                <li>
+                  <a href="/support">
+                    <i class="ri-customer-service-2-line"></i> Support
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="nav_right">
+              <ul>
+                <li class="nav_cart">
+                  <a href="/cart"
+                    ><i class="ri-shopping-cart-line"></i>
+                    <span class="cart_item-count">2</span></a
+                  >
+                </li>
+                <li>
+                  <div class="profile_nav-card">
+                    <img
+                      src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                      alt=""
+                      width="30"
+                    />
+                    <div class="profile-details">
+                      <p class="username"><%= user.username%></p>
+                      <p class="available_money"><%= user.balance%>€</p>
+                    </div>
+  
+                    <div class="profile_card-sub">
+                      <ul>
+                        <li>
+                          <a href="/profile"
+                            ><i class="ri-user-settings-line"></i> Profile</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/deposit"
+                            ><i class="ri-wallet-line"></i> Portefeuille</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/logout"
+                            ><button>
+                              <i class="ri-logout-box-r-line"></i> Déconnexion
+                            </button></a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="page_detials container">
+          <p>Bratva Family</p>
+          <h2>Mon profile</h2>
+        </div>
+      </header>
+
+    <!-- View customers --- see orders,  -->
+    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
+    <!-- View Products -- delete product , update product -->
+    <!-- product -->
+    <!--  -->
+    <!-- Main dashboard -->
+    <main class="container dashboard-wrapper">
+      <div class="product-dashboard_bottom container box-bg">
+        <div class="product-dashboard_top">
+            <div class="box-bg user-product-box box-blue">
+              <h4 class="heading-4">
+                Total products <br />
+                <%= products.length %>
+              </h4>
+            </div>
+            <!-- <div class="box-bg">
+              <h4 class="heading-4">Will show valid customers</h4>
+            </div> -->
+          </div>
+        <div class="products_wrapper">
+          <div class="products_top">
+            <p>S. No:</p>
+            <p>Nom</p>
+            <p>FORME</p>
+            <p>Date de crea</p>
+            <p>code naf</p>
+            <p>Capital social</p>
+            <p>stock</p>
+            <p>prix</p>
+          </div>
+          <div class="product_boxes">
+            <% for(let [index, product] of products.entries()) {%>
+            <div class="product-box">
+              <p><%= index + 1 %></p>
+              <h4><%= product.name %></h4>
+              <p><%= product.type %></p>
+              <p>
+                <%= new
+                Date(product.createdAt).toLocaleDateString('en-GB') %>
+              </p>
+              <p><%= product.apeCode %></p>
+              <p><%= product.socialCapital %>€</p>
+              <p><%= product.stock %></p>
+              <p><%= product.price %>€</p>
+              <button class="btn btn-green">
+                <i class="ri-shopping-bag-line"></i> Acheter
+              </button>
+            </div>
+            <%}%>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const profile_card = document.querySelector(".profile_nav-card");
+      const profile_card_sub = document.querySelector(".profile_card-sub");
+
+      profile_card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profile_card_sub.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !profile_card.contains(e.target) &&
+          !profile_card_sub.contains(e.target)
+        ) {
+          profile_card_sub.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>

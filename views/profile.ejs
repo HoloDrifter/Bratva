@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <header>
+        <nav>
+          <div class="container">
+            <div class="nav_left">
+              <a href="/dashboard">
+                <img src="img/logo.png" alt="Bratva logo" width="120" />
+              </a>
+              <ul>
+                <li>
+                  <a href="/dashboard"
+                    ><i class="ri-home-5-line"></i> Accueil</a
+                  >
+                </li>
+                <li>
+                  <a href="/products"
+                    ><i class="ri-government-line"></i> Produits</a
+                  >
+                </li>
+                <li>
+                  <a href="/orders"
+                    ><i class="ri-shopping-cart-line"></i> Mes achats</a
+                  >
+                </li>
+                <li>
+                  <a href="/support">
+                    <i class="ri-customer-service-2-line"></i> Support
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="nav_right">
+              <ul>
+                <li class="nav_cart">
+                  <a href="/cart"
+                    ><i class="ri-shopping-cart-line"></i>
+                    <span class="cart_item-count">2</span></a
+                  >
+                </li>
+                <li>
+                  <div class="profile_nav-card">
+                    <img
+                      src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                      alt=""
+                      width="30"
+                    />
+                    <div class="profile-details">
+                      <p class="username"><%= user.username%></p>
+                      <p class="available_money"><%= user.balance%>€</p>
+                    </div>
+  
+                    <div class="profile_card-sub">
+                      <ul>
+                        <li>
+                          <a href="/profile"
+                            ><i class="ri-user-settings-line"></i> Profile</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/deposit"
+                            ><i class="ri-wallet-line"></i> Portefeuille</a
+                          >
+                        </li>
+                        <li>
+                          <a href="/logout"
+                            ><button>
+                              <i class="ri-logout-box-r-line"></i> Déconnexion
+                            </button></a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="page_detials container">
+          <p>Bratva Family</p>
+          <h2>Mon profile</h2>
+        </div>
+      </header>
+
+    <!-- Main dashboard -->
+    <main class="container profile_section dashboard-wrapper">
+      <div class="profile_left box-bg">
+        <a href="/profile">
+          <div class="profile_left-box active">
+            <p><i class="ri-user-line"></i> <span>Mon profile</span></p>
+          </div>
+        </a>
+
+        <a href="/profile/pass">
+          <div class="profile_left-box">
+            <p>
+              <i class="ri-lock-2-line"></i>
+              <span>Modifier mon mot de passe</span>
+            </p>
+          </div>
+        </a>
+      </div>
+      <div class="profile_right box-bg">
+        <h4>Informations du compte</h4>
+        <div class="profile_right-boxes box-bg">
+          <div class="profile_right-box">
+            <i class="ri-user-line"></i>
+            <div class="p-r-detail">
+              <p>Username:</p>
+              <span class="p-r-detail-value"><%= user.username %></span>
+            </div>
+          </div>
+          <div class="profile_right-box">
+            <i class="ri-wallet-line"></i>
+            <div class="p-r-detail">
+              <p>Balance:</p>
+              <span class="p-r-detail-value"><%= user.balance %>€</span>
+            </div>
+          </div>
+          <div class="profile_right-box">
+            <i class="ri-time-line"></i>
+            <div class="p-r-detail">
+              <p>Date d'inscription:</p>
+              <span class="p-r-detail-value"><%= user.createdAt %></span>
+            </div>
+          </div>
+          <div class="profile_right-box">
+            <i class="ri-list-check-3"></i>
+            <div class="p-r-detail">
+              <p>Total des dépôts:</p>
+              <span class="p-r-detail-value " id="p-r-deposits"></span>
+            </div>
+          </div>
+          <% if (user.telegram){%>
+          <div class="profile_right-box">
+            <i class="ri-telegram-2-line"></i>
+            <div class="p-r-detail">
+              <p>Telegram</p>
+              <span class="p-r-detail-value"><%= user.telegramAccount %></span>
+            </div>
+          </div>
+          <% } %>
+          <div class="profile_right-box">
+            <i class="ri-hotel-line"></i>
+            <div class="p-r-detail">
+              <p>Total des commandes:</p>
+              <span class="p-r-detail-value">10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+        <div class="container">
+
+            <p>Copyright © 2025 Bratva Family</p>
+        </div>
+    </footer>
+
+    <script>
+      const profile_card = document.querySelector(".profile_nav-card");
+      const profile_card_sub = document.querySelector(".profile_card-sub");
+
+      profile_card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profile_card_sub.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !profile_card.contains(e.target) &&
+          !profile_card_sub.contains(e.target)
+        ) {
+          profile_card_sub.classList.remove("active");
+        }
+      });
+
+    //   Calling calculateDeposit's API
+    const calculateDepositFunc=async()=>{
+
+        // const URL=
+        const res = await fetch('/wallet/total-deposits', {
+            method: 'GET',
+        });
+        const data = await res.json();
+        if(!data.success){
+            alert(data.message)
+        }
+        document.querySelector('#p-r-deposits').textContent=`${data.totalDeposits}€`
+        console.log(data);
+    }
+    calculateDepositFunc()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div class="nav_left">
+            <a href="/admin/dashboard">
+              <img src="img/logo.png" alt="Bratva logo" width="120" />
+            </a>
+            <ul>
+              <li>
+                <a href="/admin/dashboard"
+                  ><i class="ri-home-5-line"></i> Accueil</a
+                >
+              </li>
+              <li>
+                <a href="/admin/products"
+                  ><i class="ri-government-line"></i> Produits</a
+                >
+              </li>
+              <li>
+                <a href="/admin/users"
+                  ><i class="ri-shopping-cart-line"></i> View Order</a
+                >
+              </li>
+              <li>
+                <a href="/admin/addProduct">
+                  <i class="ri-customer-service-2-line"></i> Create Product
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav_right">
+            <ul>
+              <li>
+                <div class="profile_nav-card">
+                  <img
+                    src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    alt=""
+                    width="30"
+                  />
+                  <div class="profile-details">
+                    <p class="username"><%= user.username%></p>
+                  </div>
+
+                  <div class="profile_card-sub admin">
+                    <ul>
+                      <li>
+                        <a href="/logout"
+                          ><button>
+                            <i class="ri-logout-box-r-line"></i> Déconnexion
+                          </button></a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>Add New Product</h2>
+      </div>
+    </header>
+
+    <!-- View customers --- see orders,  -->
+    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
+    <!-- View Products -- delete product , update product -->
+    <!-- product -->
+    <!--  -->
+    <!-- Main dashboard -->
+    <main class="container dashboard-wrapper">
+      <div class="box-bg addProductForm">
+        <h4>
+          Veuillez entrer les détails ci-dessous pour ajouter un nouveau produit
+        </h4>
+
+        <form id="addProductForm">
+          <div class="form-box-container">
+            <div class="box">
+              <label for="name">Nom</label>
+              <input type="text" name="name" id="name" placeholder="eg.Finom" />
+            </div>
+
+            <div class="box">
+              <label for="type">Forme:</label>
+              <select id="type" name="type">
+                <option value="SAS">SAS</option>
+                <option value="EI">EI</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-box-container">
+            <div class="box">
+              <label for="apeCode">code naf</label>
+              <input
+                type="text"
+                name="apeCode"
+                id="apeCode"
+                placeholder="49.99Z"
+              />
+            </div>
+            <div class="box">
+              <label for="socialCapital">Capital social</label>
+              <input
+                type="number"
+                name="socialCapital"
+                id="socialCapital"
+                placeholder="4000"
+              />
+            </div>
+          </div>
+          <div class="form-box-container">
+            <div class="box">
+              <label for="stock">stock</label>
+              <input type="number" name="stock" id="stock" placeholder="20" />
+            </div>
+            <div class="box">
+              <label for="price">Prix</label>
+              <input type="number" name="price" id="price" placeholder="2000" />
+            </div>
+          </div>
+          <div class="btn-wrapper">
+            <button type="submit" class="btn btn-bg">
+              <i class="ri-add-circle-line"></i> <span>Ajouter un produit</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      const profile_card = document.querySelector(".profile_nav-card");
+      const profile_card_sub = document.querySelector(".profile_card-sub");
+
+      profile_card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profile_card_sub.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !profile_card.contains(e.target) &&
+          !profile_card_sub.contains(e.target)
+        ) {
+          profile_card_sub.classList.remove("active");
+        }
+      });
+
+      //   calling api to add new product
+      document
+        .getElementById("addProductForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const URL = "http://localhost:3000/";
+          const obj = {
+            name: document.getElementById("name").value,
+            type: document.getElementById("type").value,
+            apeCode: document.getElementById("apeCode").value,
+            socialCapital: document.getElementById("socialCapital").value,
+            stock: document.getElementById("stock").value,
+            price: document.getElementById("price").value,
+          };
+          console.log(obj);
+          try {
+            const response = await fetch(`${URL}admin/api/addProduct`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(obj),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              alert(data.message);
+              document.getElementById("addProductForm").reset();
+            } else {
+              alert(data.message);
+            }
+
+            // Store JWT token in localStorage
+
+            // Redirect to dashboard
+            // window.location.href = "/dashboard";
+          } catch (err) {
+            errorMessage.textContent = "An error occurred. Please try again.";
+          }
+        });
+    </script>
+  </body>
+</html>

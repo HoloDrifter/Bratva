@@ -36,33 +36,8 @@ form {
   background-color: var(--clr-white);
   border-radius: var(--border-radius);
 }
-form .box {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-}
-form .box label {
-  font-weight: 500;
-  font-size: 18px;
-}
-form .box input {
-  padding: 14px;
-  font-size: 16px;
-  border: 1px solid var(--border-clr);
-  border-radius: var(--border-radius);
-}
-form .box input:focus {
-  outline: 2px solid var(--clr-primary);
-  border-color: var(--clr-primary);
-}
-.togglePasswordSpan {
-  position: absolute;
-  right: 15px;
-  top: 70%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
+
+
 
 .form_bottom {
   padding: 35px 0 0 0;

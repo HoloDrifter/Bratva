@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div class="nav_left">
+            <a href="/admin/dashboard">
+              <img src="/img/logo.png" alt="Bratva logo" width="120" />
+            </a>
+            <ul>
+              <li>
+                <a href="/admin/dashboard"
+                  ><i class="ri-home-5-line"></i> Accueil</a
+                >
+              </li>
+              <li>
+                <a href="/admin/products"
+                  ><i class="ri-government-line"></i> Produits</a
+                >
+              </li>
+              <li>
+                <a href="/admin/users"
+                  ><i class="ri-shopping-cart-line"></i> View Order</a
+                >
+              </li>
+              <li>
+                <a href="/admin/addProduct">
+                  <i class="ri-customer-service-2-line"></i> Create Product
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav_right">
+            <ul>
+              <li>
+                <div class="profile_nav-card">
+                  <img
+                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    alt=""
+                    width="30"
+                  />
+                  <div class="profile-details">
+                    <p class="username"><%= user.username%></p>
+                  </div>
+
+                  <div class="profile_card-sub admin">
+                    <ul>
+                      <li>
+                        <a href="/logout"
+                          ><button>
+                            <i class="ri-logout-box-r-line"></i> Déconnexion
+                          </button></a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>All Users</h2>
+      </div>
+    </header>
+
+    <!-- View customers --- see orders,  -->
+    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
+    <!-- View Products -- delete product , update product -->
+    <!-- product -->
+    <!--  -->
+    <!-- Main dashboard -->
+    <main class="container dashboard-wrapper">
+      <div class="dashboard_top">
+        <div class="dashboard_top-left">
+          <div class="box-bg">
+            <h4 class="heading-4">
+              Total customers <br />
+              <%= customers.length %>
+            </h4>
+          </div>
+          <div class="box-bg">
+            <h4 class="heading-4"></h4>
+          </div>
+        </div>
+        <div class="box-bg admin-addProduct-box">
+          View users
+          <a href="/admin/users">
+            <button class="btn btn-black">View users</button>
+          </a>
+        </div>
+      </div>
+
+      <div class="users-dashboard_bottom container box-bg">
+        <div class="users_wrapper">
+          <div class="users_top">
+            <p>S.no</p>
+            <p>Usermane</p>
+            <p>telegram</p>
+            <p>Joined</p>
+            <p>Total orders</p>
+            <p>View Orders</p>
+            <!-- <p>view all orders</p> -->
+          </div>
+          <div class="user-boxes">
+            <% for(let [index, customer] of customers.entries()) {%>
+            <div class="user-box">
+              <p><%= index + 1 %></p>
+              <h4 class=""><%= cusotmer.username %></h4>
+              <p class="telegram"><%= cusotmer.telegram %></p>
+              <p>
+                <%= new
+                Date(customer.createdAt).toLocaleDateString('en-GB') %>
+              </p>
+              <p><%= cusotmer.totalOrders %></p>
+              <button class="btn btn-green">
+                <i class="ri-table-view"></i> See orders
+              </button>
+            </div>
+            <%}%>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const profile_card = document.querySelector(".profile_nav-card");
+      const profile_card_sub = document.querySelector(".profile_card-sub");
+
+      profile_card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profile_card_sub.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !profile_card.contains(e.target) &&
+          !profile_card_sub.contains(e.target)
+        ) {
+          profile_card_sub.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>

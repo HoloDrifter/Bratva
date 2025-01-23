@@ -140,17 +140,15 @@
 
             if (!data.success) {
               errorBox.style.display = "flex";
-              console.log(data,"{{2}}")
               errorMessage.textContent = data.error;
               // successMessage.textContent = "";
               return;
             }
-            
 
             // Store the token in localStorage
             localStorage.setItem("token", data.token);
-            
-            window.location.href = '/dashboard';
+
+            window.location.href = "/dashboard";
             // successMessage.textContent = data.message;
             // errorMessage.textContent = "";
             // error.style.display = "none";

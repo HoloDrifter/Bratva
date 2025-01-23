@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +17,7 @@
   
   body {
     background-color: #f6f8fb;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Inter", serif;
     font-size: 16px;
   }
   .container {
@@ -33,15 +35,22 @@
   .btn {
     padding: 14px 16px;
     border-radius: var(--border-radius);
-    font-weight: 600;
+    font-weight: 500;
+    font-family: 'inter',serif;
     font-size: 16px;
     cursor: pointer;
     width: 100%;
     background: transparent;
     outline: none;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    justify-content: center;
   }
   .btn-bg {
     background-color: var(--clr-primary);
+    border-color: var(--clr-primary);
     color: var(--clr-white);
   }
   .btn-bg:hover {
@@ -58,6 +67,23 @@
   .btn-black{
     background-color: var(--clr-dark-blue);
     color: var(--clr-white);
+  }
+  .btn-green{
+    color: var(--clr-white);
+    background-color: #74b816;
+    border-color: #74b816;
+
+  }
+  .btn-green:hover{
+    background-color: #90c645;
+    border-color: #90c645;
+  }
+  footer{
+    padding: 2rem 0;
+    color:#525c68 ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   #errorMessage {
     background: #d63939;
@@ -78,4 +104,39 @@
     /* font-size: 16px; */
     font-weight: 600;
     cursor: pointer;
+  }
+
+  /* form fields */
+  form .box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+  form .box label {
+    font-weight: 500;
+    font-size: 16px;
+  }
+  form .box input, form .box select {
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid var(--border-clr);
+    border-radius: var(--border-radius);
+  }
+  form .box input:focus,form .box select:focus {
+    outline: 2px solid var(--clr-primary);
+    border-color: var(--clr-primary);
+  }
+
+  .togglePasswordSpan {
+    position: absolute;
+    right: 15px;
+    top: 70%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .dashboard_bottom{
+    display: grid !important;
+    grid-template-columns: repeat(2,1fr) !important;
+    gap: 15px !important;
   }
