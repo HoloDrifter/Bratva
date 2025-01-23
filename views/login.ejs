@@ -101,7 +101,7 @@
           const username = document.getElementById("username").value;
           const password = document.getElementById("password").value;
           const errorMessage = document.querySelector("#errorMessage p");
-          const URL = "http://localhost:3000/api/auth/";
+          const URL = "/api/auth/";
 
           try {
             const response = await fetch(`${URL}login`, {
