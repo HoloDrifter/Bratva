@@ -85,19 +85,7 @@
     </main>
 
     <script>
-      document.querySelectorAll(".togglePassword").forEach((toggle) => {
-        toggle.addEventListener("click", function () {
-          const input = this.closest(".box").querySelector("input");
-
-          if (input) {
-            input.type = input.type === "password" ? "text" : "password";
-
-            this.classList.toggle("ri-eye-line");
-            this.classList.toggle("ri-eye-off-line");
-          }
-        });
-      });
-
+     
       const closeIcon = document.querySelector("#errorMessage i");
 
       closeIcon.addEventListener("click", function () {
@@ -160,5 +148,6 @@
           }
         });
     </script>
+      <script src="/js/base.js"></script>
   </body>
 </html>

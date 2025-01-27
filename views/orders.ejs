@@ -125,29 +125,34 @@
 
       <div class="users-dashboard_bottom container box-bg">
         <div class="users_wrapper">
-          <div class="users_top">
+          <div class="users_top orders_top">
             <p>S.no</p>
-            <p>name</p>
-            <p>type</p>
-            <p>price</p>
+            <p>Nom</p>
+            <p>Description d'activité</p>
+            <p>FORME</p>
+            <p>code naf</p>
+            <p>Capital social</p>
             <p>Purchased on</p>
-            <p>Status</p>
+            <p>Amount Paid</p>
+            <p>Download</p>
             <!-- <p>view all orders</p> -->
           </div>
-          <div class="user-boxes">
+          <div class="user-boxes ">
             <% for(let [index, order] of orders.entries()) {%>
-            <div class="user-box">
+            <div class="user-box order-box">
               <p><%= index + 1 %></p>
-              <h4 class=""><%= order %></h4>
-              <p class="telegram"><%= order %></p>
+              <h4 ><%= order.productId.name %></h4>
+              <p ><%= order.productId.description %></p>
+              <p ><%= order.productId.type %></p>
+              <p ><%= order.productId.apeCode %></p>
+              <p ><%= order.productId.socialCapital %></p>
               <p>
                 <%= new
-                Date(customer.createdAt).toLocaleDateString('en-GB') %>
+                Date(order.createdAt).toLocaleDateString('en-GB') %>
               </p>
-              <p><%= order %></p>
-              <button class="btn btn-green">
-                <i class="ri-table-view"></i> See orders
-              </button>
+              <p><%= order.totalAmount %></p>
+              
+              <a href="/thank-you/<%= order.productId._id %>"><button class="btn btn-bg">View Order</button></a>
             </div>
             <%}%>
           </div>
@@ -155,23 +160,6 @@
       </div>
     </main>
 
-    <script>
-      const profile_card = document.querySelector(".profile_nav-card");
-      const profile_card_sub = document.querySelector(".profile_card-sub");
-
-      profile_card.addEventListener("click", (e) => {
-        e.stopPropagation();
-        profile_card_sub.classList.toggle("active");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (
-          !profile_card.contains(e.target) &&
-          !profile_card_sub.contains(e.target)
-        ) {
-          profile_card_sub.classList.remove("active");
-        }
-      });
-    </script>
+    <script src="/js/base.js"></script>
   </body>
 </html>

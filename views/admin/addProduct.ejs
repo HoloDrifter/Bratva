@@ -91,7 +91,7 @@
           Veuillez entrer les détails ci-dessous pour ajouter un nouveau produit
         </h4>
 
-        <form id="addProductForm">
+        <form id="addProductForm" enctype="multipart/form-data">
           <div class="form-box-container">
             <div class="box">
               <label for="name">Nom</label>
@@ -105,6 +105,15 @@
                 <option value="EI">EI</option>
               </select>
             </div>
+          </div>
+          <div class="box">
+            <label for="description">Description d'activité</label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              placeholder="Description d'activité"
+            />
           </div>
           <div class="form-box-container">
             <div class="box">
@@ -128,13 +137,22 @@
           </div>
           <div class="form-box-container">
             <div class="box">
-              <label for="stock">stock</label>
+              <label for="stock">Stock</label>
               <input type="number" name="stock" id="stock" placeholder="20" />
             </div>
             <div class="box">
               <label for="price">Prix</label>
               <input type="number" name="price" id="price" placeholder="2000" />
             </div>
+          </div>
+          <div class="box">
+            <label for="productFile">Product File</label>
+            <input
+              type="file"
+              name="productFile"
+              id="productFile"
+              placeholder="Upload Product File"
+            />
           </div>
           <div class="btn-wrapper">
             <button type="submit" class="btn btn-bg">
@@ -164,27 +182,40 @@
       });
 
       //   calling api to add new product
+      // Handling form submission
       document
         .getElementById("addProductForm")
         .addEventListener("submit", async (e) => {
           e.preventDefault();
-          const URL = "/";
-          const obj = {
-            name: document.getElementById("name").value,
-            type: document.getElementById("type").value,
-            apeCode: document.getElementById("apeCode").value,
-            socialCapital: document.getElementById("socialCapital").value,
-            stock: document.getElementById("stock").value,
-            price: document.getElementById("price").value,
-          };
-          console.log(obj);
+
+          const URL = "/"; // Base URL for your API
+
+          // Create a FormData object
+          const formData = new FormData();
+          formData.append("name", document.getElementById("name").value);
+          formData.append(
+            "description",
+            document.getElementById("description").value
+          );
+          formData.append("type", document.getElementById("type").value);
+          formData.append("apeCode", document.getElementById("apeCode").value);
+          formData.append(
+            "socialCapital",
+            document.getElementById("socialCapital").value
+          );
+          formData.append("stock", document.getElementById("stock").value);
+          formData.append("price", document.getElementById("price").value);
+
+          // Append the file
+          const fileInput = document.getElementById("productFile");
+          if (fileInput.files.length > 0) {
+            formData.append("productFile", fileInput.files[0]);
+          }
+
           try {
             const response = await fetch(`${URL}admin/api/addProduct`, {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(obj),
+              body: formData, // Send FormData
             });
 
             const data = await response.json();
@@ -195,13 +226,9 @@
             } else {
               alert(data.message);
             }
-
-            // Store JWT token in localStorage
-
-            // Redirect to dashboard
-            // window.location.href = "/dashboard";
           } catch (err) {
-            errorMessage.textContent = "An error occurred. Please try again.";
+            console.error("Error occurred:", err);
+            alert("An error occurred. Please try again.");
           }
         });
     </script>

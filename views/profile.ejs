@@ -173,22 +173,7 @@
     </footer>
 
     <script>
-      const profile_card = document.querySelector(".profile_nav-card");
-      const profile_card_sub = document.querySelector(".profile_card-sub");
-
-      profile_card.addEventListener("click", (e) => {
-        e.stopPropagation();
-        profile_card_sub.classList.toggle("active");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (
-          !profile_card.contains(e.target) &&
-          !profile_card_sub.contains(e.target)
-        ) {
-          profile_card_sub.classList.remove("active");
-        }
-      });
+     
 
     //   Calling calculateDeposit's API
     const calculateDepositFunc=async()=>{
@@ -206,5 +191,6 @@
     }
     calculateDepositFunc()
     </script>
+      <script src="/js/base.js"></script>
   </body>
 </html>

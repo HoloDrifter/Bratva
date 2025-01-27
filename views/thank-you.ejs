@@ -17,13 +17,11 @@
         <div class="container">
           <div class="nav_left">
             <a href="/dashboard">
-              <img src="/img/logo.png" alt="Bratva logo" width="120" />
+              <img src="img/logo.png" alt="Bratva logo" width="120" />
             </a>
             <ul>
               <li>
-                <a href="/dashboard"
-                  ><i class="ri-home-5-line"></i> Accueil</a
-                >
+                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
               </li>
               <li>
                 <a href="/products"
@@ -54,7 +52,7 @@
               <li>
                 <div class="profile_nav-card">
                   <img
-                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
                     alt=""
                     width="30"
                   />
@@ -92,94 +90,71 @@
       </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
-        <h2>Modifier mon mot de passe</h2>
+        <h2>All Products</h2>
       </div>
     </header>
 
-    <!-- Main dashboard -->
-    <main class="container profile_section dashboard-wrapper">
-      <div class="profile_left box-bg">
-        <a href="/profile">
-          <div class="profile_left-box">
-            <p><i class="ri-user-line"></i> <span>Mon profile</span></p>
-          </div>
-        </a>
+   
+    <main class="container dashboard-wrapper">
+      <div id="errorMessageFloat" class="width-100 ">
+        <p class="error"></p>
+        <span><i class="ri-close-line"></i></span>
+      </div>
+     
+      <div class="thank-you-container box-bg">
 
-        <a href="/profile/pass">
-          <div class="profile_left-box active">
-            <p>
-              <i class="ri-lock-2-line"></i>
-              <span>Modifier mon mot de passe</span>
-            </p>
+      <i class="ri-checkbox-circle-line"></i>
+      <h1>Order Successful</h1>
+      <p>Thank You for your purchase!</p>
+
+      <section class="box-bg thank-you-order_details">
+        <div class="show-product-model-conten">
+          <!-- order summary -->
+          <div class="orderSummary-head">
+            <h3 class="heading-4">
+              <i class="ri-shopping-cart-2-line"></i>
+              Order Details
+            </h3>
           </div>
-        </a>
-      </div>
-      <div class="profile_right box-bg">
-        <h4>Modification de mon mot de passe</h4>
-        <form id="changePasswordForm">
-          <div class="box">
-            <label for="currentPassword">Mot de passe actuel</label>
-            <input
-              type="password"
-              name="currentPassword"
-              id="currentPassword"
-              placeholder="********"
-              class="pass"
-            />
-            <span class="togglePasswordSpan"
-            ><i class="ri-eye-line togglePassword"></i
-          ></span>
-          </div>
-          <div class="form-box-container">
-            <div class="box">
-              <label for="newPassword">Nouveau mot de passe</label>
-              <input
-                type="password"
-                name="newPassword"
-                id="newPassword"
-                placeholder="********"
-                class="pass"
-              />
-              <span class="togglePasswordSpan"
-                ><i class="ri-eye-line togglePassword"></i
-              ></span>
+  
+          <div class="orderSummary-body">
+            <div class="orderSummary-box">
+              <h4>Nom</h4>
+              <p class="productName"><%= product.name%></p>
             </div>
-            <div class="box">
-              <label for="confirmPassword"
-                >Confirmer le nouveau mot de passe</label
-              >
-              <input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="********"
-                class="pass"
-              />
-              <span class="togglePasswordSpan"
-              ><i class="ri-eye-line togglePassword"></i
-            ></span>
+            <div class="orderSummary-box">
+              <h4>Description d'activité</h4>
+              <p class="productDescription"><%= product.description%></p>
+            </div>
+            <div class="orderSummary-box">
+              <h4>FORME</h4>
+              <p class="productType"><%= product.type%></p>
+            </div>
+            <div class="orderSummary-box">
+              <h4>Capital social</h4>
+              <p class="productCapitalSocial"><%= product.socialCapital%></p>
+            </div>
+            <div class="orderSummary-box">
+              <h4>Prix</h4>
+              <p class="productPrice"><%= product.price%></p>
             </div>
           </div>
-          <div class="btn-wrapper">
-            <button type="submit" class="btn btn-bg">
-              <i class="ri-edit-line"></i>Modifier
-            </button>
-          </div>
-        </form>
+  
+        </div>
+        <!-- Your Balance -->
+        <!-- Total  -->
+        <!-- Buy now -->
+      </section>
+      <div class="download_container">
+        <p>Click the button below to download your file. <i class="ri-arrow-down-line"></i></p>
+       <a href="/download/<%=product._id%>"><button class="btn btn-bg">Download</button></a>
       </div>
+    </div>
+
     </main>
 
-    <footer>
-      <div class="container">
-        <p>Copyright © 2025 Bratva Family</p>
-      </div>
-    </footer>
+  
 
-    <script>
-       
-
-
-
-    </script>
+    <script src="/js/base.js"></script>
   </body>
 </html>

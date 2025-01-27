@@ -111,6 +111,7 @@
           <div class="products_top">
             <p>S. No:</p>
             <p>Nom</p>
+            <p>Description d'activité</p>
             <p>FORME</p>
             <p>Date de crea</p>
             <p>code naf</p>
@@ -121,8 +122,9 @@
           <div class="product_boxes">
             <% for(let [index, product] of products.entries()) {%>
             <div class="product-box">
-              <p><%= index + 1 %></p>
+              <p><%= (page - 1) * limit + (index + 1) %></p>
               <h4><%= product.name %></h4>
+              <p><%= product.description %></p>
               <p><%= product.type %></p>
               <p>
                 <%= new Date(product.createdAt).toLocaleDateString('en-GB') %>
@@ -136,6 +138,7 @@
                   class="btn btn-outline edit-button"
                   data-id="<%= product._id %>"
                   data-name="<%= product.name %>"
+                  data-description="<%= product.description %>"
                   data-type="<%= product.type %>"
                   data-apeCode="<%= product.apeCode %>"
                   data-socialCapital="<%= product.socialCapital %>"
@@ -156,6 +159,21 @@
             </div>
             <%}%>
           </div>
+          <!-- Pagination Controls -->
+          <div class="pagination-controls">
+            <% if (page > 1) { %>
+              <a href="/admin/products?page=<%= page - 1 %>&limit=<%= limit %>" class="btn-prev">Previous</a>
+            <% } %>
+        
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <a href="/admin/products?page=<%= i %>&limit=<%= limit %>" class="btn-page <%= i === page ? 'active' : '' %>">
+                <%= i %>
+              </a>
+            <% } %>
+        
+            <% if (page < totalPages) { %>
+              <a href="/admin/products?page=<%= page + 1 %>&limit=<%= limit %>" class="btn-next">Next</a>
+            <% } %>
         </div>
       </div>
 
@@ -201,6 +219,7 @@
                       placeholder="eg.Finom"
                     />
                   </div>
+                  
                   <div class="box">
                     <label for="editType">Forme:</label>
                     <select id="editType" name="type">
@@ -208,6 +227,15 @@
                       <option value="EI">EI</option>
                     </select>
                   </div>
+                </div>
+                <div class="box">
+                  <label for="editDescription">Description d'activité</label>
+                  <input
+                    type="text"
+                    name="description"
+                    id="editDescription"
+                    placeholder="Description d'activité"
+                  />
                 </div>
                 <div class="form-box-container">
                   <div class="box">
@@ -348,6 +376,7 @@
 
         // Form fields
         const editName = document.getElementById("editName");
+        const editDescription = document.getElementById("editDescription");
         const editType = document.getElementById("editType");
         const editApeCode = document.getElementById("editApeCode");
         const editSocialCapital = document.getElementById("editSocialCapital");
@@ -361,6 +390,7 @@
           button.addEventListener("click", () => {
             selectedProductId2 = button.getAttribute("data-id"); // Get product ID
             editName.value = button.getAttribute("data-name"); // Populate form fields
+            editDescription.value = button.getAttribute("data-description"); // Populate form fields
             editType.value = button.getAttribute("data-type");
             editApeCode.value = button.getAttribute("data-apeCode");
             editSocialCapital.value = button.getAttribute("data-socialCapital");
@@ -387,6 +417,7 @@
             // Prepare updated product data
             const updatedProduct = {
               name: editName.value,
+              description: editDescription.value,
               type: editType.value,
               apeCode: editApeCode.value,
               socialCapital: editSocialCapital.value,

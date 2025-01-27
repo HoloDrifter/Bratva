@@ -121,13 +121,13 @@
             <% for(let [index, customer] of customers.entries()) {%>
             <div class="user-box">
               <p><%= index + 1 %></p>
-              <h4 class=""><%= cusotmer.username %></h4>
-              <p class="telegram"><%= cusotmer.telegram %></p>
+              <h4 class=""><%= customer.username %></h4>
+              <p class="telegram"><%= customer.telegram %></p>
               <p>
                 <%= new
                 Date(customer.createdAt).toLocaleDateString('en-GB') %>
               </p>
-              <p><%= cusotmer.totalOrders %></p>
+              <p><%= totalOrders %></p>
               <button class="btn btn-green">
                 <i class="ri-table-view"></i> See orders
               </button>

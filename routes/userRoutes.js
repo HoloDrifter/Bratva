@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const authenticateToken = require('../middleware/authMiddleware'); 
-const User = require('../models/user')
+const User = require('../models/user');
+const { getUserBalance } = require("../controllers/userController");
 
 
 
@@ -44,5 +45,9 @@ router.put("/change-password", authenticateToken, async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error." });
     }
 });
+
+
+
+// router.get('/balance',authenticateToken,getUserBalance)
 
 module.exports = router;

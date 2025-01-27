@@ -55,6 +55,17 @@ const logout = (req, res) => {
   }
 };
 
+// const getUserBalance=(req,res)=>{
+//   const id=req.user
+//   console.log(id)
 
+//   try{
+
+
+//   }catch(error)
+//   {
+//     res.status(500).json({status:false,message:`Failed to get User Balance ${error}`})
+//   }
+// }
 
 module.exports={getAllUsers,getAllCustomers,logout}

@@ -6,8 +6,9 @@ const {
 const {
   getAllUsers,
   getAllCustomers,
+  
 } = require("../controllers/userController");
-
+const {getOrderCount}=require('../controllers/orderController')
 const Announcement = require("../models/announcement");
 
 //   Render Admin Dashboard
@@ -25,12 +26,24 @@ const renderAdminDashboard = async (req, res) => {
 //   Render Product page
 
 const renderProductPage = async (req, res) => {
+  const { page = 1, limit = 8 } = req.query;
   try {
     // fetch products
-    const products = await getAllProducts(req, res);
-    res.render("admin/showProduct", { user: req.user, products });
+    const { products, totalPages } = await getAllProducts(page, limit);
+    if (!products) {
+      return res.status(404).send("No products found");
+    }
+    res.render("admin/showProduct", {
+      user: req.user,
+      products,
+      page: parseInt(page),
+      totalPages,
+      limit: parseInt(limit),
+    });
   } catch (error) {
-    console.log(error);
+    console.error("Error in /products route:", error.message);
+
+    res.status(500).send("Server error");
   }
 };
 
@@ -58,15 +71,17 @@ const renderCustomerPage = async (req, res) => {
   try {
     // fetch customers
     const customers = await getAllCustomers(req, res);
-    res.render("admin/showCustomers", { user: req.user, customers });
+    const totalOrders=await getOrderCount(req,res);
+    console.log(customers)
+    res.render("admin/showCustomers", { user: req.user, customers,totalOrders });
   } catch (error) {
     console.log(error);
   }
 };
 
 // Fetch all announcements
-const fetchAllAnnouncement=async(req,res)=>{
-try {
+const fetchAllAnnouncement = async (req, res) => {
+  try {
     const announcements = await Announcement.find();
 
     if (!announcements) {
@@ -80,11 +95,11 @@ try {
       message: "Server error. Could not fetch announcement.",
     });
   }
-}
+};
 //   Render Add Announcement Page
 const renderAddAnnouncementPage = async (req, res) => {
-  const announcements=await fetchAllAnnouncement(req,res)
-  res.render("admin/announcement", { user: req.user ,announcements});
+  const announcements = await fetchAllAnnouncement(req, res);
+  res.render("admin/announcement", { user: req.user, announcements });
 };
 
 //   Add Announcement
@@ -126,5 +141,5 @@ module.exports = {
   renderCustomerPage,
   renderAddAnnouncementPage,
   addAnnouncement,
-  fetchAllAnnouncement
+  fetchAllAnnouncement,
 };

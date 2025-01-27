@@ -78,6 +78,13 @@
     background-color: #90c645;
     border-color: #90c645;
   }
+  .no-btn{
+    cursor: default;
+  }
+  .no-btn:hover{
+    background-color: #74b816;
+    border-color: #74b816 ;
+  }
   footer{
     padding: 2rem 0;
     color:#525c68 ;
@@ -85,7 +92,7 @@
     align-items: center;
     justify-content: space-between;
   }
-  #errorMessage {
+  #errorMessage, #errorMessageFloat {
     background: #d63939;
     padding: 14px 16px;
     color: #fff;
@@ -99,13 +106,45 @@
     align-items: center;
     justify-content: space-between;
     display: none;
+    z-index: 10000000;
   }
-  #errorMessage i {
+  #errorMessage i,#errorMessageFloat i {
     /* font-size: 16px; */
     font-weight: 600;
     cursor: pointer;
   }
-
+#errorMessageFloat{
+  display: flex;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: none; /* Hidden by default */
+  /* opacity: 0; */
+  visibility: hidden;
+}
+.width-100{
+  /* width: 100% !important; */
+  max-width: 320px !important ;
+}
+#errorMessageFloat.errorAnimation{
+  display: flex !important; 
+  visibility: visible !important; 
+  animation: errorAnimate .7s ease ;
+}
+@keyframes errorAnimate {
+  0% {
+    transform: translateY(20px); /* Start a bit below */
+    opacity: 0; /* Start hidden */
+  }
+  50% {
+    transform: translateY(0); /* Move to the normal position */
+    opacity: 1 !important; /* Fade in */
+  }
+  100% {
+     /* Slight upward movement */
+    opacity: 0 !important; /* Fade out */
+  }
+}
   /* form fields */
   form .box {
     display: flex;
@@ -140,3 +179,29 @@
     grid-template-columns: repeat(2,1fr) !important;
     gap: 15px !important;
   }
+
+  /* Pagination */
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-controls a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .pagination-controls .active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .pagination-controls .btn-prev,
+  .pagination-controls .btn-next {
+    font-weight: bold;
+  }
+  
