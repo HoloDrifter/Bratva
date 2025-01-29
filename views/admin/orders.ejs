@@ -31,13 +31,13 @@
                 >
               </li>
               <li>
-                <a href="/admin/users"
-                  ><i class="ri-shopping-cart-line"></i> View Order</a
+                <a href="/admin/customers"
+                  ><i class="ri-shopping-cart-line"></i> Voir les commandes</a
                 >
               </li>
               <li>
                 <a href="/admin/addProduct">
-                  <i class="ri-customer-service-2-line"></i> Create Product
+                  <i class="ri-add-circle-line"></i> Créer un produit
                 </a>
               </li>
             </ul>
@@ -88,50 +88,62 @@
     <main class="container dashboard-wrapper">
       <div class="dashboard_top">
         <div class="dashboard_top-left">
-          <div class="box-bg">
-            <h4 class="heading-4">
-              Total Orders <br />
-              <%= orders.length %>
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              Total des commandes <br />
+              <span class="box-count"> <%= ordersById.length%> </span>
             </h4>
           </div>
-          <div class="box-bg">
-            <h4 class="heading-4"></h4>
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              username:  <br />
+              <span class="box-count" style="text-transform: none;"> <%= ordersById[0].userId. username  %></span>
+            </h4>
           </div>
         </div>
+
         <div class="box-bg admin-addProduct-box">
-          View customers
+          <h4 class="heading-4"> Voir tous les clients</h4>
           <a href="/admin/customers">
-            <button class="btn btn-black">View customers</button>
+            <button class="btn btn-black">
+              <i class="ri-arrow-left-line"></i> Retour
+            </button>
           </a>
+          <div class="bg-icon">
+            <i class="ri-user-shared-line"></i>
+          </div>
         </div>
       </div>
 
       <div class="users-dashboard_bottom container box-bg">
         <div class="users_wrapper">
-          <div class="users_top">
+          <div class="users_top orders_top admin-orders_top">
             <p>S.no</p>
-            <p>name</p>
-            <p>type</p>
-            <p>price</p>
+            <p>Nom</p>
+            <p>Description d'activité</p>
+            <p>FORME</p>
+            <p>code naf</p>
+            <p>Capital social</p>
             <p>Purchased on</p>
-            <p>Status</p>
+            <p>Amount Paid</p>
             <!-- <p>view all orders</p> -->
           </div>
           <div class="user-boxes">
-            <% for(let [index, order] of orders.entries()) {%>
-            <div class="user-box">
-              <p><%= index + 1 %></p>
-              <h4 class=""><%= order %></h4>
-              <p class="telegram"><%= order %></p>
-              <p>
-                <%= new
-                Date(customer.createdAt).toLocaleDateString('en-GB') %>
-              </p>
-              <p><%= order %></p>
-              <button class="btn btn-green">
-                <i class="ri-table-view"></i> See orders
-              </button>
-            </div>
+            <% for(let [index, order] of ordersById.entries()) {%>
+              <div class="user-box order-box admin-orders_box">
+                <p><%= index + 1 %></p>
+                <h4 ><%= order.productId.name %></h4>
+                <p ><%= order.productId.description %></p>
+                <p ><%= order.productId.type %></p>
+                <p ><%= order.productId.apeCode %></p>
+                <p ><%= order.productId.socialCapital %></p>
+                <p>
+                  <%= new
+                  Date(order.createdAt).toLocaleDateString('en-GB') %>
+                </p>
+                <p><%= order.totalAmount %></p>
+                
+              </div>
             <%}%>
           </div>
         </div>

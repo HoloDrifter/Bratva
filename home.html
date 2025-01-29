@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Autpshop</title>
+    <!-- css -->
+    <link rel="stylesheet" href="home.css" />
+    <!-- remixicon -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div class="logo">
+            <img src="./public/img/logo.png" alt="" />
+          </div>
+          <div class="nav_links">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Log in</a></li>
+              <li><a href="#">Register</a></li>
+            </ul>
+            <div class="nav-socials">
+              <a href="#"><i class="ri-telegram-fill"></i></a>
+              <a href="#"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="100"
+                  height="100"
+                  viewBox="0 0 50 50"
+                >
+                  <path
+                    d="M 25 2 L 24.78125 2.0019531 L 24.796875 4.0019531 L 25 4 C 26.529 4 28.054203 4.1651875 29.533203 4.4921875 L 29.966797 2.5390625 C 28.345797 2.1810625 26.674 2 25 2 z M 22.695312 2.1132812 C 20.955313 2.2872813 19.241656 2.6606562 17.597656 3.2226562 L 18.242188 5.1152344 C 19.741187 4.6022344 21.307531 4.2625156 22.894531 4.1035156 L 22.695312 2.1132812 z M 31.984375 3.0859375 L 31.376953 4.9902344 C 32.893953 5.4762344 34.349078 6.1370312 35.705078 6.9570312 L 36.740234 5.2460938 C 35.250234 4.3450938 33.649375 3.6189375 31.984375 3.0859375 z M 15.648438 3.9921875 C 14.051438 4.7111875 12.545875 5.6147344 11.171875 6.6777344 L 12.394531 8.2597656 C 13.645531 7.2917656 15.015703 6.4694531 16.470703 5.8144531 L 15.648438 3.9921875 z M 38.476562 6.4121094 L 37.285156 8.0195312 C 38.566156 8.9705312 39.727422 10.068203 40.732422 11.283203 L 42.273438 10.009766 C 41.165437 8.6707656 39.887563 7.4591094 38.476562 6.4121094 z M 25 7 C 15.626 7 8 14.178 8 23 C 8 28.129 10.606 32.9265 15 35.9375 L 15 41 C 15 41.357 15.19 41.686234 15.5 41.865234 C 15.654 41.954234 15.827 42 16 42 C 16.172 42 16.344047 41.955234 16.498047 41.865234 L 21.929688 38.738281 C 22.939688 38.912281 23.972 39 25 39 C 34.374 39 42 31.822 42 23 C 42 14.178 34.374 7 25 7 z M 9.578125 8.0371094 C 8.295125 9.2421094 7.1675156 10.594641 6.2285156 12.056641 L 7.9121094 13.136719 C 8.7631094 11.811719 9.7842656 10.586141 10.947266 9.4941406 L 9.578125 8.0371094 z M 43.529297 11.689453 L 41.869141 12.804688 C 42.757141 14.125688 43.469281 15.54825 43.988281 17.03125 L 45.878906 16.371094 C 45.302906 14.727094 44.511297 13.152453 43.529297 11.689453 z M 5.1855469 13.878906 C 4.3875469 15.450906 3.8005 17.113266 3.4375 18.822266 L 5.3945312 19.238281 C 5.7205312 17.698281 6.24975 16.200203 6.96875 14.783203 L 5.1855469 13.878906 z M 46.466797 18.392578 L 44.519531 18.849609 C 44.838531 20.202609 45 21.6 45 23 C 45 23.184 44.996234 23.366828 44.990234 23.548828 L 46.990234 23.609375 C 46.996234 23.407375 47 23.204 47 23 C 47 21.445 46.819797 19.895578 46.466797 18.392578 z M 3.109375 20.900391 C 3.037375 21.595391 3 22.301 3 23 C 3 24.052 3.0820938 25.109578 3.2460938 26.142578 L 5.2226562 25.830078 C 5.0756563 24.899078 5 23.948 5 23 C 5 22.37 5.0336563 21.733422 5.0976562 21.107422 L 3.109375 20.900391 z M 44.835938 25.4375 C 44.624937 27.0005 44.207703 28.533141 43.595703 29.994141 L 45.441406 30.767578 C 46.120406 29.144578 46.585359 27.441078 46.818359 25.705078 L 44.835938 25.4375 z M 5.6152344 27.683594 L 3.6835938 28.199219 C 4.1335938 29.887219 4.8047344 31.519828 5.6777344 33.048828 L 7.4140625 32.056641 C 6.6270625 30.676641 6.0222344 29.205594 5.6152344 27.683594 z M 42.775391 31.703125 C 42.023391 33.083125 41.092859 34.377828 40.005859 35.548828 L 41.472656 36.908203 C 42.671656 35.615203 43.69925 34.185156 44.53125 32.660156 L 42.775391 31.703125 z M 8.4375 33.65625 L 6.8105469 34.818359 C 7.7425469 36.125359 8.830875 37.330297 10.046875 38.404297 L 10.457031 42.427734 L 12.449219 42.224609 L 11.996094 37.806641 C 11.969094 37.549641 11.844437 37.313484 11.648438 37.146484 C 10.433437 36.113484 9.3535 34.93925 8.4375 33.65625 z M 38.646484 36.876953 C 37.466484 37.924953 36.153094 38.837891 34.746094 39.587891 L 35.6875 41.351562 C 37.2325 40.527563 38.675609 39.524094 39.974609 38.371094 L 38.646484 36.876953 z M 33.023438 40.402344 C 31.562437 41.012344 30.023172 41.454797 28.451172 41.716797 L 28.779297 43.689453 C 30.504297 43.402453 32.191922 42.917047 33.794922 42.248047 L 33.023438 40.402344 z M 22.847656 41.890625 C 22.680656 41.874625 22.499844 41.900703 22.339844 41.970703 L 21.326172 42.419922 L 22.138672 44.248047 L 22.910156 43.904297 C 24.179156 44.019297 25.464078 44.0285 26.705078 43.9375 L 26.558594 41.943359 C 25.341594 42.031359 24.083656 42.015625 22.847656 41.890625 z M 19.5 43.232422 L 14.927734 45.259766 L 15.738281 47.087891 L 20.310547 45.060547 L 19.5 43.232422 z M 12.652344 44.212891 L 10.662109 44.417969 L 11.005859 47.753906 C 11.038859 48.072906 11.222047 48.354625 11.498047 48.515625 C 11.653047 48.605625 11.826 48.650391 12 48.650391 C 12.138 48.650391 12.275297 48.623453 12.404297 48.564453 L 13.910156 47.896484 L 13.099609 46.068359 L 12.853516 46.177734 L 12.652344 44.212891 z"
+                  ></path></svg
+              ></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="hero">
+        <div class="container">
+          <div class="left">
+            <h1>
+              Accès instantané à des <span>comptes bancaires</span> et à des
+              <span>sociétés vérifiés</span>
+            </h1>
+            <p>
+              Achetez facilement des comptes bancaires et des entreprises grâce
+              à notre plateforme 100% automatisée. Un processus rapide et sans
+              complications pour répondre à vos besoins instantanément.
+            </p>
+            <div class="hero-btns">
+              <a href="/login"
+                ><button class="btn btn-bg">
+                  <i class="ri-login-box-line"></i> <span>Me connecter</span>
+                </button></a
+              >
+              <a href="/register"
+                ><button class="btn btn-outline">
+                  <i class="ri-user-add-line"></i> <span>Créer un compte</span>
+                </button></a
+              >
+            </div>
+          </div>
+          <div class="right">
+            <img src="./public/img/bg-img.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <!-- Highlights -->
+      <section class="highlights_section">
+        <div class="container">
+          <div class="highlights_boxes">
+            <div class="highlight-box">
+              <div class="box-top">
+                <i class="ri-user-shared-2-line"></i>
+              </div>
+              <div class="box-bottom">
+                <h3>Mises à jour régulières</h3>
+
+                <p>
+                  Nous ajoutons fréquemment de nouveaux comptes bancaires et
+                  entreprises disponibles à l’achat, garantissant un large choix
+                  et des opportunités toujours à jour.
+                </p>
+              </div>
+            </div>
+            <div class="highlight-box">
+              <div class="box-top">
+                <i class="ri-user-shared-2-line"></i>
+              </div>
+              <div class="box-bottom">
+                <h3>Processus rapide et fluide</h3>
+                <p>
+                  Notre système automatisé vous permet d'acheter des comptes
+                  bancaires et entreprises en quelques clics, sans attente ni
+                  complications.
+                </p>
+              </div>
+            </div>
+            <div class="highlight-box">
+              <div class="box-top">
+                <i class="ri-user-shared-2-line"></i>
+              </div>
+              <div class="box-bottom">
+                <h3>Garantie en cas de problème</h3>
+
+                <p>
+                  Si les informations fournies sont incorrectes ou invalides,
+                  nous offrons un remplacement ou un remboursement selon nos
+                  conditions. Votre satisfaction est notre priorité.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End Highlights -->
+    </header>
+
+    <!-- features -->
+    <section class="features_section">
+      <div class="container">
+        <div class="section_head">
+          <h2>Découvrez la meilleure <span>boutique <br> automatisée</span></h2>
+          <p>
+            Ne perdez plus de temps ! Rejoignez la meilleure marketplace pour acheter des comptes bancaires et entreprises en toute simplicité grâce à un processus rapide et automatisé. 
+          </p>
+        </div>
+
+        <div class="features_boxes">
+          <div class="feature-row">
+            <a href="#"
+              ><div class="feature-box box-small">
+                <i class="ri-group-2-line cus-icon"></i>
+                <h4>🔥 Offres exclusives</h4>
+                <p>
+                  Découvrez nos offres uniques sur des comptes bancaires et
+                  entreprises disponibles à l’achat, avec des opportunités rares
+                  et vérifiées.
+                </p>
+              </div></a
+            >
+            <a href="#">
+              <div class="feature-box box-big no-padding">
+                <div class="f-box-img f-box-img-1">
+                  <img src="./public/img/conversation.png" alt="" />
+                </div>
+                <div class="f-box-content">
+                  <h4>🛠️ Support 24/7</h4>
+                  <p>
+                    Nous vous offrons une assistance 24/7 en cas de problème
+                    avec nos produits ou lors de l'utilisation de nos services.
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="feature-row">
+            <a href="#">
+              <div class="feature-box box-big bg-gradient">
+                <p class="text-gradient">PLUS DE</p>
+                <h2 class="text-gradient">100+</h2>
+                <h4>Comptes bancaires et entreprises</h4>
+                <p>
+                  Accédez à des centaines de comptes bancaires et d’entreprises
+                  disponibles sur notre boutique, avec un large choix selon vos
+                  besoins.
+                </p>
+                <button class="btn btn-bg">
+                  Accédez à notre boutique <i class="ri-arrow-right-s-line"></i>
+                </button>
+              </div>
+            </a>
+            <a href="#"
+              ><div class="feature-box box-small">
+                <i class="ri-group-2-line cus-icon"></i>
+                <h4>🔒 Site sécurisé</h4>
+                <p>
+                  Nous utilisons la technologie FastFlux DNS et des serveurs
+                  bulletproof, garantissant une protection maximale et
+                  l’anonymat de nos clients.
+                </p>
+              </div></a
+            >
+          </div>
+          <div class="feature-row">
+            <a href="#"
+              ><div class="feature-box box-small">
+                <i class="ri-group-2-line cus-icon"></i>
+                <h4>💻 Panel intuitif</h4>
+                <p>
+                  Notre panel a été conçu pour rendre votre expérience aussi
+                  fluide et simple que possible, tout en garantissant une
+                  sécurité optimale.
+                </p>
+              </div></a
+            >
+            <a href="#">
+              <div class="feature-box box-big box-big-top">
+                <i class="ri-group-2-line cus-icon"></i>
+
+                <h4>🤖 Processus automatisé</h4>
+                <p>
+                  Notre boutique fonctionne de manière totalement automatisée,
+                  du dépôt de fonds à l'achat d'un compte ou d'une entreprise,
+                  pour une expérience rapide et efficace.
+                </p>
+                <div class="f-box-img f-box-img-2">
+                  <img src="./public/img/f-box-bg-2.webp" alt="">
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End of features -->
+
+    <!-- Reviews -->
+    <section class="reviews">
+      <div class="container">
+        <div class="section-line"></div>
+        <div class="section-gradient"></div>
+        <div class="section_head">
+          <h2>Avis de <span>nos clients</span></h2>
+          <p>
+            Réflexions de ceux qui ont fait l'expérience de Cashgen en action.
+          </p>
+        </div>
+
+        <div class="reviews_container">
+          <div class="reviews_row">
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Nath***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Service incroyable ! J’ai obtenu mon entreprise
+                  instantanément, aucun souci. 🚀
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Silv**</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Achat simple et rapide. J’ai reçu mon entreprise clé en main
+                  sans problème. Service sérieux et professionnel, merci
+                  beaucoup !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Randy***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Première commande passée pour tester, et honnêtement, tout
+                  était parfait. Compte reçu immédiatement !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Sofi**</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Je ne m’attendais pas à un processus aussi fluide. Super
+                  professionnel et rapide !
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="reviews_row">
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Zayn***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Super service ! J’ai commandé un compte bancaire, tout reçu
+                  instantanément et fonctionnel. Processus rapide et efficace,
+                  je recommande !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Rick**</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Plateforme fiable et rapide, j’ai reçu mon entreprise complète
+                  en quelques minutes. Super support aussi, merci pour votre
+                  aide !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Lance**</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Acheté une entreprise, reçu tous les documents sans aucun
+                  problème. Super sérieux !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Monte***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  MERCI ! Tout fonctionne comme prévu. Je reviendrai bientôt
+                  pour d’autres achats.
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Vince***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Rapide, efficace et pro. Mon entreprise a été mise en place en
+                  un rien de temps !
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="reviews_row">
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Zion***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  J’ai dépensé pas mal ici et jamais eu de souci. Le meilleur
+                  marketplace pour les comptes !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Oscar***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Très bonne expérience ! Mon compte bancaire a été livré
+                  immédiatement, tout est conforme à la description. Je
+                  repasserai commande.
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Eliot***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Processus hyper fluide et automatisé ! Exactement ce dont
+                  j’avais besoin, merci.
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Aaron**</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Petit souci avec un compte, mais le support l’a réglé
+                  immédiatement. Super service !
+                </p>
+              </div>
+            </div>
+            <div class="review">
+              <div class="review-top">
+                <div class="review-img"></div>
+                <h5>Vince***</h5>
+              </div>
+              <div class="review-bottom">
+                <p>
+                  Rapide, efficace et pro. Mon entreprise a été mise en place en
+                  un rien de temps !
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End of Reviews -->
+
+    <!-- Faqs -->
+    <div class="faq-container">
+      <div class="container">
+        <div class="section_head">
+          <h2>Questions <span>Fréquentes</span></h2>
+          <p>
+            Trouvez ici les réponses aux questions les plus courantes sur nos
+            comptes bancaires et entreprises.
+          </p>
+        </div>
+        <div class="faq-items">
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>
+                Quels types de comptes bancaires et d’entreprises vendez-vous ?
+              </h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <p>
+                Nous proposons une sélection de comptes bancaires vérifiés et
+                d’entreprises prêtes à l’emploi, adaptés à divers besoins.
+                Chaque offre est détaillée avec ses spécifications avant achat.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Comment fonctionne le processus d’achat ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <p>
+                Notre boutique est 100 % automatisée. Une fois votre paiement
+                effectué, vous recevez immédiatement les informations du compte
+                ou de l’entreprise achetée.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>
+                Les comptes et entreprises sont-ils livrés avec des documents
+                officiels ?
+              </h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <p>
+                Oui, les entreprises incluent tous les documents légaux
+                nécessaires pour leur utilisation. Les comptes bancaires sont
+                livrés avec les informations d’accès essentielles.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>
+                Que faire si les informations fournies sont incorrectes ou
+                invalides ?
+              </h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <p>
+                Nous garantissons la validité des comptes et entreprises. En cas
+                de problème avéré, nous offrons un remplacement ou un
+                remboursement selon nos conditions.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Puis-je choisir un compte ou une entreprise spécifique ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <p>
+                Oui ! Notre marketplace vous permet de filtrer les comptes et
+                entreprises selon vos critères pour trouver l’offre qui vous
+                convient.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Faqs -->
+
+    <!-- footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <img src="./public/img/logo.png" alt="" width="120">
+          <div class="footer-col">
+            <h4>Bratva Autoshop</h4>
+            <ul>
+              <li><a href="#">Support client</a></li>
+              <li><a href="#">Telegram</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Liens rapides</h4>
+            <ul>
+              <li><a href="#">Connexion</a></li>
+              <li><a href="#">Inscription</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Aide</h4>
+            <ul>
+              <li><a href="#">F.A.Q</a></li>
+              <li><a href="#">Telegram</a></li>
+            </ul>
+          </div>
+        </div>
+
+          <p>Copyright © 2025 Bratva Family</p>
+      </div>
+  </footer>
+    <!--End  footer -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach((item) => {
+          const header = item.querySelector(".faq-header");
+          const body = item.querySelector(".faq-body");
+          const icon = item.querySelector(".icon");
+
+          header.addEventListener("click", () => {
+            const isOpen = body.classList.contains("open");
+
+            // Close all other items
+            document.querySelectorAll(".faq-body.open").forEach((openBody) => {
+              openBody.classList.remove("open");
+              openBody.style.height = "0";
+              openBody.parentElement.querySelector(".icon").textContent = "+";
+            });
+
+            if (!isOpen) {
+              // Open the clicked item
+              body.classList.add("open");
+              body.style.height = `${body.scrollHeight}px`;
+              icon.textContent = "-";
+            } else {
+              // Close the clicked item
+              body.classList.remove("open");
+              body.style.height = "0";
+              icon.textContent = "+";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

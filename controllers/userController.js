@@ -19,7 +19,7 @@ const getAllUsers = async (req, res) => {
 
 const getAllCustomers = async (req, res) => {
   try {
-    const customers = await User.find({ hasPurchased: true });
+    const customers = await User.find({ hasPurchased: true }).select('username telegram createdAt _id totalOrders');
 
     if (!customers) {
       return null;
@@ -34,9 +34,7 @@ const getAllCustomers = async (req, res) => {
   }
 };
 
-
 // Logout user
-
 
 const logout = (req, res) => {
   try {
@@ -55,17 +53,4 @@ const logout = (req, res) => {
   }
 };
 
-// const getUserBalance=(req,res)=>{
-//   const id=req.user
-//   console.log(id)
-
-//   try{
-
-
-//   }catch(error)
-//   {
-//     res.status(500).json({status:false,message:`Failed to get User Balance ${error}`})
-//   }
-// }
-
-module.exports={getAllUsers,getAllCustomers,logout}
+module.exports = { getAllUsers, getAllCustomers, logout };

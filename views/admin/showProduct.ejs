@@ -31,13 +31,13 @@
                 >
               </li>
               <li>
-                <a href="/admin/users"
-                  ><i class="ri-shopping-cart-line"></i> View Order</a
+                <a href="/admin/customers"
+                  ><i class="ri-shopping-cart-line"></i> Voir les commandes</a
                 >
               </li>
               <li>
                 <a href="/admin/addProduct">
-                  <i class="ri-customer-service-2-line"></i> Create Product
+                  <i class="ri-add-circle-line"></i> Créer un produit
                 </a>
               </li>
             </ul>
@@ -88,21 +88,27 @@
     <main class="container dashboard-wrapper">
       <div class="dashboard_top">
         <div class="dashboard_top-left">
-          <div class="box-bg">
-            <h4 class="heading-4">
-              Total products <br />
-              <%= products.length %>
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              Total Products <br />
+              <span class="box-count"> <%= products.length%> </span>
             </h4>
           </div>
           <div class="box-bg">
             <h4 class="heading-4"></h4>
           </div>
         </div>
+
         <div class="box-bg admin-addProduct-box">
-          Add new product
+          <h4 class="heading-4">Ajouter un nouveau produit <br /></h4>
           <a href="/admin/addProduct">
-            <button class="btn btn-black">Add new product</button>
+            <button class="btn btn-black">
+              <i class="ri-add-circle-line"></i> Ajouter un produit
+            </button>
           </a>
+          <div class="bg-icon">
+            <i class="ri-bank-line"></i>
+          </div>
         </div>
       </div>
 
@@ -162,21 +168,28 @@
           <!-- Pagination Controls -->
           <div class="pagination-controls">
             <% if (page > 1) { %>
-              <a href="/admin/products?page=<%= page - 1 %>&limit=<%= limit %>" class="btn-prev">Previous</a>
+            <a
+              href="/admin/products?page=<%= page - 1 %>&limit=<%= limit %>"
+              class="btn-prev"
+              >Previous</a
+            >
+            <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+            <a
+              href="/admin/products?page=<%= i %>&limit=<%= limit %>"
+              class="btn-page <%= i === page ? 'active' : '' %>"
+            >
+              <%= i %>
+            </a>
+            <% } %> <% if (page < totalPages) { %>
+            <a
+              href="/admin/products?page=<%= page + 1 %>&limit=<%= limit %>"
+              class="btn-next"
+              >Next</a
+            >
             <% } %>
-        
-            <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="/admin/products?page=<%= i %>&limit=<%= limit %>" class="btn-page <%= i === page ? 'active' : '' %>">
-                <%= i %>
-              </a>
-            <% } %>
-        
-            <% if (page < totalPages) { %>
-              <a href="/admin/products?page=<%= page + 1 %>&limit=<%= limit %>" class="btn-next">Next</a>
-            <% } %>
+          </div>
         </div>
       </div>
-
       <section class="admin-product-delete">
         <!-- Modal -->
         <div id="deleteModal" class="modal" style="display: none">
@@ -219,7 +232,7 @@
                       placeholder="eg.Finom"
                     />
                   </div>
-                  
+
                   <div class="box">
                     <label for="editType">Forme:</label>
                     <select id="editType" name="type">
@@ -368,11 +381,11 @@
         });
 
         // Edit modal
-        const editButtons = document.querySelectorAll(".edit-button"); 
-        const editModal = document.getElementById("editModal"); 
-        const closeEditModalButton = document.getElementById("closeEditModal"); 
-        const cancelEditButton = document.getElementById("cancelEdit"); 
-        const confirmEditButton = document.getElementById("confirmEdit"); 
+        const editButtons = document.querySelectorAll(".edit-button");
+        const editModal = document.getElementById("editModal");
+        const closeEditModalButton = document.getElementById("closeEditModal");
+        const cancelEditButton = document.getElementById("cancelEdit");
+        const confirmEditButton = document.getElementById("confirmEdit");
 
         // Form fields
         const editName = document.getElementById("editName");
@@ -383,7 +396,7 @@
         const editStock = document.getElementById("editStock");
         const editPrice = document.getElementById("editPrice");
 
-        let selectedProductId2 = null; 
+        let selectedProductId2 = null;
 
         // Show the edit modal when an edit button is clicked
         editButtons.forEach((button) => {
@@ -436,7 +449,7 @@
               .then((response) => response.json())
               .then((data) => {
                 if (data.success) {
-                  console.log(data.message)
+                  console.log(data.message);
                   // Reload the page or update the table row dynamically
                   location.reload();
                 } else {

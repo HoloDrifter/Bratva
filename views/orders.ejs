@@ -10,116 +10,122 @@
     />
     <link rel="stylesheet" href="/styles/generalStyles.css" />
     <link rel="stylesheet" href="/styles/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
   <body>
     <header>
-        <nav>
-            <div class="container">
-              <div class="nav_left">
-                <a href="/dashboard">
-                  <img src="img/logo.png" alt="Bratva logo" width="120" />
+      <nav>
+        <div class="container">
+          <div class="nav_left">
+            <a href="/dashboard">
+              <img src="img/logo.png" alt="Bratva logo" width="120" />
+            </a>
+            <ul>
+              <li>
+                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
+              </li>
+              <li>
+                <a href="/products"
+                  ><i class="ri-government-line"></i> Produits</a
+                >
+              </li>
+              <li>
+                <a href="/orders"
+                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
+                >
+              </li>
+              <li>
+                <a href="/support">
+                  <i class="ri-customer-service-2-line"></i> Support
                 </a>
-                <ul>
-                  <li>
-                    <a href="/dashboard"
-                      ><i class="ri-home-5-line"></i> Accueil</a
-                    >
-                  </li>
-                  <li>
-                    <a href="/products"
-                      ><i class="ri-government-line"></i> Produits</a
-                    >
-                  </li>
-                  <li>
-                    <a href="/orders"
-                      ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                    >
-                  </li>
-                  <li>
-                    <a href="/support">
-                      <i class="ri-customer-service-2-line"></i> Support
-                    </a>
-                  </li>
-                </ul>
-              </div>
-    
-              <div class="nav_right">
-                <ul>
-                  <li class="nav_cart">
-                    <a href="/cart"
-                      ><i class="ri-shopping-cart-line"></i>
-                      <span class="cart_item-count">2</span></a
-                    >
-                  </li>
-                  <li>
-                    <div class="profile_nav-card">
-                      <img
-                        src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                        alt=""
-                        width="30"
-                      />
-                      <div class="profile-details">
-                        <p class="username"><%= user.username%></p>
-                        <p class="available_money"><%= user.balance%>€</p>
-                      </div>
-    
-                      <div class="profile_card-sub">
-                        <ul>
-                          <li>
-                            <a href="/profile"
-                              ><i class="ri-user-settings-line"></i> Profile</a
-                            >
-                          </li>
-                          <li>
-                            <a href="/deposit"
-                              ><i class="ri-wallet-line"></i> Portefeuille</a
-                            >
-                          </li>
-                          <li>
-                            <a href="/logout"
-                              ><button>
-                                <i class="ri-logout-box-r-line"></i> Déconnexion
-                              </button></a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav_right">
+            <ul>
+              <li class="nav_cart">
+                <a href="/cart"
+                  ><i class="ri-shopping-cart-line"></i>
+                  <span class="cart_item-count">2</span></a
+                >
+              </li>
+              <li>
+                <div class="profile_nav-card">
+                  <img
+                    src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    alt=""
+                    width="30"
+                  />
+                  <div class="profile-details">
+                    <p class="username"><%= user.username%></p>
+                    <p class="available_money"><%= user.balance%>€</p>
+                  </div>
+
+                  <div class="profile_card-sub">
+                    <ul>
+                      <li>
+                        <a href="/profile"
+                          ><i class="ri-user-settings-line"></i> Profile</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/deposit"
+                          ><i class="ri-wallet-line"></i> Portefeuille</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/logout"
+                          ><button>
+                            <i class="ri-logout-box-r-line"></i> Déconnexion
+                          </button></a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>All orders</h2>
       </div>
     </header>
 
-    <!-- View customers --- see orders,  -->
-    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
-    <!-- View Products -- delete product , update product -->
-    <!-- product -->
-    <!--  -->
     <!-- Main dashboard -->
     <main class="container dashboard-wrapper">
       <div class="dashboard_top">
         <div class="dashboard_top-left">
-          <div class="box-bg">
-            <h4 class="heading-4">
-              Total Orders <br />
-              <%= orders.length %>
+
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              Commandes <br />
+              <span class="box-count"> <%= orders.length%> </span>
             </h4>
+            <div class="chart-box">
+              <canvas id="ordersChart"></canvas>
+            </div>
           </div>
           <div class="box-bg">
             <h4 class="heading-4"></h4>
           </div>
         </div>
         <div class="box-bg admin-addProduct-box">
-          View Products
-          <a href="/products">
-            <button class="btn btn-black">View Products</button>
-          </a>
+          <h4 class="heading-4">
+            Voir les produits <br />
+            <!-- <span class="box-count" id="p-r-deposits"></span> -->
+          </h4>
+
+          <button class="btn btn-black">
+            <i class="ri-table-view"></i> Tous les produits
+          </button>
+          <div class="bg-icon">
+            <i class="ri-government-line"></i>
+          </div>
         </div>
       </div>
 
@@ -137,22 +143,23 @@
             <p>Download</p>
             <!-- <p>view all orders</p> -->
           </div>
-          <div class="user-boxes ">
+          <div class="user-boxes">
             <% for(let [index, order] of orders.entries()) {%>
             <div class="user-box order-box">
               <p><%= index + 1 %></p>
-              <h4 ><%= order.productId.name %></h4>
-              <p ><%= order.productId.description %></p>
-              <p ><%= order.productId.type %></p>
-              <p ><%= order.productId.apeCode %></p>
-              <p ><%= order.productId.socialCapital %></p>
+              <h4><%= order.productId.name %></h4>
+              <p><%= order.productId.description %></p>
+              <p><%= order.productId.type %></p>
+              <p><%= order.productId.apeCode %></p>
+              <p><%= order.productId.socialCapital %></p>
               <p>
-                <%= new
-                Date(order.createdAt).toLocaleDateString('en-GB') %>
+                <%= new Date(order.createdAt).toLocaleDateString('en-GB') %>
               </p>
               <p><%= order.totalAmount %></p>
-              
-              <a href="/thank-you/<%= order.productId._id %>"><button class="btn btn-bg">View Order</button></a>
+
+              <a href="/thank-you/<%= order.productId._id %>"
+                ><button class="btn btn-bg">View Order</button></a
+              >
             </div>
             <%}%>
           </div>
@@ -160,6 +167,96 @@
       </div>
     </main>
 
+    <script>
+      async function fetchUserOrders() {
+        try {
+          const response = await fetch("/analytics/user-orders", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          const data = await response.json();
+
+          if (!data.success) {
+            console.error("Failed to fetch user orders");
+            return;
+          }
+
+          // Extract order data
+          const labels = data.data.map((item) => item.date);
+          const counts = data.data.map((item) => item.count);
+
+
+          // Chart.js Configuration
+          const ctx = document.getElementById("ordersChart").getContext("2d");
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Orders",
+                  data: counts,
+                  borderColor: "#1e1e2d",
+                  borderWidth: 2,
+                  fill: true,
+                  backgroundColor: "rgba(30, 30, 45, 0.1)",
+                  tension: 0.3,
+                  pointRadius: 0,
+                  pointHoverRadius: 6,
+                  pointBackgroundColor: "#1e1e2d",
+                  pointBorderColor: "#fff",
+                  pointBorderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                tooltip: {
+                  enabled: true,
+                  mode: "index",
+                  intersect: false,
+                  backgroundColor: "rgba(0,0,0,0.8)",
+                  titleFont: { size: 14, weight: "bold" },
+                  bodyFont: { size: 12 },
+                  padding: 10,
+                  cornerRadius: 6,
+                  callbacks: {
+                    label: function (context) {
+                      return ` Orders: ${context.raw}`;
+                    },
+                  },
+                },
+                legend: {
+                  display: false,
+                },
+              },
+              interaction: {
+                mode: "nearest",
+                intersect: false,
+              },
+              scales: {
+                x: {
+                  display: false,
+                },
+                y: {
+                  display: false,
+                },
+              },
+            },
+          });
+        } catch (error) {
+          console.error("Error fetching orders data:", error);
+        }
+      }
+
+      // Fetch data when the page loads
+      fetchUserOrders();
+    </script>
     <script src="/js/base.js"></script>
   </body>
 </html>

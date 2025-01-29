@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+    <!-- chart js cdn -->
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div class="nav_left">
+            <a href="/dashboard">
+              <img src="/img/logo.png" alt="Bratva logo" width="120" />
+            </a>
+            <ul>
+              <li>
+                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
+              </li>
+              <li>
+                <a href="/products"
+                  ><i class="ri-government-line"></i> Produits</a
+                >
+              </li>
+              <li>
+                <a href="/orders"
+                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
+                >
+              </li>
+              <li>
+                <a href="/support">
+                  <i class="ri-customer-service-2-line"></i> Support
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav_right">
+            <ul>
+              <li class="nav_cart">
+                <a href="/cart"
+                  ><i class="ri-shopping-cart-line"></i>
+                  <span class="cart_item-count">2</span></a
+                >
+              </li>
+              <li>
+                <div class="profile_nav-card">
+                  <img
+                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    alt=""
+                    width="30"
+                  />
+                  <div class="profile-details">
+                    <p class="username"><%= user.username%></p>
+                    <p class="available_money"><%= user.balance%>€</p>
+                  </div>
+
+                  <div class="profile_card-sub">
+                    <ul>
+                      <li>
+                        <a href="/profile"
+                          ><i class="ri-user-settings-line"></i> Profile</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/deposit"
+                          ><i class="ri-wallet-line"></i> Portefeuille</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/logout"
+                          ><button>
+                            <i class="ri-logout-box-r-line"></i> Déconnexion
+                          </button></a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>Support</h2>
+      </div>
+    </header>
+
+    <!-- Main dashboard -->
+    <main class="dashboard-wrapper container ">
+      <div class="support_container box-bg">
+        <div class="support_head">
+            <h2><span>Besoin d'aide ?</span> <br> Nous sommes là pour vous !</h2>
+            <p>
+                Nous nous engageons à vous fournir la meilleure assistance possible. Si vous avez des questions, si vous avez besoin d'aide pour votre achat ou si vous avez besoin d'aide pour toute autre chose, n'hésitez pas à nous contacter !
+            </p>
+          </div>
+          <div class="support-links">
+        <a href="#"><p class=" support_box">📱 Appelez-nous: 02 03 04 05 02</p></a>
+          <a href="#"><p class=" support_box">💬 Envoyez-nous un message sur Signal</p></a>
+          </div>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <img src="/img/logo.png" alt="" width="120" />
+          <div class="footer-col">
+            <h4>Bratva Autoshop</h4>
+            <ul>
+              <li><a href="#">Support client</a></li>
+              <li><a href="#">Telegram</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Aide</h4>
+            <ul>
+              <li><a href="#">F.A.Q</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <p>Copyright © 2025 Bratva Family</p>
+      </div>
+    </footer>
+    <!--End  footer -->
+
+    <script src="/js/base.js"></script>
+  </body>
+</html>

@@ -6,9 +6,8 @@ const {
 const {
   getAllUsers,
   getAllCustomers,
-  
 } = require("../controllers/userController");
-const {getOrderCount}=require('../controllers/orderController')
+const { getOrderCount } = require("../controllers/orderController");
 const Announcement = require("../models/announcement");
 
 //   Render Admin Dashboard
@@ -71,9 +70,12 @@ const renderCustomerPage = async (req, res) => {
   try {
     // fetch customers
     const customers = await getAllCustomers(req, res);
-    const totalOrders=await getOrderCount(req,res);
-    console.log(customers)
-    res.render("admin/showCustomers", { user: req.user, customers,totalOrders });
+    // const totalOrders = await getOrderCount(req, res);
+    // console.log(customers);
+    res.render("admin/showCustomers", {
+      user: req.user,
+      customers
+    });
   } catch (error) {
     console.log(error);
   }

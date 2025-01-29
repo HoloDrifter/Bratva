@@ -10,203 +10,232 @@
     />
     <link rel="stylesheet" href="/styles/generalStyles.css" />
     <link rel="stylesheet" href="/styles/dashboard.css" />
+    <!-- chart js cdn -->
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+      integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <header>
-        <nav>
-          <div class="container">
-            <div class="nav_left">
-              <a href="/dashboard">
-                <img src="/img/logo.png" alt="Bratva logo" width="120" />
-              </a>
-              <ul>
-                <li>
-                  <a href="/dashboard"
-                    ><i class="ri-home-5-line"></i> Accueil</a
-                  >
-                </li>
-                <li>
-                  <a href="/products"
-                    ><i class="ri-government-line"></i> Produits</a
-                  >
-                </li>
-                <li>
-                  <a href="/orders"
-                    ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                  >
-                </li>
-                <li>
-                  <a href="/support">
-                    <i class="ri-customer-service-2-line"></i> Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-  
-            <div class="nav_right">
-              <ul>
-                <li class="nav_cart">
-                  <a href="/cart"
-                    ><i class="ri-shopping-cart-line"></i>
-                    <span class="cart_item-count">2</span></a
-                  >
-                </li>
-                <li>
-                  <div class="profile_nav-card">
-                    <img
-                      src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                      alt=""
-                      width="30"
-                    />
-                    <div class="profile-details">
-                      <p class="username"><%= user.username%></p>
-                      <p class="available_money"><%= user.balance%>€</p>
-                    </div>
-  
-                    <div class="profile_card-sub">
-                      <ul>
-                        <li>
-                          <a href="/profile"
-                            ><i class="ri-user-settings-line"></i> Profile</a
-                          >
-                        </li>
-                        <li>
-                          <a href="/deposit"
-                            ><i class="ri-wallet-line"></i> Portefeuille</a
-                          >
-                        </li>
-                        <li>
-                          <a href="/logout"
-                            ><button>
-                              <i class="ri-logout-box-r-line"></i> Déconnexion
-                            </button></a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
+      <nav>
+        <div class="container">
+          <div class="nav_left">
+            <a href="/dashboard">
+              <img src="/img/logo.png" alt="Bratva logo" width="120" />
+            </a>
+            <ul>
+              <li>
+                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
+              </li>
+              <li>
+                <a href="/products"
+                  ><i class="ri-government-line"></i> Produits</a
+                >
+              </li>
+              <li>
+                <a href="/orders"
+                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
+                >
+              </li>
+              <li>
+                <a href="/support">
+                  <i class="ri-customer-service-2-line"></i> Support
+                </a>
+              </li>
+            </ul>
           </div>
-        </nav>
-        <div class="page_detials container">
-          <p>Bratva Family</p>
-          <h2>Tableau de bord</h2>
+
+          <div class="nav_right">
+            <ul>
+              <li class="nav_cart">
+                <a href="/cart"
+                  ><i class="ri-shopping-cart-line"></i>
+                  <span class="cart_item-count">2</span></a
+                >
+              </li>
+              <li>
+                <div class="profile_nav-card">
+                  <img
+                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
+                    alt=""
+                    width="30"
+                  />
+                  <div class="profile-details">
+                    <p class="username"><%= user.username%></p>
+                    <p class="available_money"><%= user.balance%>€</p>
+                  </div>
+
+                  <div class="profile_card-sub">
+                    <ul>
+                      <li>
+                        <a href="/profile"
+                          ><i class="ri-user-settings-line"></i> Profile</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/deposit"
+                          ><i class="ri-wallet-line"></i> Portefeuille</a
+                        >
+                      </li>
+                      <li>
+                        <a href="/logout"
+                          ><button>
+                            <i class="ri-logout-box-r-line"></i> Déconnexion
+                          </button></a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </header>
+      </nav>
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>Tableau de bord</h2>
+      </div>
+    </header>
 
     <!-- Main dashboard -->
-    <main class="dashboard-wrapper container ">
+    <main class="dashboard-wrapper container">
       <div class="dashboard_top">
         <div class="dashboard_top-left">
-          <div class="box-bg"> <h4 class="heading-4">Total Users <br> <%= users.length%></h4></div>
-          <div class="box-bg"> <h4 class="heading-4"> </h4></div>
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              Utilisateurs <br />
+              <span class="box-count"> <%= users.length%> </span>
+            </h4>
+            <div class="chart-box">
+              <canvas id="registrationChart"></canvas>
+            </div>
+          </div>
+          <div class="box-bg"><h4 class="heading-4"></h4></div>
         </div>
         <div class="box-bg admin-addProduct-box">
-          <h4 class="heading-4">Deposit money</h4>
-          <button class="btn btn-black">Deposit</button>
+          <h4 class="heading-4">
+            Créditer mon compte <br />
+            <span class="box-count" ><%= user.balance %>€</span>
+          </h4>
+
+          <button class="btn btn-black">
+            <i class="ri-money-dollar-circle-line"></i> Créditer mon compte
+          </button>
+          <div class="bg-icon">
+            <i class="ri-wallet-line"></i>
+          </div>
         </div>
       </div>
       <div class="dashboard_bottom">
-            <!-- Show announcements -->
-       <div class="show-announcements-container box-bg">
-        <h2>Announcements</h2>
-        <div class="announcements_boxes">
+        <!-- Show announcements -->
+        <div class="show-announcements-container box-bg">
+          <h2>Announcements</h2>
+          <div class="announcements_boxes">
             <% for(let [index,announcement] of announcements.entries()){ %>
             <div class="announcement-box">
-                <i class="ri-megaphone-line"></i>
-                <!-- <p><%= index +1 %></p> -->
-                <p><%= announcement.description %></p>
+              <i class="ri-megaphone-line"></i>
+              <!-- <p><%= index +1 %></p> -->
+              <p><%= announcement.description %></p>
             </div>
             <%}%>
+          </div>
         </div>
-       </div>
 
-       <div class="chart_stats box-bg"><h4 class="heading-4">Will show stats here</h4></div>
+        <div class="chart_stats box-bg">
+          <h2 class="chart_stats-title">Statistiques des level</h2>
+
+          <div class="chart_stats-container">
+            <canvas id="levelChart"></canvas>
+          </div>
+
+          <div class="chart_stats-legend">
+            <span class="chart_stats-legend-item classic">Qonto</span>
+            <span class="chart_stats-legend-item gold">Shine</span>
+            <span class="chart_stats-legend-item business">Finom</span>
+            <span class="chart_stats-legend-item infinite">Pennylane</span>
+          </div>
+
+          <div class="chart_stats-list">
+            <div class="chart_stats-item classic-item">
+              <span>🛡 Qonto</span>
+              <span>50%</span>
+            </div>
+            <div class="chart_stats-item gold-item">
+              <span>⚙ Shine</span>
+              <span>33%</span>
+            </div>
+            <div class="chart_stats-item business-item">
+              <span>🏢 Finom</span>
+              <span>10%</span>
+            </div>
+            <div class="chart_stats-item infinite-item">
+              <span>🚨 Pennylane</span>
+              <span>7%</span>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
+        <!-- footer -->
+        <footer>
+          <div class="container">
+            <div class="footer-top">
+              <img src="/img/logo.png" alt="" width="120">
+              <div class="footer-col">
+                <h4>Bratva Autoshop</h4>
+                <ul>
+                  <li><a href="#">Support client</a></li>
+                  <li><a href="#">Telegram</a></li>
+                </ul>
+              </div>
 
-      
-
+              <div class="footer-col">
+                <h4>Aide</h4>
+                <ul>
+                  <li><a href="#">F.A.Q</a></li>
+                </ul>
+              </div>
+            </div>
+    
+              <p>Copyright © 2025 Bratva Family</p>
+          </div>
+      </footer>
+        <!--End  footer -->
 
     <script>
+      const ctx = document.getElementById("levelChart").getContext("2d");
+
+      new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["QONTO", "SHINE", "FINOM", "PENNYLANE"],
+          datasets: [
+            {
+              data: [50, 33, 10, 7], // Sample data
+              backgroundColor: ["#dcdcdc", "#2E5BFF", "#1951A3", "#D92525"],
+              hoverOffset: 5,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }, // Hide default legend
+          },
+          cutout: "70%", // Create a doughnut effect
+        },
+      });
+
      
-
-      // Charts
-      // Data passed from the server to the EJS template
-
-
-      // var barChartData = ''
-      // var lineChartData = ''
-      // var pieChartData=''
-
-      // // Bar Chart
-      // var barCtx = document.getElementById('barChart').getContext('2d');
-      // var barChart = new Chart(barCtx, {
-      //     type: 'bar', // Type of chart: bar
-      //     data: {
-      //         labels: barChartData.labels, // x-axis labels
-      //         datasets: [{
-      //             label: 'Bar Dataset',
-      //             data: barChartData.values, // y-axis data
-      //             backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      //             borderColor: 'rgba(255, 99, 132, 1)',
-      //             borderWidth: 1
-      //         }]
-      //     },
-      //     options: {
-      //         scales: {
-      //             y: {
-      //                 beginAtZero: true
-      //             }
-      //         }
-      //     }
-      // });
-
-      // // Line Chart
-      // var lineCtx = document.getElementById('lineChart').getContext('2d');
-      // var lineChart = new Chart(lineCtx, {
-      //     type: 'line', // Type of chart: line
-      //     data: {
-      //         labels: lineChartData.labels, // x-axis labels
-      //         datasets: [{
-      //             label: 'Line Dataset',
-      //             data: lineChartData.values, // y-axis data
-      //             fill: false,
-      //             borderColor: 'rgba(54, 162, 235, 1)',
-      //             tension: 0.1
-      //         }]
-      //     },
-      //     options: {
-      //         scales: {
-      //             y: {
-      //                 beginAtZero: true
-      //             }
-      //         }
-      //     }
-      // });
-
-      // // Pie Chart
-      // var pieCtx = document.getElementById('pieChart').getContext('2d');
-      // var pieChart = new Chart(pieCtx, {
-      //     type: 'pie', // Type of chart: pie
-      //     data: {
-      //         labels: pieChartData.labels, // Pie segments
-      //         datasets: [{
-      //             label: 'Pie Dataset',
-      //             data: pieChartData.values, // Pie chart data
-      //             backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
-      //             borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-      //             borderWidth: 1
-      //         }]
-      //     },
-      //     options: {
-      //         responsive: true
-      //     }
-      // });
     </script>
+    <script src="/js/chart.js"></script>
     <script src="/js/base.js"></script>
   </body>
 </html>

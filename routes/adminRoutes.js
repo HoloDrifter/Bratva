@@ -16,31 +16,6 @@ const {
   renderAddAnnouncementPage,
   addAnnouncement
 } = require("../controllers/adminController");
-// const { render } = require("ejs");
-
-
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     console.log(file)
-//         const userId = req.user._id; // Assuming you have user information in the request
-//         const userUploadsPath = `./uploads/${userId}`;
-    
-//         // Ensure the directory exists or create it
-//         fs.mkdir(userUploadsPath, { recursive: true }, (err) => {
-//           if (err) {
-//             return cb(err, null);
-//           }
-//           cb(null, userUploadsPath);
-//         });
-//       },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + '-' + file.originalname);
-//   }
-// });
-// const upload = multer({ storage: storage });
-
-
 
 // Admin dashboard
 router.get(

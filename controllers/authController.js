@@ -60,7 +60,6 @@ const handleLogin = async (req, res) => {
 const handleSignup = async (req, res) => {
   const { username, password, confirmPassword, telegram } = req.body;
 
-  console.log(req.body);
 
   // Validation block
   if (!username || !password || !confirmPassword) {
@@ -81,14 +80,12 @@ const handleSignup = async (req, res) => {
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
-      console.log("User already exists");
       return res
         .status(400)
         .json({ success: false, error: "User already exists" });
     }
 
     if (username.length < 4 || username.length > 15) {
-      console.log("Username must be 4-15 characters long");
       return res.status(400).json({
         success: false,
         error: "Username must be 4-15 characters long",
@@ -96,7 +93,7 @@ const handleSignup = async (req, res) => {
     }
 
     if (password.length < 8 || password.length > 20) {
-      console.log("Password must be 8-20 characters long");
+      // console.log("Password must be 8-20 characters long");
       return res.status(400).json({
         success: false,
         error: "Password must be 8-20 characters long",
@@ -104,7 +101,7 @@ const handleSignup = async (req, res) => {
     }
 
     if (password !== confirmPassword) {
-      console.log("Password does not match");
+      // console.log("Password does not match");
       return res.status(400).json({
         success: false,
         error: "Password does not match",

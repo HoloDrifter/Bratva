@@ -6,9 +6,9 @@ const User = require("../models/user");
 // Get all Orders
 const getAllOrders = async (req, res) => {
   try {
-    if (req.params) {
-      const userId = req.params;
-    }
+    // if (req.params) {
+    //   const userId = req.params;
+    // }
     const userId = req.user.id; // User ID extracted from the token
     // Fetch all orders for the user
     const orders = await Order.find({ userId }).populate(
@@ -32,18 +32,22 @@ const getAllOrders = async (req, res) => {
 // Get orders by ID
 const getAllOrdersById = async (req, res) => {
   try {
-    const userId = req.params;
-
+    // if (req.params) {
+    //   const userId = req.params;
+    // }
+    const { userId } = req.params; // User ID extracted from the token
     // Fetch all orders for the user
-    const orders = await Order.find({ userId }).populate(
-      "productId",
-      "name price description"
-    );
+    const orders = await Order.find({ userId })
+      .populate(
+        "productId",
+        "name description price type socialCapital apeCode"
+      )
+      .populate("userId", "username");
+    if (!orders) {
+      return null;
+    }
 
-    res.status(200).json({
-      success: true,
-      orders,
-    });
+    return orders;
   } catch (error) {
     console.error("Error fetching orders:", error.message);
     res.status(500).json({
@@ -57,13 +61,12 @@ const getAllOrdersById = async (req, res) => {
 
 const getOrderCount = async (req, res) => {
   try {
-    const userId = req.user.id; // User ID extracted from the token
+    const userId = req.body; // User ID extracted from the token
 
     // Count the total number of orders for the user
     const orderCount = await Order.countDocuments({ userId });
-console.log(orderCount)
-    return orderCount
-
+    // console.log(orderCount);
+    return orderCount;
   } catch (error) {
     console.error("Error fetching order count:", error.message);
     res.status(500).json({
@@ -131,10 +134,16 @@ const createOrder = async (req, res) => {
       purchaseDate: new Date(),
     });
 
-    // Deduct the product price from the user's balance
-    user.hasPurchased = true;
-    user.balance -= product.price;
-    await user.save(); // Save the updated balance
+    await User.findByIdAndUpdate(userId, {
+      $inc: { totalOrders: 1 },
+      $set: { balance: user.balance - product.price, hasPurchased: true },
+    });
+    // // Deduct the product price from the user's balance
+    // user.hasPurchased = true;
+    // user.balance -= product.price;
+    // // Update the totalOrders field
+    // user.totalOrders += 1;
+    // await user.save(); // Save the updated balance
 
     // Decrease the product stock by 1
     product.stock -= 1;
@@ -146,7 +155,7 @@ const createOrder = async (req, res) => {
     const order = await Order.findOne({ userId, productId, status: "Paid" });
 
     if (order) {
-      console.log(order);
+      // console.log(order);
       return res.status(201).json({
         success: true,
         message: "Purchase successful",
@@ -157,32 +166,13 @@ const createOrder = async (req, res) => {
         .status(403)
         .json({ success: false, message: "Order is not paid yet" });
     }
-
-    // Respond with success and order details
-    // res.status(201).json({
-    //   success: true,
-    //   message: "Order created successfully",
-    //   order: {
-    //     productId: product._id,
-    //     name: product.name,
-    //     type: product.type,
-    //     description: product.description,
-    //     apeCode: product.apeCode,
-    //     socialCapital: product.socialCapital,
-    //     price: product.price,
-    //     purchaseDate: newOrder.purchaseDate,
-    //     totalAmount: newOrder.totalAmount,
-    //   },
-    // });
   } catch (error) {
     console.error("Error creating order:", error.message);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error. Could not create order.",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Server error. Could not create order.",
+    });
   }
 };
 
-module.exports = { getOrderCount, getAllOrders, createOrder };
+module.exports = { getOrderCount, getAllOrders, createOrder, getAllOrdersById };

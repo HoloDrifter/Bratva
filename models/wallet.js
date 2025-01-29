@@ -20,6 +20,8 @@ const walletSchema = new mongoose.Schema({
   },
 });
 
+// add these four fields in the wallet page to show transactions
+
 const Wallet = mongoose.model("Wallet", walletSchema);
 
 module.exports = Wallet;

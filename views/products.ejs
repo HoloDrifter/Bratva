@@ -94,23 +94,18 @@
       </div>
     </header>
 
-    <!-- View customers --- see orders,  -->
-    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
-    <!-- View Products -- delete product , update product -->
-    <!-- product -->
-    <!--  -->
     <!-- Main dashboard -->
     <main class="container dashboard-wrapper">
-      <div id="errorMessageFloat" class="width-100 ">
-        <p class="error">hello there</p>
+      <div id="errorMessageFloat" class="width-100">
+        <p class="error"></p>
         <span><i class="ri-close-line"></i></span>
       </div>
       <div class="product-dashboard_bottom container box-bg">
         <div class="product-dashboard_top">
-          <div class="box-bg user-product-box box-blue">
+          <div class="box-bg user-product-box">
             <h4 class="heading-4">
-              Total products <br />
-              <%= products.length %>
+              Total des produits <br />
+              <span class="box-count"> <%= products.length %> </span>
             </h4>
           </div>
           <!-- <div class="box-bg">
@@ -131,41 +126,53 @@
           </div>
           <div class="product_boxes">
             <% for(let [index, product] of products.entries()) { %>
-              <div class="product-box">
-                <p><%= (page - 1) * limit + (index + 1) %></p> <!-- Adjusting the serial number based on the page -->
-                <h4><%= product.name %></h4>
-                <p><%= product.description %></p>
-                <p><%= product.type %></p>
-                <p><%= new Date(product.createdAt).toLocaleDateString('en-GB') %></p>
-                <p><%= product.apeCode %></p>
-                <p><%= product.socialCapital %>€</p>
-                <p><%= product.stock %></p>
-                <p><%= product.price %>€</p>
-                <button class="btn btn-green buy-btn" data-productId="<%= product._id %>">
-                  <i class="ri-shopping-bag-line"></i> Acheter
-                </button>
-              </div>
+            <div class="product-box">
+              <p><%= (page - 1) * limit + (index + 1) %></p>
+              <!-- Adjusting the serial number based on the page -->
+              <h4><%= product.name %></h4>
+              <p><%= product.description %></p>
+              <p><%= product.type %></p>
+              <p>
+                <%= new Date(product.createdAt).toLocaleDateString('en-GB') %>
+              </p>
+              <p><%= product.apeCode %></p>
+              <p><%= product.socialCapital %>€</p>
+              <p><%= product.stock %></p>
+              <p><%= product.price %>€</p>
+              <button
+                class="btn btn-green buy-btn"
+                data-productId="<%= product._id %>"
+              >
+                <i class="ri-shopping-bag-line"></i> Acheter
+              </button>
+            </div>
             <% } %>
           </div>
-        
+
           <!-- Pagination Controls -->
           <div class="pagination-controls">
             <% if (page > 1) { %>
-              <a href="/products?page=<%= page - 1 %>&limit=<%= limit %>" class="btn-prev">Previous</a>
-            <% } %>
-        
-            <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="/products?page=<%= i %>&limit=<%= limit %>" class="btn-page <%= i === page ? 'active' : '' %>">
-                <%= i %>
-              </a>
-            <% } %>
-        
-            <% if (page < totalPages) { %>
-              <a href="/products?page=<%= page + 1 %>&limit=<%= limit %>" class="btn-next">Next</a>
+            <a
+              href="/products?page=<%= page - 1 %>&limit=<%= limit %>"
+              class="btn-prev"
+              >Previous</a
+            >
+            <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+            <a
+              href="/products?page=<%= i %>&limit=<%= limit %>"
+              class="btn-page <%= i === page ? 'active' : '' %>"
+            >
+              <%= i %>
+            </a>
+            <% } %> <% if (page < totalPages) { %>
+            <a
+              href="/products?page=<%= page + 1 %>&limit=<%= limit %>"
+              class="btn-next"
+              >Next</a
+            >
             <% } %>
           </div>
         </div>
-        
       </div>
     </main>
 
@@ -230,26 +237,14 @@
         document.querySelector(".show-product-confirm-model").style.display =
           "none";
       });
-      const errorMessage = document.querySelector("#errorMessageFloat p");
-      const errorBox = document.getElementById("errorMessageFloat");
-      // close error Message
-
-      const closeIcon = document.querySelector("#errorMessageFloat i");
-
-      closeIcon.addEventListener("click", function () {
-        const errorMessage = document.getElementById("errorMessageFloat");
-        errorMessage.style.display = "none";
-      });
-
-    
 
       // Calling Order create Api
 
       // Show Product Confirm Model
       const showProductConfirmModel = async (btn) => {
         try {
-          const productId=btn.getAttribute("data-productid")
-          console.log(productId)
+          const productId = btn.getAttribute("data-productid");
+          console.log(productId);
           const response = await fetch("/products/productById", {
             method: "POST",
             headers: {
@@ -262,17 +257,13 @@
           const data = await response.json();
 
           if (!data.success) {
-            errorMessage.textContent = data.message;
-            errorBox.classList.add("errorAnimation");
-            setTimeout(() => {
-              errorBox.classList.remove("errorAnimation");
-            }, 4000);
+            messageDisplay(data.message, "red");
             return;
           }
           const { name, description, type, price, socialCapital } =
             data.product;
           // Setting value of the model
-          confirmBuyBtn.setAttribute('data-productId',productId);
+          confirmBuyBtn.setAttribute("data-productId", productId);
           document.querySelector(".productName").textContent = name;
           document.querySelector(".productDescription").textContent =
             description;
@@ -302,9 +293,14 @@
 
       confirmBuyBtn.addEventListener("click", async () => {
         // const successMessage = document.getElementById("successMessage");
+        // const button = document.getElementById("buyButton");
+
+        // Disable the button to prevent multiple clicks
+        confirmBuyBtn.disabled = true;
+        confirmBuyBtn.innerText = "Processing..."; // Change button text
 
         try {
-          const productId=confirmBuyBtn.getAttribute('data-productId')
+          const productId = confirmBuyBtn.getAttribute("data-productId");
           const response = await fetch(`/orders/create`, {
             method: "POST",
             headers: {
@@ -317,31 +313,34 @@
 
           const data = await response.json();
           if (!data.success) {
-            errorMessage.textContent = data.message;
-            errorBox.classList.add("errorAnimation");
-            setTimeout(() => {
-              errorBox.classList.remove("errorAnimation");
-            }, 4000);
+            messageDisplay(data.message, "red");
             return;
-          }else{
-            errorMessage.textContent = data.message;
-            errorBox.classList.add("errorAnimation");
-            errorBox.style.background='green'
- 
-            setTimeout(()=>{
+          } else {
+            messageDisplay(data.message, "green");
+
+            setTimeout(() => {
               window.location.href = data.redirectUrl;
-            },700)
+            }, 2000);
           }
 
           // Redirect to orders page to download file
-          
         } catch (error) {
           console.error("Error:", error);
-          errorMessage.textContent =
-            "An unexpected error occurred. Please try again.";
+          messageDisplay(
+            "An unexpected error occurred. Please try again.",
+            "red"
+          );
+        } finally {
+          document.querySelector(
+            ".show-product-confirm-model"
+          ).style.display = "none";
+          setTimeout(() => {
+            confirmBuyBtn.disabled = false;
+            confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
+          }, 1500);
         }
       });
     </script>
-  <script src="/js/base.js"></script>
+    <script src="/js/base.js"></script>
   </body>
 </html>

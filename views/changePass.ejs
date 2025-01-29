@@ -21,9 +21,7 @@
             </a>
             <ul>
               <li>
-                <a href="/dashboard"
-                  ><i class="ri-home-5-line"></i> Accueil</a
-                >
+                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
               </li>
               <li>
                 <a href="/products"
@@ -98,6 +96,10 @@
 
     <!-- Main dashboard -->
     <main class="container profile_section dashboard-wrapper">
+      <div id="errorMessageFloat" class="width-100">
+        <p class="error"></p>
+        <span><i class="ri-close-line"></i></span>
+      </div>
       <div class="profile_left box-bg">
         <a href="/profile">
           <div class="profile_left-box">
@@ -127,8 +129,8 @@
               class="pass"
             />
             <span class="togglePasswordSpan"
-            ><i class="ri-eye-line togglePassword"></i
-          ></span>
+              ><i class="ri-eye-line togglePassword"></i
+            ></span>
           </div>
           <div class="form-box-container">
             <div class="box">
@@ -156,8 +158,8 @@
                 class="pass"
               />
               <span class="togglePasswordSpan"
-              ><i class="ri-eye-line togglePassword"></i
-            ></span>
+                ><i class="ri-eye-line togglePassword"></i
+              ></span>
             </div>
           </div>
           <div class="btn-wrapper">
@@ -176,10 +178,50 @@
     </footer>
 
     <script>
-       
+      const URL = "/api/profile/change-password";
 
+      document
+        .getElementById("changePasswordForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
+          const currentPassword =
+            document.getElementById("currentPassword").value;
+          const newPassword = document.getElementById("newPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
 
+          try {
+            const response = await fetch(`${URL}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                currentPassword,
+                newPassword,
+                confirmPassword,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+              messageDisplay(data.message, "red");
+              return;
+            }
+            messageDisplay(data.message, "green");
+
+            // Redirect to dashboard
+            document.getElementById("changePasswordForm").reset();
+          } catch (err) {
+            messageDisplay(
+              "An error occurred while changing password. Please try again.",
+              "red"
+            );
+          }
+        });
     </script>
+    <script src="/js/base.js"></script>
   </body>
 </html>

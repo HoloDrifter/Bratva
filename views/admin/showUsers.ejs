@@ -31,13 +31,13 @@
                 >
               </li>
               <li>
-                <a href="/admin/users"
-                  ><i class="ri-shopping-cart-line"></i> View Order</a
+                <a href="/admin/customers"
+                  ><i class="ri-shopping-cart-line"></i> Voir les commandes</a
                 >
               </li>
               <li>
                 <a href="/admin/addProduct">
-                  <i class="ri-customer-service-2-line"></i> Create Product
+                  <i class="ri-add-circle-line"></i> Créer un produit
                 </a>
               </li>
             </ul>
@@ -88,21 +88,27 @@
     <main class="container dashboard-wrapper">
       <div class="dashboard_top">
         <div class="dashboard_top-left">
-          <div class="box-bg">
-            <h4 class="heading-4">
-              Total Users <br />
-              <%= users.length %>
+          <div class="box-bg chart-box-container">
+            <h4 class="heading-4 pad-22">
+              Total des utilisateurs <br />
+              <span class="box-count"> <%= users.length%> </span>
             </h4>
           </div>
           <div class="box-bg">
             <h4 class="heading-4"></h4>
           </div>
         </div>
+
         <div class="box-bg admin-addProduct-box">
-          View Customers
+          <h4 class="heading-4">Clients <br /></h4>
           <a href="/admin/customers">
-            <button class="btn btn-black">View customers</button>
+            <button class="btn btn-black">
+              <i class="ri-user-follow-line"></i> Voir les clients
+            </button>
           </a>
+          <div class="bg-icon">
+            <i class="ri-user-2-line"></i>
+          </div>
         </div>
       </div>
 
@@ -122,12 +128,14 @@
             <div class="user-box">
               <p><%= index + 1 %></p>
               <h4 class=""><%= user.username %></h4>
-              <p class="telegram"><%= user.telegram %></p>
-              <p>
-                <%= new
-                Date(user.createdAt).toLocaleDateString('en-GB') %>
-              </p>
+              <p class="telegram"><%= user.telegramAccount %></p>
+              <p><%= new Date(user.createdAt).toLocaleDateString('en-GB') %></p>
+              <%if(user.hasPurchased==true){%>
+              <p class="purchasedBoolean"><%= user.hasPurchased %></p>
+              <% } else{ %>
               <p><%= user.hasPurchased %></p>
+
+              <% } %>
               <p><%= user.balance %></p>
               <!-- <button class="btn btn-green">
                 <i class="ri-table-view"></i> See orders

@@ -31,22 +31,7 @@ const upload = multer({
 }).single("productFile"); // Expect a file field named 'productFile'
 
 // Fetch all products
-// const getAllProducts = async (req, res) => {
-//   try {
-//     const products = await Product.find();
 
-//     if (!products) {
-//       return null;
-//     }
-//     return products;
-//   } catch (error) {
-//     console.error("Error fetching products:", error.message);
-//     res.status(500).json({
-//       success: false,
-//       message: "Server error. Could not fetch products.",
-//     });
-//   }
-// };
 
 const getAllProducts = async (page, limit) => {
   try {
@@ -57,7 +42,8 @@ const getAllProducts = async (page, limit) => {
     const products = await Product.find()
       .skip(skip)
       .limit(parseInt(limit))
-      .select('name description price type apeCode socialCapital stock createdAt');
+      .select('-fileUrl');
+
 
     // Count total number of products for pagination
     const totalProducts = await Product.countDocuments();
@@ -123,7 +109,7 @@ const getProductDetails = async (req, res) => {
       });
     }
 
-    const product = await Product.findById(productId).select('name description price type socialCapital fileUrl');
+    const product = await Product.findById(productId).select('name description price type socialCapital');
     if (!product) {
       return res.status(404).json({
         success: false,
