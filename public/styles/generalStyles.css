@@ -58,7 +58,7 @@ li {
 }
 .btn-outline {
   background-color: var(--clr-white);
-  color: var(--clr-primary);
+  color: var(--clr-black);
   border: 1px solid var(--border-clr);
 }
 .btn-outline:hover {
