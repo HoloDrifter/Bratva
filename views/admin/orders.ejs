@@ -13,7 +13,7 @@
   </head>
   <body>
     <header>
-      <%- include('partials/admin_nav', { user: user }) %>
+      <%- include('../partials/admin_nav', { user: user }) %>
 
       <div class="page_detials container">
         <p>Bratva Family</p>
@@ -60,15 +60,15 @@
       <div class="users-dashboard_bottom container box-bg">
         <div class="users_wrapper">
           <div class="users_top orders_top admin-orders_top">
-            <p>S.no</p>
-            <p>Nom</p>
-            <p>Description d'activité</p>
-            <p>FORME</p>
-            <p>code naf</p>
-            <p>Capital social</p>
-            <p>Purchased on</p>
-            <p>Amount Paid</p>
-            <!-- <p>view all orders</p> -->
+            <p>S.no:</p>
+            <p>PAYS</p>
+            <p>DESCRIPTION D'ACTIVITE</p>
+            <p>FORME JURIDIQUE</p>
+            <p>CODE APE</p>
+            <p>CAPITAL SOCIAL</p>
+            <p>Acheté le</p>
+            <p>Montant payé</p>
+            <p>banques achetées</p>
           </div>
           <div class="user-boxes">
             <% for(let [index, order] of ordersById.entries()) {%>
@@ -83,7 +83,22 @@
                   <%= new
                   Date(order.createdAt).toLocaleDateString('en-GB') %>
                 </p>
-                <p><%= order.totalAmount %></p>
+               
+
+                  <p><%= order.totalAmount %>€</p>
+           
+
+
+               <div class="banks_btns">
+                <% for(let bank of order.selectedBanks) { %>
+                  <button class="btn btn-bg bank_btn <%= bank.purchased ? 'disabled-bank' : '' %>">
+                    <%= bank.name %> <span><%= bank.price %>€</span>
+                  </button>
+                  
+                  
+                  
+                  <% } %>
+                  </div>
                 
               </div>
             <%}%>
@@ -91,6 +106,7 @@
         </div>
       </div>
     </main>
+    <%- include('../partials/landing_footer.ejs') %>
 
     <script>
       const profile_card = document.querySelector(".profile_nav-card");

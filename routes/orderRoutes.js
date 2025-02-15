@@ -30,9 +30,10 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
-router.get("/:userId", authenticateToken,async (req, res) => {
+router.get("/:userId", authenticateToken, async (req, res) => {
   try {
     const ordersById = await getAllOrdersById(req, res);
+    console.log("ORDERS BY ID:", ordersById);
     const user = req.user;
     res.render("admin/orders", { user, ordersById });
   } catch (error) {

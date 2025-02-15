@@ -32,16 +32,53 @@ const getAllOrdersById = async (req, res) => {
     const { userId } = req.params;
     // Fetch all orders for the user
     const orders = await Order.find({ userId })
-      .populate(
-        "productId",
-        "name description price type socialCapital apeCode"
-      )
-      .populate("userId", "username");
+    .populate({
+      path: "productId",
+      select: "name description type socialCapital apeCode banks",
+    })
+    .populate("userId", "username")
+    .lean();
+
     if (!orders) {
       return null;
     }
 
-    return orders;
+    const processedOrders = orders.map(order => {
+      try {
+        // Preserve banks array for filtering
+        const productBanks = order.productId?.banks || [];
+        const selectedBankIds = order.selectedBanks?.map(id => id.toString()) || [];
+
+        // Filter using original banks array
+        const selectedBanks = productBanks.filter(bank => 
+          selectedBankIds.includes(bank._id.toString())
+        );
+
+        // Create new product object WITHOUT banks after filtering
+        const productWithoutBanks = { ...order.productId };
+        delete productWithoutBanks.banks;
+
+        return {
+          ...order,
+          productId: productWithoutBanks,
+          selectedBanks: selectedBanks.map(bank => ({
+            // Transform to desired format
+            _id: bank._id,
+            name: bank.name,
+            price: bank.price,
+            bankFile: bank.bankFile
+          }))
+        };
+      } catch (mapError) {
+        console.error("Error processing order:", mapError.message);
+        return null;
+      }
+    }).filter(order => order !== null);
+    // console.log("Processed Orders:", processedOrders[0].selectedBanks);
+    // console.log("Sample populated product:", orders[0]?.productId);
+    // console.log("Sample selectedBanks:", orders[0]?.selectedBanks);
+
+    return processedOrders;
   } catch (error) {
     console.error("Error fetching orders:", error.message);
     res.status(500).json({
@@ -119,7 +156,7 @@ const createOrder = async (req, res) => {
     //  Deduct the total amount from the user's balance
     await User.findByIdAndUpdate(userId, {
       $inc: { totalOrders: 1 },
-      $set: { balance: user.balance - totalAmount },
+      $set: { balance: user.balance - totalAmount, hasPurchased: true },
     });
 
     //  Mark banks as purchased
@@ -166,6 +203,7 @@ const getOrderDetails = async (userId, orderId) => {
       return null;
     }
 
+    console.log(order)
     if (!order.selectedBanks || order.selectedBanks.length === 0) {
       console.error("selectedBanks is missing or empty in order:", order);
       return null;

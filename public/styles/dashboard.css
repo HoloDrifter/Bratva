@@ -588,7 +588,7 @@ padding: 35px 25px 25px 25px ;
   grid-template-columns: 30px 130px 260px 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 .admin-orders_top,.admin-orders_box{
-  grid-template-columns: 30px 140px 300px 1fr 1fr 1fr 1fr 90px;
+  grid-template-columns: 30px 140px 250px 1fr 1fr 1fr 1fr 90px 1fr;
 
 }
 .order-box p,.order-box h4{

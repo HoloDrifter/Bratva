@@ -21,11 +21,7 @@
       </div>
     </header>
 
-    <!-- View customers --- see orders,  -->
-    <!-- cusotmer usermane, customer total orders --= when clicked on it can see all orders in detail -->
-    <!-- View Products -- delete product , update product -->
-    <!-- product -->
-    <!--  -->
+    
     <!-- Main dashboard -->
     <main class="container dashboard-wrapper">
       <div id="errorMessageFloat" class="width-100">
@@ -76,7 +72,7 @@
               <div class="user-box">
                 <p><%= index + 1 %></p>
                 <h4 class=""><%= customer.username %></h4>
-                <p class="telegram"><%= customer.telegramAccount %></p>
+                <p class="telegram"><%= customer.username %></p>
                 <p>
                   <%= new Date(customer.createdAt).toLocaleDateString('en-GB')
                   %>
@@ -92,6 +88,7 @@
         </div>
       </div>
     </main>
+    <%- include('../partials/landing_footer.ejs') %>
 
     <script>
       const URL = "/api/count";

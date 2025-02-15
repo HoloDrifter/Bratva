@@ -1,67 +1,71 @@
 <nav>
-    <div class="container">
-      <div class="logo">
-        <a href="/">
-          <img src="../img/bratva-logo-white.png" alt="" />
-        </a>
-      </div>
-      <div class="nav_links">
-        <ul>
-          <li class="<%= activePage === 'home' ? 'active' : '' %>"><a href="/home">Accueil</a></li>
-          <li class="<%= activePage === 'about' ? 'active' : '' %>"><a href="/about">A propos de </a></li>
-          <li class="menu <%= activePage === 'products' ? 'active' : '' %> ">
-            <a href="#">Produits</a>
-            <div class="sub-menu">
-              <ul>
-                <li>
-                  <a href="/products/french-company" class="capitalize"
-                    >Entreprises / Societes Francaise & Comptes Bancaires</a
-                  >
-                </li>
-                <li>
-                  <a href="/products/uk-company"
-                    >Entreprises du Royaume-Uni & JP-Morgan Bank / HSBC
-                  </a>
-                </li>
-                <li>
-                  <a href="/products/paradis-bancaire"
-                    >Société Paradis Bancaire & Introduction Bancaire en
-                    Banque de Reserve Physique</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="menu <%= activePage === 'services' ? 'active' : '' %>">
-            <a href="#">Services</a>
-            <div class="sub-menu">
-              <ul>
-                <li>
-                  <a href="/services/blanchiment-d'argent"
-                    >Blanchiment d'Argent</a
-                  >
-                </li>
-                <li>
-                  <a href="/services/decaisse-et-Facturation-fournisseur"
-                    >Décaisse et Facturation fournisseur</a
-                  >
-                </li>
-                <li>
-                  <a href="/services/evasion-fiscale">Evasion Fiscale</a>
-                </li>
-                <li>
-                  <a href="#">Services Financiers Personnalisés</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="nav_btns">
-        <ul>
-          <li class="login"><a href="/login">Connexion</a></li>
-          <li class="register"><a href="/register"> Inscription</a></li>
-        </ul>
-      </div>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <img src="../img/bratva-logo-white.png" alt="" />
+      </a>
     </div>
-  </nav>
+    <div class="nav_links">
+      <ul>
+        <li class="<%= activePage === 'home' ? 'active' : '' %>">
+          <a href="/home">Accueil</a>
+        </li>
+        <li class="<%= activePage === 'about' ? 'active' : '' %>">
+          <a href="/about">A propos de </a>
+        </li>
+        <li class="menu <%= activePage === 'products' ? 'active' : '' %>">
+          <a href="#">Produits</a>
+          <div class="sub-menu">
+            <ul>
+              <li>
+                <a href="/products/french-company" class="capitalize"
+                  >Entreprises / Societes Francaise & Comptes Bancaires</a
+                >
+              </li>
+              <li>
+                <a href="/products/uk-company"
+                  >Entreprises du Royaume-Uni & JP-Morgan Bank / HSBC
+                </a>
+              </li>
+              <li>
+                <a href="/products/paradis-bancaire"
+                  >Société Paradis Bancaire & Introduction Bancaire en Banque de
+                  Reserve Physique</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="menu <%= activePage === 'services' ? 'active' : '' %>">
+          <a href="#">Services</a>
+          <div class="sub-menu">
+            <ul>
+              <li>
+                <a href="/services/blanchiment-d'argent"
+                  >Blanchiment d'Argent</a
+                >
+              </li>
+              <li>
+                <a href="/services/decaisse-et-Facturation-fournisseur"
+                  >Décaisse et Facturation fournisseur</a
+                >
+              </li>
+              <li>
+                <a href="/services/evasion-fiscale">Evasion Fiscale</a>
+              </li>
+              <li>
+                <a href="#">Services Financiers Personnalisés</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="nav_btns">
+      <ul>
+        <li class="login"><a href="/login">Connexion</a></li>
+        <li class="register"><a href="/register"> Inscription</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
