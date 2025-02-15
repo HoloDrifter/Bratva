@@ -16,7 +16,6 @@ router.get("/user-registrations", authenticateToken, async (req, res) => {
     startDate.setUTCDate(today.getUTCDate() - 14); // Move back 10 days
     startDate.setUTCHours(0, 0, 0, 0); // Start of the day in UTC
 
-    // console.log("Fetching registrations from:", startDate, "to", today); // Debugging
 
     // Aggregate user registrations grouped by day
     const userRegistrations = await User.aggregate([
@@ -70,7 +69,6 @@ router.get("/customers-count", authenticateToken, async (req, res) => {
       startDate.setUTCDate(today.getUTCDate() - 14);
       startDate.setUTCHours(0, 0, 0, 0);
 
-      // console.log("Fetching customers from:", startDate, "to", today);
 
       // Aggregate new customers grouped by date
       const customerCounts = await User.aggregate([
@@ -126,7 +124,6 @@ router.get("/user-orders", authenticateToken, async (req, res) => {
       startDate.setUTCDate(today.getUTCDate() - 14);
       startDate.setUTCHours(0, 0, 0, 0);
 
-      // console.log("Fetching orders from:", startDate, "to", today);
 
       // Aggregate orders grouped by date
       const orderCounts = await Order.aggregate([

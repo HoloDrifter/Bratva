@@ -13,91 +13,20 @@
   </head>
   <body>
     <header>
-        <nav>
-          <div class="container">
-            <div class="nav_left">
-              <a href="/dashboard">
-                <img src="img/logo.png" alt="Bratva logo" width="120" />
-              </a>
-              <ul>
-                <li>
-                  <a href="/dashboard"
-                    ><i class="ri-home-5-line"></i> Accueil</a
-                  >
-                </li>
-                <li>
-                  <a href="/products"
-                    ><i class="ri-government-line"></i> Produits</a
-                  >
-                </li>
-                <li>
-                  <a href="/orders"
-                    ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                  >
-                </li>
-                <li>
-                  <a href="/support">
-                    <i class="ri-customer-service-2-line"></i> Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-  
-            <div class="nav_right">
-              <ul>
-                <li class="nav_cart">
-                  <a href="/cart"
-                    ><i class="ri-shopping-cart-line"></i>
-                    <span class="cart_item-count">2</span></a
-                  >
-                </li>
-                <li>
-                  <div class="profile_nav-card">
-                    <img
-                      src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                      alt=""
-                      width="30"
-                    />
-                    <div class="profile-details">
-                      <p class="username"><%= user.username%></p>
-                      <p class="available_money"><%= user.balance%>€</p>
-                    </div>
-  
-                    <div class="profile_card-sub">
-                      <ul>
-                        <li>
-                          <a href="/profile"
-                            ><i class="ri-user-settings-line"></i> Profile</a
-                          >
-                        </li>
-                        <li>
-                          <a href="/deposit"
-                            ><i class="ri-wallet-line"></i> Portefeuille</a
-                          >
-                        </li>
-                        <li>
-                          <a href="/logout"
-                            ><button>
-                              <i class="ri-logout-box-r-line"></i> Déconnexion
-                            </button></a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div class="page_detials container">
-          <p>Bratva Family</p>
-          <h2>Mon profile</h2>
-        </div>
-      </header>
+      <%- include('partials/nav', { user: user }) %>
+
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>Mon profile</h2>
+      </div>
+    </header>
 
     <!-- Main dashboard -->
     <main class="container profile_section dashboard-wrapper">
+      <div id="errorMessageFloat" class="width-100">
+        <p class="error"></p>
+        <span><i class="ri-close-line"></i></span>
+      </div>
       <div class="profile_left box-bg">
         <a href="/profile">
           <div class="profile_left-box active">
@@ -135,22 +64,25 @@
             <i class="ri-time-line"></i>
             <div class="p-r-detail">
               <p>Date d'inscription:</p>
-              <span class="p-r-detail-value"><%= user.createdAt %></span>
+              <span class="p-r-detail-value"
+                ><%= new Date(user.createdAt).toLocaleDateString('en-GB')
+                %></span
+              >
             </div>
           </div>
           <div class="profile_right-box">
             <i class="ri-list-check-3"></i>
             <div class="p-r-detail">
               <p>Total des dépôts:</p>
-              <span class="p-r-detail-value " id="p-r-deposits"></span>
+              <span class="p-r-detail-value" id="p-r-deposits"></span>
             </div>
           </div>
           <% if (user.telegram){%>
           <div class="profile_right-box">
             <i class="ri-telegram-2-line"></i>
             <div class="p-r-detail">
-              <p>Telegram</p>
-              <span class="p-r-detail-value"><%= user.telegramAccount %></span>
+              <p>Telegram:</p>
+              <span class="p-r-detail-value"><%= user.telegram %></span>
             </div>
           </div>
           <% } %>
@@ -158,39 +90,43 @@
             <i class="ri-hotel-line"></i>
             <div class="p-r-detail">
               <p>Total des commandes:</p>
-              <span class="p-r-detail-value">10</span>
+              <span class="p-r-detail-value"><%= user.totalOrders %></span>
             </div>
           </div>
         </div>
       </div>
     </main>
 
-    <footer>
-        <div class="container">
+      <!-- footer -->
+      <%- include('partials/footer') %>
 
-            <p>Copyright © 2025 Bratva Family</p>
-        </div>
-    </footer>
+      <!--End  footer -->
 
     <script>
-     
 
-    //   Calling calculateDeposit's API
-    const calculateDepositFunc=async()=>{
 
-        // const URL=
-        const res = await fetch('/wallet/total-deposits', {
-            method: 'GET',
-        });
-        const data = await res.json();
-        if(!data.success){
-            alert(data.message)
+      //   Calling calculateDeposit's API
+      const calculateDepositFunc=async()=>{
+          try{
+
+            const res = await fetch('/deposits/api/user/total-deposits', {
+              method: 'GET',
+            });
+            const data = await res.json();
+            if(data.totalDeposits){
+              document.querySelector('#p-r-deposits').textContent=`${data.totalDeposits}€`
+            }else if(data.totalDeposits==0){
+              document.querySelector('#p-r-deposits').textContent=`${data.totalDeposits}€`
+            }else{
+              messageDisplay("Error fetching total deposits!", "red");
+            }
+          }catch(error){
+            messageDisplay(`Error: ${error}`, "red");
+            console.log('Error fetching data')
+          }
         }
-        document.querySelector('#p-r-deposits').textContent=`${data.totalDeposits}€`
-        console.log(data);
-    }
-    calculateDepositFunc()
+      calculateDepositFunc()
     </script>
-      <script src="/js/base.js"></script>
+    <script src="/js/base.js"></script>
   </body>
 </html>

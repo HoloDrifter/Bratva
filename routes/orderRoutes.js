@@ -33,7 +33,6 @@ router.get("/", authenticateToken, async (req, res) => {
 router.get("/:userId", authenticateToken,async (req, res) => {
   try {
     const ordersById = await getAllOrdersById(req, res);
-    // console.log(ordersById)
     const user = req.user;
     res.render("admin/orders", { user, ordersById });
   } catch (error) {
@@ -43,7 +42,6 @@ router.get("/:userId", authenticateToken,async (req, res) => {
 });
 
 // Get the number of orders for a user
-router.get("/api/count", authenticateToken, getOrderCount);
 
 // create new order
 router.post("/create", authenticateToken,orderLimiter, createOrder);

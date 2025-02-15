@@ -7,6 +7,7 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  getAvailableProducts
 } = require("../controllers/productController");
 const successfulPurchase = require("../middleware/successfulPurchase");
 
@@ -22,7 +23,7 @@ router.get("/", authenticateToken, async (req, res) => {
   const { page = 1, limit = 10 } = req.query; // Default to page 1 and 10 items per page
   try {
     // Use getAllProducts with pagination
-    const { products, totalPages } = await getAllProducts(page, limit);
+    const { products, totalPages } = await getAvailableProducts(page, limit);
 
     if (!products) {
       return res.status(404).send("No products found");
@@ -43,8 +44,12 @@ router.get("/", authenticateToken, async (req, res) => {
 });
 
 
+
+
+
 // Get a single product by ID
 router.post("/productById",authenticateToken, getProductById); 
+// router.post("/productById",authenticateToken, getProductById); 
 
 // Admin routes
 router.put("/api/editProduct/:id", authenticateToken, authorizeAdmin, updateProduct); // Update a product

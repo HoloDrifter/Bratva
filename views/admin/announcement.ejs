@@ -13,66 +13,8 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="container">
-          <div class="nav_left">
-            <a href="/admin/dashboard">
-              <img src="/img/logo.png" alt="Bratva logo" width="120" />
-            </a>
-            <ul>
-              <li>
-                <a href="/admin/dashboard"
-                  ><i class="ri-home-5-line"></i> Accueil</a
-                >
-              </li>
-              <li>
-                <a href="/admin/products"
-                  ><i class="ri-government-line"></i> Produits</a
-                >
-              </li>
-              <li>
-                <a href="/admin/customers"
-                  ><i class="ri-shopping-cart-line"></i> Voir les commandes</a
-                >
-              </li>
-              <li>
-                <a href="/admin/addProduct">
-                  <i class="ri-add-circle-line"></i> Créer un produit
-                </a>
-              </li>
-            </ul>
-          </div>
+      <%- include('../partials/admin_nav', { user: user }) %>
 
-          <div class="nav_right">
-            <ul>
-              <li>
-                <div class="profile_nav-card">
-                  <img
-                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                    alt=""
-                    width="30"
-                  />
-                  <div class="profile-details">
-                    <p class="username"><%= user.username%></p>
-                  </div>
-
-                  <div class="profile_card-sub admin">
-                    <ul>
-                      <li>
-                        <a href="/logout"
-                          ><button>
-                            <i class="ri-logout-box-r-line"></i> Déconnexion
-                          </button></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>Add New Announcement</h2>

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  telegramAccount: { type: String },
+  telegram: { type: String },
   balance: { type: Number, default: 600 },
   role: { type: String, enum: ["user", "admin"], default: "user" },
   hasPurchased: { type: Boolean, default: false },

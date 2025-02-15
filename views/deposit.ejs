@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header>
+      <%- include('partials/nav', { user: user }) %>
+
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>Deposit</h2>
+      </div>
+    </header>
+
+    <!-- Main dashboard -->
+    <main class="container dashboard-wrapper">
+      <div id="errorMessageFloat" class="width-100">
+        <p class="error"></p>
+        <span><i class="ri-close-line"></i></span>
+      </div>
+      <div class="dashboard_top deposit_top">
+        <div class="box-bg admin-addProduct-box">
+          <h4 class="heading-4">
+            Pay <br />
+            <!-- <span class="box-count" id="p-r-deposits"></span> -->
+          </h4>
+
+          <form id="deposit-form">
+            <div class="form-group">
+              <label for="amount">Montant à déposer</label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="Montant en EUR"
+                required
+              />
+            </div>
+            <button class="btn btn-black" type="submit">Déposer</button>
+          </form>
+
+          <div class="bg-icon">
+            <i class="ri-government-line"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="users-dashboard_bottom container box-bg">
+        <div class="users_wrapper">
+          <div class="users_top deposits-table_top">
+            <p>S.no</p>
+            <p>Invoice Id</p>
+            <p>Checkout Link</p>
+            <p>Date</p>
+            <p>Amount</p>
+            <p>Status</p>
+          </div>
+          <div class="deposit-boxes">
+            <div class="user-box deposit-box">
+              <p></p>
+              <p></p>
+              <a href="" class="checkoutUrl" target="_blank"> </a>
+              <p></p>
+              <p></p>
+              <p class="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- footer -->
+    <%- include('partials/footer') %>
+
+    <!--End  footer -->
+
+    <script>
+      const statusMessages = {
+        Created: "Créé",
+        Processing: "En traitement",
+        Paid: "Payé",
+        Settled: "Payé avec succès",
+        Expired: "Expiré",
+        Failed: "Échoué",
+      };
+
+      // Fetch the deposit transactions from the API
+      async function fetchDeposits() {
+        try {
+          const response = await fetch("/deposits/api/user/deposits");
+          const deposits = await response.json();
+
+          const depositContainer = document.querySelector(".deposit-boxes");
+          depositContainer.innerHTML = "";
+
+          deposits.forEach((deposit, index) => {
+            let statusClass = "";
+            let statusText = statusMessages[deposit.status] || deposit.status;
+
+            switch (deposit.status) {
+              case "Created":
+                statusClass = "status-created";
+                break;
+              case "Processing":
+                statusClass = "status-processing";
+                break;
+              case "Paid":
+                statusClass = "status-paid";
+                break;
+              case "Settled":
+                statusClass = "status-settled";
+                break;
+              case "Expired":
+                statusClass = "status-expired";
+                break;
+              case "Failed":
+                statusClass = "status-failed";
+                break;
+              default:
+                statusClass = "";
+                statusText = deposit.status; // Default to the status if no custom message is set
+            }
+
+            const depositDiv = document.createElement("div");
+            depositDiv.classList.add("user-box", "deposit-box");
+            depositDiv.setAttribute("data-invoice-id", deposit.invoiceId);
+            depositDiv.innerHTML = `
+        <p>${index + 1}</p>
+        <p>${deposit.invoiceId}</p>
+        <a href='${deposit.checkOutLink}' class='checkoutUrl' target="_blank">${
+              deposit.checkOutLink
+            }</a>
+        <p>${new Date(deposit.createdAt).toLocaleDateString()}</p>
+        <p>${deposit.amount}€</p>
+        <p class="status ${statusClass}">${statusText}</p>
+      `;
+            depositContainer.appendChild(depositDiv);
+          });
+        } catch (error) {
+          console.error("Error fetching deposits:", error);
+        }
+      }
+
+      // Handle the deposit form submission
+      document
+        .querySelector("#deposit-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const amount = document.getElementById("amount").value;
+          console.log(amount);
+          const submitButton = document.querySelector('button[type="submit"]');
+          const originalButtonText = submitButton.textContent;
+
+          // Disable the button and show loader
+          submitButton.disabled = true;
+          submitButton.innerHTML = 'Processing... <span class="loader"></span>'; // Add a loader in the button
+
+          try {
+            // Send the amount to the API to create a deposit
+            const response = await fetch("/deposits/api/deposit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ amount }),
+            });
+
+            const result = await response.json();
+
+            if (result.checkoutLink) {
+              // Redirect to checkout URL
+              fetchDeposits();
+              window.location.href = result.checkoutLink;
+              document.querySelector("#deposit-form").reset();
+            } else {
+              alert("Something went wrong, please try again.");
+            }
+          } catch (error) {
+            console.error("Error submitting deposit:", error);
+            alert("Error processing deposit. Please try again.");
+          } finally {
+            // Re-enable the button and reset its text
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+          }
+        });
+
+      // Fetch deposits when the page loads
+      window.onload = fetchDeposits;
+
+
+
+      // Connect to SSE to listen for deposit updates
+      const userId = "<%= user._id %>";
+      const eventSource = new EventSource(`/events?userId=${userId}`); 
+
+      eventSource.onmessage = (event) => {
+        try {
+          console.log("Received event:", event.data); 
+          const data = JSON.parse(event.data); 
+          const { invoiceId, status, balance, message } = data;
+
+          if (message) {
+            const messageType = status === "Settled" ? "green" : (status === "Processing" ? "orange" : "red");
+            messageDisplay(message, messageType); 
+          }
+
+          const depositBox = document.querySelector(
+            `.deposit-box[data-invoice-id="${invoiceId}"]`
+          );
+          if (depositBox) {
+            const statusElement = depositBox.querySelector(".status");
+
+            // Update status text
+            if (statusMessages[status]) {
+              statusElement.textContent = statusMessages[status];
+            } else {
+              statusElement.textContent = status; 
+            }
+
+            // Update status 
+            statusElement.classList.remove(...statusElement.classList); // Remove old classes
+            statusElement.classList.add(
+              "status",
+              `status-${status.toLowerCase()}`
+            );
+          }
+
+          // Update balance if available
+          if (balance !== undefined) {
+            const balanceElement = document.querySelector(".available_money");
+            if (balanceElement) {
+              balanceElement.textContent = `${balance}€`; // Update balance in the nav bar
+            }
+          }
+        } catch (error) {
+          console.error("Error processing SSE event:", error); 
+          messageDisplay(
+            "Error processing the update. Please try again.",
+            "red"
+          ); 
+        }
+      };
+
+      // Error handling for SSE connection
+      eventSource.onerror = (event) => {
+        console.error("SSE Error:", event);
+        messageDisplay(
+          "Connection lost. Please check your internet or try again later.",
+          "red"
+        ); 
+      };
+    </script>
+    <script src="/js/base.js"></script>
+  </body>
+</html>

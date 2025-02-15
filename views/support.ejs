@@ -21,81 +21,8 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="container">
-          <div class="nav_left">
-            <a href="/dashboard">
-              <img src="/img/logo.png" alt="Bratva logo" width="120" />
-            </a>
-            <ul>
-              <li>
-                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
-              </li>
-              <li>
-                <a href="/products"
-                  ><i class="ri-government-line"></i> Produits</a
-                >
-              </li>
-              <li>
-                <a href="/orders"
-                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                >
-              </li>
-              <li>
-                <a href="/support">
-                  <i class="ri-customer-service-2-line"></i> Support
-                </a>
-              </li>
-            </ul>
-          </div>
+      <%- include('partials/nav', { user: user }) %>
 
-          <div class="nav_right">
-            <ul>
-              <li class="nav_cart">
-                <a href="/cart"
-                  ><i class="ri-shopping-cart-line"></i>
-                  <span class="cart_item-count">2</span></a
-                >
-              </li>
-              <li>
-                <div class="profile_nav-card">
-                  <img
-                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                    alt=""
-                    width="30"
-                  />
-                  <div class="profile-details">
-                    <p class="username"><%= user.username%></p>
-                    <p class="available_money"><%= user.balance%>€</p>
-                  </div>
-
-                  <div class="profile_card-sub">
-                    <ul>
-                      <li>
-                        <a href="/profile"
-                          ><i class="ri-user-settings-line"></i> Profile</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/deposit"
-                          ><i class="ri-wallet-line"></i> Portefeuille</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/logout"
-                          ><button>
-                            <i class="ri-logout-box-r-line"></i> Déconnexion
-                          </button></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>Support</h2>
@@ -119,29 +46,8 @@
     </main>
 
     <!-- footer -->
-    <footer>
-      <div class="container">
-        <div class="footer-top">
-          <img src="/img/logo.png" alt="" width="120" />
-          <div class="footer-col">
-            <h4>Bratva Autoshop</h4>
-            <ul>
-              <li><a href="#">Support client</a></li>
-              <li><a href="#">Telegram</a></li>
-            </ul>
-          </div>
+    <%- include('partials/footer') %>
 
-          <div class="footer-col">
-            <h4>Aide</h4>
-            <ul>
-              <li><a href="#">F.A.Q</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <p>Copyright © 2025 Bratva Family</p>
-      </div>
-    </footer>
     <!--End  footer -->
 
     <script src="/js/base.js"></script>

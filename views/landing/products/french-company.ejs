@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entreprises / Societes Francaise & Comptes Bancaires</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/styles/home.css" />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+
+    <!-- remixicon -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <%- include('../../partials/landing_nav', { activePage: activePage }) %>
+
+
+      <div class="hero" id="product-hero">
+
+        <div class="container">
+          <div class="left">
+            <h1>
+              Création d'entreprises française avec comptes bancaires prêtes à
+              l'emploie - démarrez et développer votre activité, vos projets,
+              vos ambitions dès maintenant !
+            </h1>
+            <p>
+              Notre équipe de formaliste assure une production de toutes formes
+              juridiques et de toutes activités, de l'entreprise individuelle, à
+              la société SAS afin d'assurer tout type d'opérations.
+            </p>
+            <button class="btn  btn-outline" style="width: 200px;">Commencer</button>
+          </div>
+          <div class="right">
+            <!-- < src="/test-3.jpg" alt="" /> -->
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- what to expect -->
+    <section class="offer_section">
+      <div class="container">
+        <div class="offer-left">
+          <img src="../img/landing/test-2.jpg" alt="">
+        </div>
+        <div class="offer-right">
+          <div class="offer_head">
+            <h2>
+              Que recevons-nous exactement à l'Achat d'une société avec comptes
+              bancaires ?
+            </h2>
+          </div>
+          <div class="offer-boxes">
+            <div class="offer-box">
+              <p>La société enregistrée au Greffe Français</p>
+            </div>
+            <div class="offer-box">
+              <p>Le ou les comptes bancaires associés</p>
+            </div>
+            <div class="offer-box">
+              <p>
+                Documents de certification de la Société (K-Bis, RBE, Acte
+                constitutifs)
+              </p>
+            </div>
+            <div class="offer-box">
+              <p>Documents d'identité du gérant de paille de la société</p>
+            </div>
+            <div class="offer-box">
+              <p>Site Web de Façade Légale</p>
+            </div>
+            <div class="offer-box">
+              <p>
+                Document PDF de formation à la Gestion bancaire et de tenue de
+                compte
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End what to expect -->
+
+    <!-- Pricing -->
+    <section class="pricing_section">
+      <div class="container">
+        <div class="section_head pricing_head">
+          <h2>Pricing <span>we offer</span></h2>
+        </div>
+        <div class="pricing-boxes">
+          <div class="pricing-box">
+            <h3>Entreprise Individuelle</h3>
+            <p class="price">990€</p>
+            <p>
+              <i class="ri-scroll-to-bottom-line"></i> 1 compte bancaire
+              (Neo-banque)
+            </p>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-box-line"></div>
+            <h3>Société SAS</h3>
+            <p class="price">1990€</p>
+            <p>
+              <i class="ri-scroll-to-bottom-line"></i> 1 compte bancaire
+              (Neo-banque)
+            </p>
+          </div>
+          <div class="pricing-box">
+            <h3>Compte en banque supplémentaire</h3>
+            <p class="price">1490€</p>
+            <p>par compte en banque (néo-banque supplémentaire)</p>
+          </div>
+        </div>
+
+        <!--  -->
+        <div class="specific-service">
+          <h2>
+            Vous avez besoin d'une société avec une activité, un nom, un capital
+            social particulier ? Ou tout autre demande liée à ce service ?
+          </h2>
+
+          <form action="#" method="post" id="service-form">
+            <h4 class="form-h4">
+              Merci de remplir le formulaire ci-dessous et/ou de nous contacter
+              directement
+            </h4>
+            <p>Notre équipe de Formaliste s'occupe de tout.</p>
+            <div class="form-col">
+              <div class="box">
+                <label for="raison_sociale">RAISON SOCIALE :</label>
+                <input
+                  type="text"
+                  id="raison_sociale"
+                  name="raison_sociale"
+                  required
+                />
+              </div>
+
+              <div class="box">
+                <label for="code_ape">CODE APE :</label>
+                <input type="text" id="code_ape" name="code_ape" required />
+              </div>
+            </div>
+
+            <div class="form-col">
+              <div class="box">
+                <label for="activite">ACTIVITE :</label>
+                <input type="text" id="activite" name="activite" required />
+              </div>
+
+              <div class="box">
+                <label for="forme_juridique">FORME JURIDIQUE :</label>
+                <input
+                  type="text"
+                  id="forme_juridique"
+                  name="forme_juridique"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="box">
+                <label for="regime_tva">REGIME TVA - IMPOSITION :</label>
+                <input
+                  type="text"
+                  id="regime_tva"
+                  name="regime_tva"
+                  required
+                  placeholder="REGIME TVA - IMPOSITION"
+                />
+              </div>
+
+              <div class="box">
+                <label for="adresse_siege">ADRESSE SIEGE SOCIALE :</label>
+                <input
+                  type="text"
+                  id="adresse_siege"
+                  name="adresse_siege"
+                  required
+                />
+              </div>
+            </div>
+            <div class="box">
+              <label for="commentaire">COMMENTAIRE / NOTE :</label>
+              <textarea id="commentaire" name="commentaire"></textarea>
+            </div>
+
+            <div class="box">
+              <label for="banques_associees">BANQUES ASSOCIEES :</label>
+              <input
+                type="text"
+                id="banques_associees"
+                name="banques_associees"
+              />
+            </div>
+
+            <div class="form-col">
+              <div class="box">
+                <label for="utilisateur_signal"
+                  >Nom d'utilisateur Signal :</label
+                >
+                <input
+                  type="text"
+                  id="utilisateur_signal"
+                  name="utilisateur_signal"
+                />
+              </div>
+
+              <div class="box">
+                <label for="lien_contact_signal"
+                  >Lien de Contact Signal :</label
+                >
+                <input
+                  type="url"
+                  id="lien_contact_signal"
+                  name="lien_contact_signal"
+                />
+              </div>
+            </div>
+
+            <div class="box">
+              <label for="email_contact">Email de Contact :</label>
+              <input type="email" id="email_contact" name="email_contact" />
+            </div>
+            <div class="box">
+              <label for="creation_personne"
+                >CREATION DE LA SOCIETE SUR UNE PERSONNE PRECISE ? :</label
+              >
+
+              <div class="flex-row">
+                <div class="box">
+                  <input
+                    type="radio"
+                    id="creation-personne"
+                    name="creation_personne"
+                    value="oui"
+                    onclick="togglePersonalInfo()"
+                  />
+                  <label for="creation-personne">Oui</label>
+                </div>
+
+                <div class="box">
+                  <input
+                    type="radio"
+                    id="creation-personne-no"
+                    name="creation_personne"
+                    value="non"
+                    onclick="togglePersonalInfo()"
+                  />
+                  <label for="creation-personne-no">Non</label>
+                </div>
+              </div>
+            </div>
+
+            <div id="info-personnelles" style="display: none">
+              <h3>Information Personnelle</h3>
+
+              <div class="form-col">
+                <div class="box">
+                  <label for="nom">Nom :</label>
+                  <input type="text" id="nom" name="nom" />
+                </div>
+
+                <div class="box">
+                  <label for="prenom">Prénom :</label>
+                  <input type="text" id="prenom" name="prenom" />
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="box">
+                  <label for="date_naissance">Date de naissance :</label>
+                  <input
+                    type="date"
+                    id="date_naissance"
+                    name="date_naissance"
+                  />
+                </div>
+
+                <div class="box">
+                  <label for="ville_naissance">Ville de naissance :</label>
+                  <input
+                    type="text"
+                    id="ville_naissance"
+                    name="ville_naissance"
+                  />
+                </div>
+              </div>
+
+              <div class="box">
+                <label for="adresse_personnelle">Adresse personnelle :</label>
+                <input
+                  type="text"
+                  id="adresse_personnelle"
+                  name="adresse_personnelle"
+                />
+              </div>
+
+              <div class="form-col">
+                <div class="box">
+                  <label for="email">Email :</label>
+                  <input type="email" id="email" name="email" />
+                </div>
+
+                <div class="box">
+                  <label for="tel">Numéro de téléphone :</label>
+                  <input type="tel" id="tel" name="tel" />
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline">Envoyer</button>
+          </form>
+        </div>
+
+        <!-- form -->
+      </div>
+    </section>
+    <!-- End Pricing -->
+
+    <!-- Faqs -->
+    <section class="faq-container" id="faqs">
+      <div class="container">
+        <div class="section_head">
+          <h2>Questions <span>Fréquentes</span></h2>
+          <p>
+            Trouvez ici les réponses aux questions les plus courantes sur nos
+            comptes bancaires et entreprises.
+          </p>
+        </div>
+        <div class="faq-items">
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>
+                Quels types de comptes bancaires et d’entreprises vendez-vous ?
+              </h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p class="p-black">
+                  Entreprise / Société : Nous proposons une sélection de 2
+                  Formes juridiques par défaut bien différentes.
+                </p>
+                <ul>
+                  <li>
+                    L'Entreprise Individuelle (auto-entrepreneur) pour les
+                    opérations et activités de petite envergure.
+                  </li>
+                  <li>
+                    Les Sociétés par Actions simplifiés et Société à
+                    responsabilité limité (SAS / LTD) pour les opérations et
+                    activités de grandes envergures.
+                  </li>
+                </ul>
+
+                <p class="p-black m-15">
+                  Comptes bancaires : Nous proposons 2 types de comptes
+                  bancaires.
+                </p>
+                <ul>
+                  <li>
+                    Banque en ligne, des banques qui imposent moins de
+                    réglementation et moins de contraintes que les banques
+                    traditionnelles (Qonto, Shine, Finom, Revolut Business
+                    etc...)
+                  </li>
+                  <li>
+                    Banques Physiques Systémique, des banques institutionnelles
+                    installées physiquement (Société général, Crédit agricole,
+                    HSBC, J-P Morgan bank etc...)
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Comment fonctionne le processus d’achat ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p>
+                  Notre boutique est 100 % automatisée. Une fois votre paiement
+                  effectué, vous recevez immédiatement les informations du
+                  compte ou de l’entreprise achetée.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Puis-je choisir un compte ou une entreprise spécifique ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p>- La société enregistrée au Greffe Français</p>
+                <p>
+                  - Le ou les comptes bancaires associés avec le procédé
+                  d'installation
+                </p>
+                <p>
+                  - Documents de certification de la Société (K-Bis, RBE, Acte
+                  constitutifs)
+                </p>
+                <p>- Documents d'identité du gérant de paille de la société</p>
+                <p>- Site Web de Facade Légale</p>
+                <p>
+                  - Document PDF de formation à la Gestion bancaire et de tenue
+                  de compte
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>
+                Que faire si les informations fournies sont incorrectes ou
+                invalides ?
+              </h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p>
+                  Nous garantissons la validité des comptes et entreprises. En
+                  cas de problème avéré, nous offrons un remplacement ou un
+                  remboursement selon nos conditions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Puis-je choisir un compte ou une entreprise spécifique ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p>
+                  Oui ! Notre marketplace vous permet de filtrer les comptes et
+                  entreprises selon vos critères pour trouver l’offre qui vous
+                  convient. Si cela ne suffit pas, nos experts financiers
+                  s'engagent à satisfaire vos besoins spécifiques.
+                </p>
+                <p>
+                  Contactez nous dès à présent sur signal ou via notre
+                  formulaire de contact !
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3>Quelle est la différence entre une Entreprise individuelle (EI) et une société (SAS/LTD) ?</h3>
+              <span class="icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-content">
+                <p>
+                  Entreprise individuelle (EI) : il s'agit d'une toute petite entreprise indépendante, qui a pour souhait de tester son marché, elle comporte des limites de CA légalement, qui peuvent etre dépassés, mais aux yeux de la banque cela sera suspect. C'est une entreprise à titre personnel au nom du gérant de l'entreprise, sans capital social et peu de crédibilité .
+                </p>
+                <br>
+                <p>
+                  Société SAS/LTD = Il s'agit d'une PME détachée de la qualité juridique du gérant de l'entreprise, société à personne morale. Société pleinement implantée dans son secteur d'activité, avec du Capital Social, de la crédibilité aux yeux des banques  et avec une activité lucratif.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Faqs -->
+
+    <!-- cta -->
+    <section class="cta">
+      <div class="container">
+        <!-- <video autoplay muted loop id="background-video">
+                <source src="/img/bg-video-3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video> -->
+        <div class="content">
+          <h2>Passez à l’action dès maintenant !</h2>
+          <p>
+            Accédez à des
+            <span
+              >entreprises internationales, comptes bancaires premium et
+              services financiers avancés</span
+            >
+            en quelques clics. Rejoignez l’élite et optimisez vos opportunités
+            dès aujourd’hui.
+          </p>
+          <div class="hero-btns">
+            <a href="/register"
+              ><button class="btn btn-outline">
+                <i class="ri-user-add-line"></i> <span>Créer un compte</span>
+              </button></a
+            >
+            <a href="/login"
+              ><button class="btn button-black">
+                <i class="ri-login-box-line"></i> <span>Me connecter</span>
+              </button></a
+            >
+          </div>
+          <!-- <button class="register"><a href="/register"> Inscription</a></button> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- end cta -->
+
+    <!-- footer -->
+    <%- include('../../partials/landing_footer.ejs') %>
+
+  
+    <!--End  footer -->
+
+    <script>
+      function togglePersonalInfo() {
+        var isPersonal = document.getElementById("creation-personne").checked;
+        var personalInfo = document.getElementById("info-personnelles");
+        if (isPersonal) {
+          personalInfo.style.display = "flex";
+        } else {
+          personalInfo.style.display = "none";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach((item) => {
+          const header = item.querySelector(".faq-header");
+          const body = item.querySelector(".faq-body");
+          const icon = item.querySelector(".icon");
+
+          header.addEventListener("click", () => {
+            const isOpen = body.classList.contains("open");
+
+            // Close all other items
+            document.querySelectorAll(".faq-body.open").forEach((openBody) => {
+              openBody.classList.remove("open");
+              openBody.style.height = "0";
+              openBody.parentElement.querySelector(".icon").textContent = "+";
+            });
+
+            if (!isOpen) {
+              // Open the clicked item
+              body.classList.add("open");
+              body.style.height = `${body.scrollHeight}px`;
+              icon.textContent = "-";
+            } else {
+              // Close the clicked item
+              body.classList.remove("open");
+              body.style.height = "0";
+              icon.textContent = "+";
+            }
+          });
+        });
+      });
+
+      // // reviews
+      // const rows = document.querySelectorAll(".reviews-row");
+
+      // rows.forEach((row) => {
+      //   row.addEventListener("mouseenter", () => {
+      //     rows.forEach((roww) => {
+      //       roww.style.animationPlayState = "paused";
+      //     });
+      //   });
+      //   row.addEventListener("mouseleave", () => {
+      //     rows.forEach((roww) => {
+      //       roww.style.animationPlayState = "running";
+      //     });
+      //   });
+      // });
+    </script>
+  </body>
+</html>

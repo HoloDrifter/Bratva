@@ -70,11 +70,9 @@ const renderCustomerPage = async (req, res) => {
   try {
     // fetch customers
     const customers = await getAllCustomers(req, res);
-    // const totalOrders = await getOrderCount(req, res);
-    // console.log(customers);
     res.render("admin/showCustomers", {
       user: req.user,
-      customers
+      customers,
     });
   } catch (error) {
     console.log(error);

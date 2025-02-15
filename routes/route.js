@@ -8,17 +8,18 @@ const { fetchAllAnnouncement } = require("../controllers/adminController");
 const {
   getAllProducts,
   getProductById,
-  getProductDetails,
 } = require("../controllers/productController");
+const { getOrderDetails } = require("../controllers/orderController");
 const { getAllUsers, logout } = require("../controllers/userController");
 const successfulPurchase = require("../middleware/successfulPurchase");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
 // landing page
-router.get('/',redirectIfLoggedIn,(req,res)=>{
-  res.render("home")
-})
+router.get("/", redirectIfLoggedIn, (req, res) => {
+  res.render("landing/home",{ activePage: 'home' });
+
+});
 
 // Register
 router.get("/register", redirectIfLoggedIn, (req, res) => {
@@ -53,7 +54,6 @@ router.get("/dashboard", authenticateToken, async (req, res) => {
 
 //  Profile routes
 router.get("/profile", authenticateToken, (req, res) => {
-  // console.log(req.user)
   res.render("profile", { user: req.user });
 });
 
@@ -100,12 +100,10 @@ router.post(
       }
 
       if (newPassword === currentPassword)
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "The new password cannot be the same as the old one.",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "The new password cannot be the same as the old one.",
+        });
       // Hash the new password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -127,28 +125,82 @@ router.post(
 );
 
 router.get(
-  "/thank-you/:productId",
+  "/thank-you/:orderId",
   authenticateToken,
   successfulPurchase,
   async (req, res) => {
     try {
-      const product = await getProductDetails(req, res);
+      const orderDetails = await getOrderDetails(
+        req.user.id,
+        req.params.orderId
+      );
 
-      res.render("thank-you", { user: req.user, product });
+      if (!orderDetails) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Order details not found" });
+      }
+
+      res.render("thank-you", { user: req.user, order: orderDetails });
     } catch (err) {
-      // res.status(500).json({ message: 'Error processing download', error: err.message });
       res.status(500).json({ message: "Page not found", error: err.message });
     }
   }
 );
 
 // Support page
-router.get('/support',authenticateToken,(req,res)=>{
-  res.render('support',{user:req.user})
-})
+router.get("/support", authenticateToken, (req, res) => {
+  res.render("support", { user: req.user });
+});
 
-// Random routes
-// router.get('/userDetails', authenticateToken,(req,res)=>{
-//   console.log(req.user)
-// })
+
+
+// ======== Home page Routes=========
+
+// Home page
+router.get("/home", async (req, res) => {
+  res.render("landing/home",{ activePage: 'home' });
+});
+// About page
+router.get("/about", async (req, res) => {
+  res.render("landing/about",{ activePage: 'about' });
+});
+// Identity-policy
+router.get("/politique-de-remboursement", async (req, res) => {
+  res.render("landing/refund-policy",{ activePage: 'home' });
+});
+
+// Refund policy
+router.get("/politique-de-confidentitalite", async (req, res) => {
+  res.render("landing/identity-policy",{ activePage: 'home' });
+});
+
+// ==Product routes
+// french company
+router.get("/products/french-company", async (req, res) => {
+  res.render("landing/products/french-company",{ activePage: 'products' });
+});
+// Paradis bancaire
+router.get("/products/paradis-bancaire", async (req, res) => {
+  res.render("landing/products/paradis-bancaire",{ activePage: 'products' });
+});
+// uk company
+router.get("/products/uk-company", async (req, res) => {
+  res.render("landing/products/uk-company",{ activePage: 'products' });
+});
+
+// ==Service routes
+// blanchiment-d'argent
+router.get("/services/blanchiment-d'argent", async (req, res) => {
+  res.render("landing/services/blanchiment-d'argent",{ activePage: 'services' });
+});
+// Évasion-fiscale
+router.get("/services/evasion-fiscale", async (req, res) => {
+  res.render("landing/services/Évasion-fiscale",{ activePage: 'services' });
+});
+// Décaisse-et-Facturation-fournisseur
+router.get("/services/decaisse-et-Facturation-fournisseur", async (req, res) => {
+  res.render("landing/services/Décaisse-et-Facturation-fournisseur",{ activePage: 'services' });
+});
+
 module.exports = router;

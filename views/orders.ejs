@@ -15,81 +15,8 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="container">
-          <div class="nav_left">
-            <a href="/dashboard">
-              <img src="img/logo.png" alt="Bratva logo" width="120" />
-            </a>
-            <ul>
-              <li>
-                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
-              </li>
-              <li>
-                <a href="/products"
-                  ><i class="ri-government-line"></i> Produits</a
-                >
-              </li>
-              <li>
-                <a href="/orders"
-                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                >
-              </li>
-              <li>
-                <a href="/support">
-                  <i class="ri-customer-service-2-line"></i> Support
-                </a>
-              </li>
-            </ul>
-          </div>
+      <%- include('partials/nav', { user: user }) %>
 
-          <div class="nav_right">
-            <ul>
-              <li class="nav_cart">
-                <a href="/cart"
-                  ><i class="ri-shopping-cart-line"></i>
-                  <span class="cart_item-count">2</span></a
-                >
-              </li>
-              <li>
-                <div class="profile_nav-card">
-                  <img
-                    src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                    alt=""
-                    width="30"
-                  />
-                  <div class="profile-details">
-                    <p class="username"><%= user.username%></p>
-                    <p class="available_money"><%= user.balance%>€</p>
-                  </div>
-
-                  <div class="profile_card-sub">
-                    <ul>
-                      <li>
-                        <a href="/profile"
-                          ><i class="ri-user-settings-line"></i> Profile</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/deposit"
-                          ><i class="ri-wallet-line"></i> Portefeuille</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/logout"
-                          ><button>
-                            <i class="ri-logout-box-r-line"></i> Déconnexion
-                          </button></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>All orders</h2>
@@ -120,9 +47,12 @@
             <!-- <span class="box-count" id="p-r-deposits"></span> -->
           </h4>
 
-          <button class="btn btn-black">
-            <i class="ri-table-view"></i> Tous les produits
-          </button>
+          <a href="/products">
+
+            <button class="btn btn-black">
+              <i class="ri-table-view"></i> Tous les produits
+            </button>
+          </a>
           <div class="bg-icon">
             <i class="ri-government-line"></i>
           </div>
@@ -145,28 +75,40 @@
           </div>
           <div class="user-boxes">
             <% for(let [index, order] of orders.entries()) {%>
-            <div class="user-box order-box">
-              <p><%= index + 1 %></p>
-              <h4><%= order.productId.name %></h4>
-              <p><%= order.productId.description %></p>
-              <p><%= order.productId.type %></p>
-              <p><%= order.productId.apeCode %></p>
-              <p><%= order.productId.socialCapital %></p>
-              <p>
-                <%= new Date(order.createdAt).toLocaleDateString('en-GB') %>
-              </p>
-              <p><%= order.totalAmount %></p>
-
-              <a href="/thank-you/<%= order.productId._id %>"
-                ><button class="btn btn-bg">View Order</button></a
-              >
-            </div>
-            <%}%>
+              <div class="user-box order-box">
+                <p><%= index + 1 %></p>
+                
+                <% if (order.productId) { %>
+                  <h4><%= order.productId.name %></h4>
+                  <p><%= order.productId.description %></p>
+                  <p><%= order.productId.type %></p>
+                  <p><%= order.productId.apeCode %></p>
+                  <p><%= order.productId.socialCapital %></p>
+                  
+                  <p>
+                    <%= new Date(order.createdAt).toLocaleDateString('en-GB') %>
+                  </p>
+                  <p><%= order.totalAmount %></p>
+                  <a href=" /thank-you/<%= order._id %>"
+                    ><button class="btn btn-bg">View Order</button></a
+                  >
+                <% } else { %>
+                  <p>Product information is unavailable</p>
+                <% } %>
+                
+              
+              </div>
+            <% } %>
+            
           </div>
         </div>
       </div>
     </main>
 
+        <!-- footer -->
+        <%- include('partials/footer') %>
+
+        <!--End  footer -->
     <script>
       async function fetchUserOrders() {
         try {

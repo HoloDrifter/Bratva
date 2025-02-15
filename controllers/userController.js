@@ -19,7 +19,9 @@ const getAllUsers = async (req, res) => {
 
 const getAllCustomers = async (req, res) => {
   try {
-    const customers = await User.find({ hasPurchased: true }).select('username telegram createdAt _id totalOrders');
+    const customers = await User.find({ hasPurchased: true }).select(
+      "username telegram createdAt _id totalOrders"
+    );
 
     if (!customers) {
       return null;
@@ -38,14 +40,12 @@ const getAllCustomers = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    // Clear the token cookie
     res.clearCookie("token", {
-      httpOnly: true, // Prevent client-side JavaScript access
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict", // Prevent CSRF attacks
     });
 
-    // Redirect the user to the login page
     res.redirect("/login");
   } catch (error) {
     console.error("Error during logout:", error.message);

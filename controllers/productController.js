@@ -1,37 +1,6 @@
 const Product = require("../models/product");
-const multer = require("multer");
-const path = require("path");
-
-// Configure Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Directory where files will be saved
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + "-" + file.originalname); // Unique filename
-  },
-});
-
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    const allowedFileTypes = /zip|rar/; // Restrict to ZIP or RAR files
-    const extname = allowedFileTypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-    const mimetype = allowedFileTypes.test(file.mimetype);
-
-    if (extname && mimetype) {
-      return cb(null, true);
-    } else {
-      cb(new Error("Only .zip and .rar files are allowed"));
-    }
-  },
-}).single("productFile"); // Expect a file field named 'productFile'
 
 // Fetch all products
-
 
 const getAllProducts = async (page, limit) => {
   try {
@@ -42,12 +11,78 @@ const getAllProducts = async (page, limit) => {
     const products = await Product.find()
       .skip(skip)
       .limit(parseInt(limit))
-      .select('-fileUrl');
-
+      .select("-banks.bankFile -banks.purchasedBy");
 
     // Count total number of products for pagination
     const totalProducts = await Product.countDocuments();
     const totalPages = Math.ceil(totalProducts / limit);
+
+    return { products, totalPages };
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    throw new Error("Error fetching products");
+  }
+};
+
+
+const getAvailableProducts = async (page, limit) => {
+  try {
+    // Calculate the number of documents to skip
+    const skip = (page - 1) * limit;
+
+    // Fetch products whose banks have at least one bank with purchased: false
+    const products = await Product.aggregate([
+      // Step 1: Unwind the banks array to check each bank individually
+      { $unwind: "$banks" },
+
+      // Step 2: Filter only the products with banks where purchased: false
+      { $match: { "banks.purchased": false } },
+
+      // Step 3: Exclude the fields bankFile and purchasedBy from the banks
+      { $project: {
+        name: 1,
+        description: 1,
+        type: 1,
+        apeCode: 1,
+        socialCapital: 1,
+        fileUrl: 1,
+        dateImmatriculation: 1,
+        createdAt: 1,
+        banks: {
+          _id: 1,
+          name: 1,
+          price: 1
+        }
+      } },
+
+      // Step 4: Group back the products by their _id to reassemble the product documents
+      { $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        description: { $first: "$description" },
+        type: { $first: "$type" },
+        apeCode: { $first: "$apeCode" },
+        socialCapital: { $first: "$socialCapital" },
+        fileUrl: { $first: "$fileUrl" },
+        dateImmatriculation: { $first: "$dateImmatriculation" },
+        banks: { $push: "$banks" }, // reassemble banks array
+        createdAt: { $first: "$createdAt" }
+      } },
+
+      // Step 5: Pagination - Skip and Limit
+      { $skip: skip },
+      { $limit: parseInt(limit) }
+    ]);
+
+    // Count total number of products with at least one bank with purchased: false for pagination
+    const totalProducts = await Product.aggregate([
+      { $unwind: "$banks" },
+      { $match: { "banks.purchased": false } },
+      { $group: { _id: "$_id" } },
+      { $count: "total" }
+    ]);
+
+    const totalPages = totalProducts.length > 0 ? Math.ceil(totalProducts[0].total / limit) : 1;
 
     return { products, totalPages };
   } catch (error) {
@@ -62,9 +97,6 @@ const getAllProducts = async (page, limit) => {
 
 
 
-
-// Fetch product by ID
-
 const getProductById = async (req, res) => {
   const { productId } = req.body;
 
@@ -76,7 +108,9 @@ const getProductById = async (req, res) => {
       });
     }
 
-    const product = await Product.findById(productId).select('name description price type socialCapital ');
+    const product = await Product.findById(productId).select(
+      "-banks.bankFile -banks.purchasedBy"
+    );
     if (!product) {
       return res.status(404).json({
         success: false,
@@ -84,7 +118,7 @@ const getProductById = async (req, res) => {
       });
     }
 
-   return res.status(200).json({
+    return res.status(200).json({
       success: true,
       product,
     });
@@ -97,111 +131,96 @@ const getProductById = async (req, res) => {
   }
 };
 
-// Fetch product details by params
-const getProductDetails = async (req, res) => {
-  const { productId } = req.params;
 
-  try {
-    if (!productId) {
-      return res.status(400).json({
-        success: false,
-        message: "Product Id is required",
-      });
-    }
 
-    const product = await Product.findById(productId).select('name description price type socialCapital');
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
-
-    return product
-  } catch (error) {
-    console.error("Error fetching product:", error.message);
-    res.status(500).json({
-      success: false,
-      message: "Server error. Could not fetch product.",
-    });
-  }
-};
 
 // Add new product (Admin Only)
 
 const addProduct = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) {
+  // Use multer middleware for file uploads
+
+  const {
+    name,
+    description,
+    type,
+    apeCode,
+    socialCapital,
+    dateImmatriculation,
+    bankNames,
+    bankPrices,
+  } = req.body;
+
+  try {
+    // Validate the form input
+    if (
+      !name ||
+      !description ||
+      !dateImmatriculation ||
+      !type ||
+      !apeCode ||
+      !socialCapital
+    ) {
       return res.status(400).json({
         success: false,
-        message: err.message || "File upload failed",
+        message: "All fields are required",
       });
     }
 
-    const { name, description, type, apeCode, socialCapital, stock, price } =
-      req.body;
+    // Check if the product already exists
+    const existingProduct = await Product.findOne({
+      name,
+      description,
+      type,
+      apeCode,
+      socialCapital,
+    });
 
-    try {
-     
-
-      // Validate input
-      if (
-        !name ||
-        !description ||
-        !price ||
-        !type ||
-        !apeCode ||
-        !socialCapital ||
-        !stock ||
-        !req.file
-      ) {
-        return res.status(400).json({
-          success: false,
-          message: "All fields are required",
-        });
-      }
-
-      const existingProduct = await Product.findOne({
-        name,
-        description,
-        type,
-        apeCode,
-        socialCapital,
-        stock,
-        price,
-      });
-
-      if (existingProduct) {
-        return res.status(400).json({
-          success: false,
-          message: "Product already exists with the same details",
-        });
-      }
-
-      const newProduct = await Product.create({
-        name,
-        description,
-        type,
-        apeCode,
-        socialCapital,
-        stock,
-        price,
-        fileUrl: req.file ? req.file.path : null, // Save file path in DB
-      });
-
-      return res.status(201).json({
-        success: true,
-        message: "Product added successfully",
-        product: newProduct,
-      });
-    } catch (error) {
-      console.error("Error adding product:", error.message);
-      res.status(500).json({
+    if (existingProduct) {
+      return res.status(400).json({
         success: false,
-        message: "Server error. Could not add product.",
+        message: "Product already exists with the same details",
       });
     }
-  });
+
+    let banks = [];
+    if (Array.isArray(bankNames)) {
+      banks = bankNames.map((name, index) => ({
+        name,
+        price: bankPrices[index],
+        bankFile: req.files[index]?.filename,
+      }));
+    } else if (bankNames) {
+      banks.push({
+        name: bankNames,
+        price: bankPrices,
+        bankFile: req.files[0]?.filename,
+      });
+    }
+
+
+    // Create a new product with bank data and file paths
+    const newProduct = await Product.create({
+      name,
+      description,
+      type,
+      apeCode,
+      socialCapital,
+      banks, // Store the banks data with file paths
+      dateImmatriculation,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Product added successfully",
+      product: newProduct,
+    });
+  } catch (error) {
+    console.error("Error adding product:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Server error. Could not add product.",
+    });
+  }
 };
 
 // Update a Product (Admin Only)
@@ -288,5 +307,5 @@ module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
-  getProductDetails
+  getAvailableProducts
 };

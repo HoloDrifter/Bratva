@@ -23,43 +23,52 @@ const handleLogin = async (req, res) => {
     // Check password match
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ success: false, error: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid credentials" });
     }
 
     // Generate a JWT token
     const token = jwt.sign(
-      { id: user._id, username: user.username, role: user.role }, // Include user role in the token payload
-      process.env.JWT_SCRT, // Secret key
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_SCRT,
       {
-        expiresIn: "2d", // Token expires in 2 days
+        expiresIn: "2d",
       }
     );
 
-    // Set token as an HTTP-only cookie
     res.cookie("token", token, {
-      httpOnly: true, // Prevent client-side JavaScript access
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 2 * 24 * 60 * 60 * 1000,
+      sameSite: "Strict",
     });
 
     // Send response without including the token in the body
     if (user.username === "bratvaadmin93*@autoshop") {
-      return res.status(200).json({ success: true, message: "Admin login successful", role: user.role });
+      return res.status(200).json({
+        success: true,
+        message: "Admin login successful",
+        role: user.role,
+      });
     }
 
-    res.status(200).json({ success: true, message: "Login successful", role: user.role });
+    res
+      .status(200)
+      .json({ success: true, message: "Login successful", role: user.role });
   } catch (error) {
     console.error("Login error:", error.message);
-    res.status(500).json({ success: false, message: "Server error. Please try again later." });
+    res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later.",
+    });
   }
 };
-
 
 //   Signup
 
 const handleSignup = async (req, res) => {
   const { username, password, confirmPassword, telegram } = req.body;
-
 
   // Validation block
   if (!username || !password || !confirmPassword) {
@@ -93,7 +102,6 @@ const handleSignup = async (req, res) => {
     }
 
     if (password.length < 8 || password.length > 20) {
-      // console.log("Password must be 8-20 characters long");
       return res.status(400).json({
         success: false,
         error: "Password must be 8-20 characters long",
@@ -101,7 +109,6 @@ const handleSignup = async (req, res) => {
     }
 
     if (password !== confirmPassword) {
-      // console.log("Password does not match");
       return res.status(400).json({
         success: false,
         error: "Password does not match",
@@ -131,9 +138,10 @@ const handleSignup = async (req, res) => {
 
     // Set token as an HTTP-only cookie
     res.cookie("token", token, {
-      httpOnly: true, // Prevent access via client-side JavaScript
-      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 2 * 24 * 60 * 60 * 1000,
+      sameSite: "Strict",
     });
 
     // Send response without including the token in the body
@@ -150,6 +158,5 @@ const handleSignup = async (req, res) => {
     });
   }
 };
-
 
 module.exports = { handleLogin, handleSignup };

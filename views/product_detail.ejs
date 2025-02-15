@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bratva Family</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/generalStyles.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <%- include('partials/nav', { user: user }) %>
+
+      <div class="page_detials container">
+        <p>Bratva Family</p>
+        <h2>All Products</h2>
+      </div>
+    </header>
+
+    <!-- Main dashboard -->
+    <main class="container dashboard-wrapper">
+      <div id="errorMessageFloat" class="width-100">
+        <p class="error"></p>
+        <span><i class="ri-close-line"></i></span>
+      </div>
+      <div class="product-dashboard_bottom container box-bg">
+
+        <div class="products_wrapper">
+            <div class="orderSummary-head">
+                <h3 class="heading-4">
+                  <i class="ri-shopping-cart-2-line"></i>
+                  Order Summary
+                </h3>
+              </div>
+          
+              <div class="orderSummary-body">
+                <div class="orderSummary-box">
+                  <h4>Nom</h4>
+                  <p class="productName"><%= product.name%></p>
+                </div>
+                <div class="orderSummary-box">
+                  <h4>Description d'activité</h4>
+                  <p class="productDescription"><%= product.description%></p>
+                </div>
+                <div class="orderSummary-box">
+                  <h4>FORME</h4>
+                  <p class="productType"><%= product.type%></p>
+                </div>
+                <div class="orderSummary-box">
+                  <h4>Capital social</h4>
+                  <p class="productCapitalSocial"><%= product.socialCapital%></p>
+                </div>
+                <div class="orderSummary-box">
+                  <h4>Prix</h4>
+                  <p class="productPrice"><%= product.price%></p>
+                </div>
+              </div>
+          <div class="product_details-bottom">
+            <h4>Select Banks</h4>
+          </div>
+ 
+        </div>
+      </div>
+    </main>
+    <!-- footer -->
+    <%- include('partials/footer') %>
+
+    <!--End  footer -->
+    <script>
+      const closeModalButton = document.getElementById("closeModal");
+      const confirmBuyBtn = document.getElementById("confirmBuyBtn");
+
+      closeModalButton.addEventListener("click", () => {
+        document.querySelector(".show-product-confirm-model").style.display =
+          "none";
+      });
+
+      // Calling Order create Api
+
+      // Show Product Confirm Model
+
+      // confirmBuyBtn.addEventListener("click", async () => {
+      //   // const successMessage = document.getElementById("successMessage");
+      //   // const button = document.getElementById("buyButton");
+
+      //   // Disable the button to prevent multiple clicks
+      //   confirmBuyBtn.disabled = true;
+      //   confirmBuyBtn.innerText = "Processing..."; // Change button text
+
+      //   try {
+      //     const productId = confirmBuyBtn.getAttribute("data-productId");
+      //     const response = await fetch(`/orders/create`, {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify({
+      //         productId,
+      //       }),
+      //     });
+
+      //     const data = await response.json();
+      //     if (!data.success) {
+      //       messageDisplay(data.message, "red");
+      //       return;
+      //     } else {
+      //       messageDisplay(data.message, "green");
+
+      //       setTimeout(() => {
+      //         window.location.href = data.redirectUrl;
+      //       }, 2000);
+      //     }
+
+      //     // Redirect to orders page to download file
+      //   } catch (error) {
+      //     console.error("Error:", error);
+      //     messageDisplay(
+      //       "An unexpected error occurred. Please try again.",
+      //       "red"
+      //     );
+      //   } finally {
+      //     document.querySelector(
+      //       ".show-product-confirm-model"
+      //     ).style.display = "none";
+      //     setTimeout(() => {
+      //       confirmBuyBtn.disabled = false;
+      //       confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
+      //     }, 1500);
+      //   }
+      // });
+    </script>
+    <script src="/js/base.js"></script>
+  </body>
+</html>

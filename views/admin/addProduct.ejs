@@ -13,66 +13,8 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="container">
-          <div class="nav_left">
-            <a href="/admin/dashboard">
-              <img src="/img/logo.png" alt="Bratva logo" width="120" />
-            </a>
-            <ul>
-              <li>
-                <a href="/admin/dashboard"
-                  ><i class="ri-home-5-line"></i> Accueil</a
-                >
-              </li>
-              <li>
-                <a href="/admin/products"
-                  ><i class="ri-government-line"></i> Produits</a
-                >
-              </li>
-              <li>
-                <a href="/admin/customers"
-                  ><i class="ri-shopping-cart-line"></i> Voir les commandes</a
-                >
-              </li>
-              <li>
-                <a href="/admin/addProduct">
-                  <i class="ri-add-circle-line"></i> Créer un produit
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="nav_right">
-            <ul>
-              <li>
-                <div class="profile_nav-card">
-                  <img
-                    src="/img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                    alt=""
-                    width="30"
-                  />
-                  <div class="profile-details">
-                    <p class="username"><%= user.username%></p>
-                  </div>
-
-                  <div class="profile_card-sub admin">
-                    <ul>
-                      <li>
-                        <a href="/logout"
-                          ><button>
-                            <i class="ri-logout-box-r-line"></i> Déconnexion
-                          </button></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <%- include('../partials/admin_nav', { user: user }) %>
+     
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>Add New Product</h2>
@@ -94,72 +36,66 @@
         <form id="addProductForm" enctype="multipart/form-data">
           <div class="form-box-container">
             <div class="box">
-              <label for="name">Nom</label>
-              <input type="text" name="name" id="name" placeholder="eg.Finom" />
+              <label for="name">PAYS:</label>
+              <input type="text" name="name" id="name" placeholder="PAYS" required />
             </div>
-
             <div class="box">
-              <label for="type">Forme:</label>
-              <select id="type" name="type">
+              <label for="type">FORME JURIDIQUE:</label>
+              <select id="type" name="type" required>
                 <option value="SAS">SAS</option>
                 <option value="EI">EI</option>
+                <option value="LTD">LTD</option>
               </select>
             </div>
           </div>
           <div class="box">
-            <label for="description">Description d'activité</label>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              placeholder="Description d'activité"
-            />
+            <label for="description">DESCRIPTION D'ACTIVITE:</label>
+            <input type="text" name="description" id="description" placeholder="Description d'activité" required />
           </div>
+        
           <div class="form-box-container">
             <div class="box">
-              <label for="apeCode">code naf</label>
-              <input
-                type="text"
-                name="apeCode"
-                id="apeCode"
-                placeholder="49.99Z"
-              />
+              <label for="apeCode">CODE APE:</label>
+              <input type="text" name="apeCode" id="apeCode" placeholder="49.99Z" required />
             </div>
             <div class="box">
-              <label for="socialCapital">Capital social</label>
-              <input
-                type="number"
-                name="socialCapital"
-                id="socialCapital"
-                placeholder="4000"
-              />
+              <label for="socialCapital">CAPITAL SOCIAL:</label>
+              <input type="number" name="socialCapital" id="socialCapital" placeholder="4000" required />
             </div>
           </div>
+        
           <div class="form-box-container">
+            <!-- <div class="box">
+              <label for="productFile">Company File</label>
+              <input type="file" name="productFile" id="productFile" required />
+            </div> -->
             <div class="box">
-              <label for="stock">Stock</label>
-              <input type="number" name="stock" id="stock" placeholder="20" />
-            </div>
-            <div class="box">
-              <label for="price">Prix</label>
-              <input type="number" name="price" id="price" placeholder="2000" />
+              <label for="dateImmatriculation">DATE D'IMMATRICULATION</label>
+              <input type="date" name="dateImmatriculation" id="dateImmatriculation" required />
             </div>
           </div>
+        
           <div class="box">
-            <label for="productFile">Product File</label>
-            <input
-              type="file"
-              name="productFile"
-              id="productFile"
-              placeholder="Upload Product File"
-            />
+            <div id="banksContainer" style="display: flex; flex-direction: column; gap: 18px;">
+              <div class="bankEntry">
+                <label>Bank Name:</label>
+                <input type="text" name="bankNames[]" required />
+                <label>Price:</label>
+                <input type="number" name="bankPrices[]" required />
+                <label>Bank File:</label>
+                <input type="file" name="bankFiles[]" required />
+                <button type="button" style="display: inline-block; width: fit-content; margin-left: 10px;" class="btn btn-bg" onclick="addBank()">Add Another Bank</button>
+              </div>
+            </div>
           </div>
+        
           <div class="btn-wrapper">
             <button type="submit" class="btn btn-bg">
               <i class="ri-add-circle-line"></i> <span>Ajouter un produit</span>
             </button>
           </div>
         </form>
+        
       </div>
     </main>
 
@@ -183,54 +119,74 @@
 
       //   calling api to add new product
       // Handling form submission
-      document
-        .getElementById("addProductForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
+      document.getElementById("addProductForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-          const URL = "/"; // Base URL for your API
+  const formData = new FormData();
+  formData.append("name", document.getElementById("name").value);
+  formData.append("description", document.getElementById("description").value);
+  formData.append("type", document.getElementById("type").value);
+  formData.append("apeCode", document.getElementById("apeCode").value);
+  formData.append("socialCapital", document.getElementById("socialCapital").value);
+  formData.append("dateImmatriculation", document.getElementById("dateImmatriculation").value);
 
-          // Create a FormData object
-          const formData = new FormData();
-          formData.append("name", document.getElementById("name").value);
-          formData.append(
-            "description",
-            document.getElementById("description").value
-          );
-          formData.append("type", document.getElementById("type").value);
-          formData.append("apeCode", document.getElementById("apeCode").value);
-          formData.append(
-            "socialCapital",
-            document.getElementById("socialCapital").value
-          );
-          formData.append("stock", document.getElementById("stock").value);
-          formData.append("price", document.getElementById("price").value);
+  // Append the product file
+  // const productFile = document.getElementById("productFile");
+  // if (productFile.files.length > 0) {
+  //   formData.append("productFile", productFile.files[0]);
+  // }
 
-          // Append the file
-          const fileInput = document.getElementById("productFile");
-          if (fileInput.files.length > 0) {
-            formData.append("productFile", fileInput.files[0]);
-          }
+  // Collect the bank data
+  const bankNames = document.getElementsByName("bankNames[]");
+  const bankPrices = document.getElementsByName("bankPrices[]");
+  const bankFiles = document.getElementsByName("bankFiles[]");
 
-          try {
-            const response = await fetch(`${URL}admin/api/addProduct`, {
-              method: "POST",
-              body: formData, // Send FormData
-            });
+  for (let i = 0; i < bankNames.length; i++) {
+    formData.append("bankNames[]", bankNames[i].value);
+    formData.append("bankPrices[]", bankPrices[i].value);
+    if (bankFiles[i].files.length > 0) {
+      formData.append("bankFiles[]", bankFiles[i].files[0]);
+    }
+  }
 
-            const data = await response.json();
+  try {
+    const response = await fetch("/admin/api/addProduct", {
+      method: "POST",
+      body: formData,
+    });
 
-            if (response.ok) {
-              alert(data.message);
-              document.getElementById("addProductForm").reset();
-            } else {
-              alert(data.message);
-            }
-          } catch (err) {
-            console.error("Error occurred:", err);
-            alert("An error occurred. Please try again.");
-          }
-        });
+    const data = await response.json();
+    if (response.ok) {
+      alert(data.message);
+      document.getElementById("addProductForm").reset();
+    } else {
+      alert(data.message);
+    }
+  } catch (err) {
+    console.error("Error occurred:", err);
+    alert("An error occurred. Please try again.");
+  }
+});
+
+
+
+
+
+
+function addBank() {
+  const container = document.getElementById('banksContainer');
+  const div = document.createElement('div');
+  div.className = 'bankEntry';
+  div.innerHTML = `
+    <label>Bank Name:</label>
+    <input type="text" name="bankNames[]" required>
+    <label>Price:</label>
+    <input type="number" name="bankPrices[]" required>
+    <label>Bank File:</label>
+    <input type="file" name="bankFiles[]" required>
+  `;
+  container.appendChild(div);
+}
     </script>
   </body>
 </html>

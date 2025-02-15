@@ -13,81 +13,8 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div class="container">
-          <div class="nav_left">
-            <a href="/dashboard">
-              <img src="img/logo.png" alt="Bratva logo" width="120" />
-            </a>
-            <ul>
-              <li>
-                <a href="/dashboard"><i class="ri-home-5-line"></i> Accueil</a>
-              </li>
-              <li>
-                <a href="/products"
-                  ><i class="ri-government-line"></i> Produits</a
-                >
-              </li>
-              <li>
-                <a href="/orders"
-                  ><i class="ri-shopping-cart-line"></i> Mes achats</a
-                >
-              </li>
-              <li>
-                <a href="/support">
-                  <i class="ri-customer-service-2-line"></i> Support
-                </a>
-              </li>
-            </ul>
-          </div>
+      <%- include('partials/nav', { user: user }) %>
 
-          <div class="nav_right">
-            <ul>
-              <li class="nav_cart">
-                <a href="/cart"
-                  ><i class="ri-shopping-cart-line"></i>
-                  <span class="cart_item-count">2</span></a
-                >
-              </li>
-              <li>
-                <div class="profile_nav-card">
-                  <img
-                    src="img/resource-database-26KGWLCbX7o-unsplash.jpg"
-                    alt=""
-                    width="30"
-                  />
-                  <div class="profile-details">
-                    <p class="username"><%= user.username%></p>
-                    <p class="available_money"><%= user.balance%>€</p>
-                  </div>
-
-                  <div class="profile_card-sub">
-                    <ul>
-                      <li>
-                        <a href="/profile"
-                          ><i class="ri-user-settings-line"></i> Profile</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/deposit"
-                          ><i class="ri-wallet-line"></i> Portefeuille</a
-                        >
-                      </li>
-                      <li>
-                        <a href="/logout"
-                          ><button>
-                            <i class="ri-logout-box-r-line"></i> Déconnexion
-                          </button></a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <div class="page_detials container">
         <p>Bratva Family</p>
         <h2>All Products</h2>
@@ -115,14 +42,13 @@
         <div class="products_wrapper">
           <div class="products_top">
             <p>S. No:</p>
-            <p>Nom</p>
-            <p>Description d'activité</p>
-            <p>FORME</p>
-            <p>Date de crea</p>
-            <p>code naf</p>
-            <p>Capital social</p>
-            <p>stock</p>
-            <p>prix</p>
+            <p>PAYS</p>
+            <p>DESCRIPTION D'ACTIVITE</p>
+            <p>FORME JURIDIQUE</p>
+            <p>DATE D'IMMATRICULATION</p>
+            <p>CODE APE</p>
+            <p>CAPITAL SOCIAL</p>
+            <p>BANQUE</p>
           </div>
           <div class="product_boxes">
             <% for(let [index, product] of products.entries()) { %>
@@ -133,18 +59,28 @@
               <p><%= product.description %></p>
               <p><%= product.type %></p>
               <p>
-                <%= new Date(product.createdAt).toLocaleDateString('en-GB') %>
+                <%= new Date(product.dateImmatriculation).toLocaleDateString('en-GB') %>
               </p>
               <p><%= product.apeCode %></p>
               <p><%= product.socialCapital %>€</p>
-              <p><%= product.stock %></p>
-              <p><%= product.price %>€</p>
+              <div class="banks_btns">
+            <% for(let bank of product.banks) { %>
+              <button class="btn btn-bg bank_btn <%= bank.purchased ? 'disabled-bank' : '' %>">
+                <%= bank.name %> <span><%= bank.price %>€</span>
+              </button>
+              
+              
+              
+              <% } %>
+              </div>
+              
               <button
                 class="btn btn-green buy-btn"
                 data-productId="<%= product._id %>"
               >
                 <i class="ri-shopping-bag-line"></i> Acheter
               </button>
+              
             </div>
             <% } %>
           </div>
@@ -189,25 +125,37 @@
 
         <div class="orderSummary-body">
           <div class="orderSummary-box">
-            <h4>Nom</h4>
+            <h4>PAYS</h4>
             <p class="productName"></p>
           </div>
           <div class="orderSummary-box">
-            <h4>Description d'activité</h4>
+            <h4>DESCRIPTION D'ACTIVITE</h4>
             <p class="productDescription"></p>
           </div>
           <div class="orderSummary-box">
-            <h4>FORME</h4>
+            <h4>FORME JURIDIQUE</h4>
             <p class="productType"></p>
           </div>
           <div class="orderSummary-box">
-            <h4>Capital social</h4>
+            <h4>DATE D'IMMATRICULATION</h4>
+            <p class="productRegistrationDate"></p>
+          </div>
+          <div class="orderSummary-box">
+            <h4>CODE APE</h4>
+            <p class="productCodeApe"></p>
+          </div>
+          <div class="orderSummary-box">
+            <h4>CAPITAL SOCIAL</h4>
             <p class="productCapitalSocial"></p>
           </div>
           <div class="orderSummary-box">
-            <h4>Prix</h4>
-            <p class="productPrice"></p>
+            <h4>Select BANQUE</h4>
+            <div class="banks_wrapper">
+              <!-- bank code here -->
+            </div>
           </div>
+
+     
         </div>
         <div class="orderSummary-footer box-bg">
           <div class="orderSummary-box">
@@ -224,10 +172,12 @@
           </button>
         </div>
       </div>
-      <!-- Your Balance -->
-      <!-- Total  -->
-      <!-- Buy now -->
+  
     </section>
+    <!-- footer -->
+    <%- include('partials/footer') %>
+
+    <!--End  footer -->
 
     <script>
       const closeModalButton = document.getElementById("closeModal");
@@ -238,51 +188,92 @@
           "none";
       });
 
-      // Calling Order create Api
+    // Calling Order create Api
+    const showProductConfirmModel = async (btn) => {
+  try {
+    const productId = btn.getAttribute("data-productid");
+    console.log(productId);
+    
+    const response = await fetch("/products/productById", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId: productId }),
+    });
 
-      // Show Product Confirm Model
-      const showProductConfirmModel = async (btn) => {
-        try {
-          const productId = btn.getAttribute("data-productid");
-          console.log(productId);
-          const response = await fetch("/products/productById", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              productId: productId,
-            }),
-          });
-          const data = await response.json();
+    const data = await response.json();
 
-          if (!data.success) {
-            messageDisplay(data.message, "red");
-            return;
-          }
-          const { name, description, type, price, socialCapital } =
-            data.product;
-          // Setting value of the model
-          confirmBuyBtn.setAttribute("data-productId", productId);
-          document.querySelector(".productName").textContent = name;
-          document.querySelector(".productDescription").textContent =
-            description;
-          document.querySelector(".productType").textContent = type;
-          document.querySelector(".productPrice").textContent = price + "€";
-          document
-            .querySelectorAll(".productPrice")
-            .forEach((product) => (product.textContent = price + "€"));
-          document.querySelector(".productCapitalSocial").textContent =
-            socialCapital + "€";
+    if (!data.success) {
+      messageDisplay(data.message, "red");
+      return;
+    }
 
-          const showProductConfirmModel = document.querySelector(
-            ".show-product-confirm-model"
-          );
-          showProductConfirmModel.style.display = "flex";
-        } catch (error) {
-          alert("Error Fetching Product details");
-        }
-      };
+    const { name, description, type, apeCode, socialCapital, banks, dateImmatriculation } = data.product;
+
+    // Set modal values
+    confirmBuyBtn.setAttribute("data-productId", productId);
+    document.querySelector(".productName").textContent = name;
+    document.querySelector(".productDescription").textContent = description;
+    document.querySelector('.productRegistrationDate').textContent = new Date(dateImmatriculation).toLocaleDateString('en-GB');
+    document.querySelector(".productType").textContent = type;
+    document.querySelector(".productCodeApe").textContent = apeCode;
+    document.querySelector(".productCapitalSocial").textContent = socialCapital + "€";
+
+    // Reset total price initially
+    document.querySelector(".productTotal").textContent = "0€";
+    document.querySelector("#confirmBuyBtn").innerHTML = `Pay Now 0€`;
+
+    // Populate banks as checkboxes
+    const banksWrapper = document.querySelector(".banks_wrapper");
+    banksWrapper.innerHTML = ""; // Clear previous content
+
+    banks.forEach((bank, index) => {
+      const bankElement = document.createElement("div");
+      bankElement.classList.add("bank-option");
+
+      // ✅ Disable if already purchased
+      const isPurchased = bank.purchased;
+      bankElement.innerHTML = `
+        <input type="checkbox" id="bank-${index}" name="selectedBanks" value="${bank._id}" data-price="${bank.price}" ${isPurchased ? "disabled" : ""}>
+        <label for="bank-${index}" ${isPurchased ? 'style="color: gray; text-decoration: line-through;"' : ""}>
+          ${bank.name} - ${bank.price}€
+          ${isPurchased ? "(Already Purchased)" : ""}
+        </label>
+      `;
+
+      banksWrapper.appendChild(bankElement);
+    });
+
+    // Update total price when selecting banks
+    const checkboxes = document.querySelectorAll('input[name="selectedBanks"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", updateTotalPrice);
+    });
+
+    // Show the modal
+    const showProductConfirmModel = document.querySelector(".show-product-confirm-model");
+    showProductConfirmModel.style.display = "flex";
+
+  } catch (error) {
+    alert("Error Fetching Product details");
+  }
+};
+
+const updateTotalPrice = () => {
+  let total = 0;
+  document
+    .querySelectorAll('input[name="selectedBanks"]:checked')
+    .forEach((checkbox) => {
+      total += parseFloat(checkbox.getAttribute("data-price"));
+    });
+
+  // ✅ Ensure it doesn't show "undefined" if no banks are selected
+  document.querySelector(".productTotal").textContent = total > 0 ? total + "€" : "0€";
+  document.querySelector("#confirmBuyBtn").innerHTML = `Pay Now ${total > 0 ? total + "€" : "0€"}`;
+};
+
+
 
       const purchaseBtn = document.querySelectorAll(".buy-btn");
       purchaseBtn.forEach((btn) => {
@@ -292,54 +283,63 @@
       });
 
       confirmBuyBtn.addEventListener("click", async () => {
-        // const successMessage = document.getElementById("successMessage");
-        // const button = document.getElementById("buyButton");
+  // Disable the button to prevent multiple clicks
+  confirmBuyBtn.disabled = true;
+  confirmBuyBtn.innerText = "Processing..."; // Change button text
 
-        // Disable the button to prevent multiple clicks
-        confirmBuyBtn.disabled = true;
-        confirmBuyBtn.innerText = "Processing..."; // Change button text
+  try {
+    const productId = confirmBuyBtn.getAttribute("data-productId");
 
-        try {
-          const productId = confirmBuyBtn.getAttribute("data-productId");
-          const response = await fetch(`/orders/create`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              productId,
-            }),
-          });
+    // Get selected banks
+    const selectedBanks = Array.from(
+      document.querySelectorAll('input[name="selectedBanks"]:checked')
+    ).map((checkbox) => checkbox.value);
 
-          const data = await response.json();
-          if (!data.success) {
-            messageDisplay(data.message, "red");
-            return;
-          } else {
-            messageDisplay(data.message, "green");
+    if (selectedBanks.length === 0) {
+      messageDisplay("Please select at least one bank before proceeding.", "red");
+      confirmBuyBtn.disabled = false;
+      confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
+      return;
+    }
 
-            setTimeout(() => {
-              window.location.href = data.redirectUrl;
-            }, 2000);
-          }
+    // Send request to backend
+    const response = await fetch(`/orders/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId,
+        selectedBanks, // Send selected banks array
+      }),
+    });
 
-          // Redirect to orders page to download file
-        } catch (error) {
-          console.error("Error:", error);
-          messageDisplay(
-            "An unexpected error occurred. Please try again.",
-            "red"
-          );
-        } finally {
-          document.querySelector(
-            ".show-product-confirm-model"
-          ).style.display = "none";
-          setTimeout(() => {
-            confirmBuyBtn.disabled = false;
-            confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
-          }, 1500);
-        }
-      });
+    const data = await response.json();
+    if (!data.success) {
+      messageDisplay(data.message, "red");
+      confirmBuyBtn.disabled = false;
+      confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
+      return;
+    } else {
+      messageDisplay(data.message, "green");
+
+      setTimeout(() => {
+        window.location.href = data.redirectUrl;
+      }, 2000);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    messageDisplay("An unexpected error occurred. Please try again.", "red");
+  } finally {
+    // Close modal and reset button state
+    document.querySelector(".show-product-confirm-model").style.display = "none";
+    setTimeout(() => {
+      confirmBuyBtn.disabled = false;
+      confirmBuyBtn.innerHTML = ` Pay Now <span class="productPrice"></span>`;
+    }, 1500);
+  }
+});
+
     </script>
     <script src="/js/base.js"></script>
   </body>
